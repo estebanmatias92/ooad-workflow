@@ -1,0 +1,38 @@
+@startuml Diagrama de Clases — {{ Dominio }} — basado en CU-{{ NNN }}, RF-{{ NNN }}
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entities (centro Clean)
+class Usuario {
+  + id: UUID
+  + email: string
+  + estado: EstadoUsuario
+  + crear(datos): Usuario
+}
+
+class Pedido {
+  + id: UUID
+  + total: Money
+  + agregarItem(item): void
+}
+
+' Use Cases
+class CrearUsuarioUseCase {
+  + execute(dto: CrearUsuarioDTO): Usuario
+}
+
+' Value Objects
+class Email {
+  + valor: string
+  + validar(): boolean
+}
+
+Usuario --> Email : usa
+CrearUsuarioUseCase ..> Usuario : crea
+Pedido --> Usuario : pertenece a
+
+note right of Usuario
+  Entidad — regla: email único
+  RF-001 / CU-001
+end note
+@enduml

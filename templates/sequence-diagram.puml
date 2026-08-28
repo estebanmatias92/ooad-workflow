@@ -1,0 +1,22 @@
+@startuml Secuencia — CU-{{ NNN }} {{ Título }}
+actor Usuario
+participant Controller as Ctrl
+participant UseCase as UC
+participant Entity as Ent
+participant Repo as Repo
+database DB
+
+Usuario -> Ctrl : POST /usuarios {dto}
+Ctrl -> UC : execute(dto)
+UC -> Ent : crear(datos)
+Ent -> Ent : validar reglas (Strategy)
+Ent --> UC : Usuario creado
+UC -> Repo : guardar(usuario)
+Repo -> DB : INSERT
+DB --> Repo : ok
+Repo --> UC : ok
+UC --> Ctrl : UsuarioDTO
+Ctrl --> Usuario : 201 Created
+
+note over UC, Ent : Clean 4 capas: Controller(Frameworks) → UseCase → Entity
+@enduml
