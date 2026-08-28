@@ -1,70 +1,70 @@
-# OOAD Workflow — Framework agéntico profesional
+# OOAD Workflow — Professional Agentic Framework
 
-Framework agéntico **OOAD + Clean 4 capas + TDD**, alineado al paradigma de la Tecnicatura en Análisis de Sistemas (`systems-analysis-ooad-paradigm.md:3` — `IEEE830/Casos de Uso → UML/GoF → TDD → MVC/Capas`). Alternativa profesional a `mattpocock/skills` (DDD/VSA) y `addyosmani/agent-skills` (PRD→VSA SaaS).
+Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Analysis paradigm (`systems-analysis-ooad-paradigm.md:3` — `IEEE830/Use Cases → UML/GoF → TDD → MVC/Layers`). Professional alternative to `mattpocock/skills` (DDD/VSA) and `addyosmani/agent-skills` (PRD→VSA SaaS).
 
-## Perfiles metodológicos (elegible en `setup-ooad`)
+## Methodology Profiles (selectable via `setup-ooad`)
 
-| Perfil | Cuándo | Artefacto obligatorio |
-|--------|--------|-----------------------|
-| **RUP iterativo** *(default)* | Producto mediano, equipo pequeño-mediano, requisitos evolutivos con riesgo | Vision + CU detallados + C4/UML + ADR iterativo |
-| **Waterfall** | Contrato fijo, regulación, equipo grande | SRS IEEE830 + SDD pesado firmados |
-| **Ágil / Scrum** | Producto digital, requisitos cambiantes | Backlog US INVEST + Gherkin AC + ADR just-enough |
+| Profile | When | Required Artifact |
+|---------|------|-------------------|
+| **Iterative RUP** *(default)* | Medium product, small-to-medium team, evolving requirements with risk | Vision + detailed UCs + C4/UML + iterative ADR |
+| **Waterfall** | Fixed contract, regulation, large team | Signed SRS IEEE830 + heavy SDD |
+| **Agile / Scrum** | Digital product, changing requirements | US backlog INVEST + Gherkin AC + just-enough ADR |
 
-La misma base SDLC 7 fases (`Discovery → RE → Design → Implementation → Testing → Deployment → Maintenance`) se agenda distinto por perfil (`artefactos-por-fase-y-metodologia.md:72-149`).
+The same 7-phase SDLC base (`Discovery → RE → Design → Implementation → Testing → Deployment → Maintenance`) is scheduled differently per profile (`artefactos-por-fase-y-metodologia.md:72-149` — *artifacts-by-phase-and-methodology*, ES).
 
-## Skills (activación manual, en orden sugerido)
+## Skills (manual activation, suggested order)
 
-1. `/setup-ooad` — configura perfil + tracker + arquitectura + domain docs (una vez por repo)
-2. `/ooad-discover` — PRD + Vision + personas + glosario draft
-3. `/ooad-requirements` — SRS **ó** US+CU+Gherkin + modelo conceptual + RTM + validación Fagan
-4. `/ooad-architect` — C4/UML + modelo datos + GoF + Clean 4 capas + ADR-MADR
-5. `/ooad-build` — código Clean (entities/usecases/adapters/frameworks) + TDD + OpenAPI
-6. `/ooad-verify` — plan pruebas + Gherkin ejecutable (pirámide 80/15/5)
-7. `/ooad-ship` — checklist prod + runbooks + rollback + changelog + pipeline
+1. `/setup-ooad` — configure profile + tracker + architecture + domain docs (once per repo)
+2. `/ooad-discover` — PRD + Vision + personas + draft glossary
+3. `/ooad-requirements` — SRS **or** US+UC+Gherkin + conceptual model + RTM + Fagan validation
+4. `/ooad-architect` — C4/UML + data model + GoF + Clean 4 Layers + ADR-MADR
+5. `/ooad-build` — Clean code (entities/usecases/adapters/frameworks) + TDD + OpenAPI
+6. `/ooad-verify` — test plan + executable Gherkin (pyramid 80/15/5)
+7. `/ooad-ship` — prod checklist + runbooks + rollback + changelog + pipeline
 
-> Orden sugerido, no forzado: brownfield puede iniciar en `ooad-architect` con gap→US.
+> Suggested order, not enforced: brownfield can start at `ooad-architect` with gap → US.
 
-## Instalación
+## Installation
 
-### Desarrollo (este repo)
+### Development (this repo)
 
-Skills viven en `./ooad-workflow/` y se exponen a opencode vía symlink global:
+Skills live in `./ooad-workflow/` and are exposed to opencode via global symlink:
 
 ```bash
 ln -s $(pwd)/ooad-workflow ~/.config/opencode/skills/ooad-workflow
 ```
 
-Verifica:
+Verify:
 
 ```bash
 ls -l ~/.config/opencode/skills/ooad-workflow
-# debe apuntar a .../ooad-systems-modeling/ooad-workflow
+# should point to .../ooad-systems-modeling/ooad-workflow
 ```
 
-### Repo local alternativo
+### Alternative local repo
 
 ```
-ooad-workflow/.opencode/skills/  # si prefieres no usar global
+ooad-workflow/.opencode/skills/  # if you prefer not to use global
 ```
 
-## Uso
+## Usage
 
 ```bash
-# 1) Configurar repo nuevo
-/setup-ooad   # elige RUP* / Waterfall / Ágil, tracker, arquitectura
+# 1) Configure new repo
+/setup-ooad   # choose RUP* / Waterfall / Agile, tracker, architecture
 
-# 2) Ciclo por feature (RUP ejemplo: por iteración)
+# 2) Cycle per feature (RUP example: per iteration)
  /ooad-discover      # PRD + Vision
- /ooad-requirements  # CU-001.. + RTM
- /ooad-architect     # C4 + clases + ADR
- /ooad-build         # TDD por CU
+ /ooad-requirements  # UC-001.. + RTM
+ /ooad-architect     # C4 + classes + ADR
+ /ooad-build         # TDD per UC
  /ooad-verify        # Gherkin E2E
  /ooad-ship          # release
 ```
 
-Cada skill lee `docs/agents/workflow.md` para decidir plantilla y gate.
+Each skill reads `docs/agents/workflow.md` to decide template and gate.
 
-## Estructura
+## Structure
 
 ```
 ooad-workflow/
@@ -77,28 +77,28 @@ ooad-workflow/
 │   ├── ooad-verify/
 │   └── ooad-ship/
 ├── templates/
-│   ├── prd.md, srs-830.md, cu-detallado.md, us-gherkin.md
+│   ├── prd.md, srs-830.md, use-case-detailed.md, us-gherkin.md
 │   ├── glossary.md, rtm.csv, adr-madr.md
 │   ├── c4.puml, class-diagram.puml, sequence-diagram.puml
 │   └── workflow.md, domain.md, architecture.md, issue-tracker-*.md
 └── references/
-    ├── artefactos-matrix.md
+    ├── artifacts-matrix.md
     └── definition-of-done.md
 ```
 
-## Comparativa
+## Comparison
 
-| Criterio OOAD | `ooad-workflow` | Matt Pocock | AddyOsmani |
-|---------------|-----------------|-------------|------------|
-| IEEE830/RN-xxx | ✅ nativo por perfil | ❌ User Stories DDD | ❌ PRD SaaS |
-| CU→Secuencia→Clases | ✅ | ❌ seams | ❌ VSA |
-| GoF + Clean 4 | ✅ MADR justificado | Deep modules | Contract-first genérico |
-| TDD | ✅ RED→GREEN por capa | seam-based | ✅ |
-| MVC/Capas | ✅ default | VSA | VSA SaaS |
+| OOAD Criterion | `ooad-workflow` | Matt Pocock | AddyOsmani |
+|----------------|-----------------|-------------|------------|
+| IEEE830/FR-xxx | ✅ native per profile | ❌ DDD User Stories | ❌ SaaS PRD |
+| UC→Sequence→Classes | ✅ | ❌ seams | ❌ VSA |
+| GoF + Clean 4 | ✅ MADR justified | Deep modules | Generic contract-first |
+| TDD | ✅ RED→GREEN per layer | seam-based | ✅ |
+| MVC/Layers | ✅ default | VSA | VSA SaaS |
 
-## Referencias
+## References
 
-- `systems-analysis-ooad-paradigm.md`
-- `artefactos-por-fase-y-metodologia.md`
-- `requirements-engineering.md` + 5 sub-fases RE
-- `architecture-decision-record.md` (MADR)
+- `systems-analysis-ooad-paradigm.md` (ES)
+- `artefactos-por-fase-y-metodologia.md` (ES)
+- `requirements-engineering.md` + 5 RE sub-phases (ES)
+- `architecture-decision-record.md` (MADR) (ES)

@@ -1,38 +1,38 @@
-@startuml Diagrama de Clases — {{ Dominio }} — basado en CU-{{ NNN }}, RF-{{ NNN }}
+@startuml Class Diagram — {{ Domain }} — based on UC-{{ NNN }}, FR-{{ NNN }}
 skinparam classAttributeIconSize 0
 skinparam linetype ortho
 
-' Entities (centro Clean)
-class Usuario {
+' Entities (Clean core)
+class User {
   + id: UUID
   + email: string
-  + estado: EstadoUsuario
-  + crear(datos): Usuario
+  + status: UserStatus
+  + create(data): User
 }
 
-class Pedido {
+class Order {
   + id: UUID
   + total: Money
-  + agregarItem(item): void
+  + addItem(item): void
 }
 
 ' Use Cases
-class CrearUsuarioUseCase {
-  + execute(dto: CrearUsuarioDTO): Usuario
+class CreateUserUseCase {
+  + execute(dto: CreateUserDTO): User
 }
 
 ' Value Objects
 class Email {
-  + valor: string
-  + validar(): boolean
+  + value: string
+  + validate(): boolean
 }
 
-Usuario --> Email : usa
-CrearUsuarioUseCase ..> Usuario : crea
-Pedido --> Usuario : pertenece a
+User --> Email : uses
+CreateUserUseCase ..> User : creates
+Order --> User : belongs to
 
-note right of Usuario
-  Entidad — regla: email único
-  RF-001 / CU-001
+note right of User
+  Entity — rule: unique email
+  FR-001 / UC-001
 end note
 @enduml

@@ -1,79 +1,79 @@
 ---
 name: ooad-discover
-description: Fase Discovery OOAD — produce PRD, Vision y glosario draft. Primera skill del workflow RUP/Waterfall/Ágil. Lee docs/agents/workflow.md para gating por perfil.
+description: OOAD Discovery phase — produces PRD, Vision and draft glossary. First skill in the RUP/Waterfall/Agile workflow. Reads docs/agents/workflow.md for profile gating.
 ---
 
-# OOAD Discover — Discovery / Investigación
+# OOAD Discover — Discovery / Research
 
-## Objetivo
+## Objective
 
-Transformar una idea vaga o charter inicial en un **PRD** con visión, KPIs, personas y límite de alcance. Alimenta la fase RE. Ver `product-requirements-document.md`, `lean-startup.md`, `glosario-dominio.md`, `artefactos-por-fase-y-metodologia.md:72 Discovery`.
+Transform a vague idea or initial charter into a **PRD** with vision, KPIs, personas and scope boundary. Feeds the RE phase. See `product-requirements-document.md` (ES), `lean-startup.md` (ES), `glosario-dominio.md` (ES), `artefactos-por-fase-y-metodologia.md:72 Discovery` (ES).
 
-## Cuándo usar
+## When to Use
 
-- Repo recién configurado con `setup-ooad` sin PRD.
-- Nueva iniciativa/producto antes de escribir SRS/US.
-- Brownfield: cuando hay que reconstruir visión perdida.
+- Repo newly configured with `setup-ooad` without PRD.
+- New initiative/product before writing SRS/US.
+- Brownfield: when lost vision must be rebuilt.
 
-**No usar para:** fix de una línea, typo, refactor sin cambio de alcance.
+**Do not use for:** one-line fix, typo, refactor without scope change.
 
-## Precondición
+## Preconditions
 
-- `docs/agents/workflow.md` existe (perfil elegido).
-- Charter o descripción stakeholder mínima (aunque sea 1 párrafo).
+- `docs/agents/workflow.md` exists (profile chosen).
+- Minimal stakeholder charter/description (even 1 paragraph).
 
-## Proceso
+## Process
 
-### 1. Explora
+### 1. Explore
 
-- Lee `docs/agents/workflow.md` (perfil) y `docs/agents/domain.md` (dónde va glosario).
-- Lee `CONTEXT.md` si existe; si no, se creará draft aquí.
-- Revisa `elicitacion-requerimientos.md: técnicas entrevista/JAD/observación`.
+- Read `docs/agents/workflow.md` (profile) and `docs/agents/domain.md` (where glossary goes).
+- Read `CONTEXT.md` if it exists; otherwise draft will be created here.
+- Review `elicitacion-requerimientos.md: interview/JAD/observation techniques` (ES).
 
-### 2. Entrevista (si falta contexto)
+### 2. Interview (if context missing)
 
-Si la idea está subespecificada, aplica `interview-me` minimal (1 pregunta a la vez con hipótesis):
+If idea is underspecified, apply minimal `interview-me` (1 question at a time with hypothesis):
 
-- ¿Quién es el usuario? ¿Por qué ahora? ¿Qué éxito medible? ¿Qué queda fuera?
+- Who is the user? Why now? What measurable success? What is out of scope?
 
-No bloquees si el usuario quiere velocidad — genera draft con supuestos listados.
+Do not block if user wants speed — generate draft with listed assumptions.
 
-### 3. Produce artefactos
+### 3. Produce Artifacts
 
-| Artefacto | Ruta | Perfil |
-|-----------|------|--------|
-| **PRD** | `docs/01-discovery/PRD.md` (plantilla `templates/prd.md`) | Todos: Waterfall=firmado completo, RUP=Vision+KPIs, Ágil=1 pág vivo |
-| **Vision Statement** | sección dentro de PRD | RUP obligatorio (Inception) |
-| **User Personas** | `docs/01-discovery/personas.md` | RUP/Ágil sí, Waterfall a veces |
-| **Glosario draft** | `docs/01-discovery/glosario-draft.md` → luego `CONTEXT.md` | Todos draft aquí, refinado en `ooad-requirements` |
-| **Diagrama Contexto tentativo** | `docs/01-discovery/contexto-tentativo.puml` | Opcional en Discovery, obligatorio en RE |
+| Artifact | Path | Profile |
+|----------|------|---------|
+| **PRD** | `docs/01-discovery/PRD.md` (template `templates/prd.md`) | All: Waterfall=complete signed, RUP=Vision+KPIs, Agile=1-page living |
+| **Vision Statement** | section inside PRD | RUP required (Inception) |
+| **User Personas** | `docs/01-discovery/personas.md` | RUP/Agile yes, Waterfall sometimes |
+| **Draft Glossary** | `docs/01-discovery/glossary-draft.md` → then `CONTEXT.md` | All draft here, refined in `ooad-requirements` |
+| **Tentative Context Diagram** | `docs/01-discovery/context-tentative.puml` | Optional in Discovery, required in RE |
 
-Plantillas: `templates/prd.md`, `templates/glossary.md`.
+Templates: `templates/prd.md`, `templates/glossary.md`.
 
-**Secciones PRD mínimas:**
+**Minimum PRD sections:**
 
 ```
-# PRD: [Nombre]
-## Visión / Elevator pitch
-## Usuarios / Personas
-## KPIs / Success criteria (medibles)
-## Features (Waterfall: narrativa completa; Ágil: lista priorizada MoSCoW)
+# PRD: [Name]
+## Vision / Elevator pitch
+## Users / Personas
+## KPIs / Success criteria (measurable)
+## Features (Waterfall: complete narrative; Agile: prioritized MoSCoW list)
 ## Out of scope
-## Supuestos / Riesgos iniciales
+## Assumptions / Initial Risks
 ## Open questions
 ```
 
-### 4. Gates por perfil
+### 4. Gates by Profile
 
-- **RUP**: Vision revisada con stakeholder; glosario draft sin ambigüedad crítica.
-- **Waterfall**: PRD completo revisado y pre-firmado antes de RE.
-- **Ágil**: PRD 1 pág revisado; backlog inicial con 5-10 US priorizadas.
+- **RUP**: Vision reviewed with stakeholder; draft glossary without critical ambiguity.
+- **Waterfall**: Complete PRD reviewed and pre-signed before RE.
+- **Agile**: 1-page PRD reviewed; initial backlog with 5-10 prioritized US.
 
-### 5. Verifica
+### 5. Verify
 
-- [ ] PRD cubre visión + KPIs + out-of-scope + supuestos
-- [ ] Glosario draft sin términos contradictorios con `CONTEXT.md` existente
-- [ ] Supuestos listados explícitamente (no llenados en silencio)
-- [ ] Humano revisó y aprobó
+- [ ] PRD covers vision + KPIs + out-of-scope + assumptions
+- [ ] Draft glossary without contradictory terms vs existing `CONTEXT.md`
+- [ ] Assumptions listed explicitly (not silently filled)
+- [ ] Human reviewed and approved
 
-No avances a `ooad-requirements` sin aprobación.
+Do not advance to `ooad-requirements` without approval.

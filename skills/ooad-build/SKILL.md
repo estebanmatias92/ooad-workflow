@@ -1,96 +1,96 @@
 ---
 name: ooad-build
-description: Implementación OOAD — código Clean 4 capas + TDD + OpenAPI/Migrations. Construye desde docs/03-architecture, con traza RF/CU/US. Lee docs/agents/workflow.md.
+description: OOAD Implementation — Clean 4 Layers + TDD + OpenAPI/Migrations. Builds from docs/03-architecture, traced to FR/UC/US. Reads docs/agents/workflow.md.
 ---
 
 # OOAD Build — Implementation
 
-## Objetivo
+## Objective
 
-Escribir código en capas Clean + tests TDD que satisfagan los artefactos de RE y arquitectura, con traza a consignas. Ver `xp.md: TDD/CI/Refactoring`, `artefactos-por-fase-y-metodologia.md: Implementation`, `software-development-life-cycle.md:Implementation`.
+Write code in Clean layers + TDD tests that satisfy RE and architecture artifacts, traced to requirements. See `xp.md: TDD/CI/Refactoring` (ES), `artefactos-por-fase-y-metodologia.md: Implementation` (ES), `software-development-life-cycle.md:Implementation` (ES).
 
-## Precondición
+## Preconditions
 
-- `docs/02-requirements/` validado.
-- `docs/03-architecture/` aprobado (C4/UML + ADRs).
+- `docs/02-requirements/` validated.
+- `docs/03-architecture/` approved (C4/UML + ADRs).
 - `docs/agents/workflow.md` + `docs/agents/architecture.md`.
 
-## Proceso
+## Process
 
-### 1. Prepara entorno
+### 1. Prepare Environment
 
-Según stack (elegido en `ooad-architect`):
+Per stack (chosen in `ooad-architect`):
 
-| Stack | Archivos |
-|-------|----------|
+| Stack | Files |
+|-------|-------|
 | python-venv | `requirements.txt + .gitignore` |
 | python-nix | `flake.nix + .envrc` |
 | node | `package.json + tsconfig` |
 | any | `README.md + .gitignore` |
 
-Reusa infra previa si existe (idempotencia). Ver `templates/gitignore-template.md`.
+Reuse prior infra if it exists (idempotency). See `templates/gitignore-template.md`.
 
-### 2. Slicing — por CU/US, no horizontal masivo
+### 2. Slicing — by UC/US, not massive horizontal
 
-No construyas toda la DB, luego toda la API, luego toda la UI. Vertical slice por CU/US pero respetando capas Clean:
+Do not build all DB, then all API, then all UI. Vertical slice per UC/US but respecting Clean layers:
 
 ```
-Slice 1: CU-001 Crear cuenta (Entity User + UseCase CreateUser + Adapter Repo + Controller) → TDD → verde → commit
-Slice 2: CU-002 Login (UseCase Auth + Strategy para cifrado) → TDD → commit
+Slice 1: UC-001 Create account (Entity User + UseCase CreateUser + Adapter Repo + Controller) → TDD → green → commit
+Slice 2: UC-002 Login (UseCase Auth + Strategy for encryption) → TDD → commit
 ```
 
-Cada slice deja el sistema compilable y tests en verde.
+Each slice leaves the system compilable and tests green.
 
-### 3. Reglas de codificación
+### 3. Coding Rules
 
-1.  **Traza**: cada módulo/clase inicia con comentario `// RF-001 / CU-001 — título` o `# RF-001`.
-2.  **Clean 4 capas** (default):
+1.  **Trace**: each module/class starts with comment `// FR-001 / UC-001 — title` or `# FR-001`.
+2.  **Clean 4 Layers** (default):
     ```
     src/
-    ├── entities/        # Enterprise Business Rules (puro dominio)
-    ├── usecases/        # Application Business Rules (casos de uso)
+    ├── entities/        # Enterprise Business Rules (pure domain)
+    ├── usecases/        # Application Business Rules (use cases)
     ├── adapters/        # Interface Adapters (repo, presenter, gateway)
     └── frameworks/      # Frameworks & Drivers (web, db, config)
     ```
-    Dependencias solo hacia adentro. Nunca `entities` importa `frameworks`.
+    Dependencies only inward. Never `entities` imports `frameworks`.
 
-3.  **SOLID + GRASP + GoF**: una responsabilidad por clase; asigna responsabilidad al experto en información; usa GoF solo cuando justificado por ADR.
-4.  **Clean Code**: nombres descriptivos, funciones cortas, sin duplicación.
-5.  **TDD**: `RED → GREEN → REFACTOR`. Un test por comportamiento, no por método privado. Ver `criterios-aceptacion.md: Gherkin`.
+3.  **SOLID + GRASP + GoF**: single responsibility per class; assign responsibility to information expert; use GoF only when justified by ADR.
+4.  **Clean Code**: descriptive names, short functions, no duplication.
+5.  **TDD**: `RED → GREEN → REFACTOR`. One test per behavior, not per private method. See `criterios-aceptacion.md: Gherkin` (ES).
 
-### 4. TDD loop por slice
+### 4. TDD Loop per Slice
 
 ```bash
-# RED: escribe test que falla (unit en entities/usecases, integración en adapters)
-pytest tests/test_create_user.py -v   # debe fallar
-# GREEN: mínimo código para pasar
-# REFACTOR: limpia, tests siguen verde
-# VERIFY: corre suite
+# RED: write failing test (unit in entities/usecases, integration in adapters)
+pytest tests/test_create_user.py -v   # should fail
+# GREEN: minimal code to pass
+# REFACTOR: clean up, tests stay green
+# VERIFY: run suite
 pytest && npm test / go test ./...
 ```
 
-Preferir `real implementation > fake > stub > mock` (mock solo en boundaries lentos).
+Prefer `real implementation > fake > stub > mock` (mock only at slow boundaries).
 
-### 5. Especificación de APIs
+### 5. API Specification
 
-Si hay API REST: `openapi.yaml` (contract-first) en `docs/03-architecture/` o `api/` — genera antes o junto al controller.
+If REST API exists: `openapi.yaml` (contract-first) in `docs/03-architecture/` or `api/` — generate before or alongside controller.
 
-### 6. No editar artefactos upstream
+### 6. Do Not Edit Upstream Artifacts
 
-No modifiques `docs/02-requirements/` ni `docs/03-architecture/` sin aprobación. Si hay inconsistencia, pregunta.
+Do not modify `docs/02-requirements/` nor `docs/03-architecture/` without approval. If inconsistency, ask.
 
-### 7. Verifica
+### 7. Verify
 
-- [ ] Cada clase trazable a RF/CU/US
-- [ ] Regla dependencia Clean respetada
-- [ ] TDD: test falla antes, pasa después
-- [ ] Suite verde (`pytest`, `go test`, `npm test` según stack)
+- [ ] Each class traceable to FR/UC/US
+- [ ] Clean dependency rule respected
+- [ ] TDD: test fails before, passes after
+- [ ] Suite green (`pytest`, `go test`, `npm test` per stack)
 - [ ] Build + lint ok
-- [ ] OpenAPI si aplica
-- [ ] Commit atómico por slice (`feat: CU-001 CreateUser entity+usecase`)
+- [ ] OpenAPI if applicable
+- [ ] Atomic commit per slice (`feat: UC-001 CreateUser entity+usecase`)
 
-### 8. Gates por perfil
+### 8. Gates by Profile
 
-- **RUP**: Construction itera slices; cada iteración entrega incremento ejecutable.
-- **Waterfall**: Build al final, tras diseño completo.
-- **Ágil**: Build por sprint, slice = US, CI corre por push.
+- **RUP**: Construction iterates slices; each iteration delivers executable increment.
+- **Waterfall**: Build at the end, after complete design.
+- **Agile**: Build per sprint, slice = US, CI runs per push.

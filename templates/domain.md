@@ -1,42 +1,42 @@
-# Domain Docs — reglas de consumo
+# Domain Docs — Consumption Rules
 
-Cómo las skills `ooad-*` consumen docs de dominio.
+How `ooad-*` skills consume domain docs.
 
-## Antes de explorar, lee
+## Before Exploring, Read
 
-- `CONTEXT.md` en root, o `CONTEXT-MAP.md` si existe (apunta a un `CONTEXT.md` por contexto). Lee cada uno relevante al tema.
-- `docs/adr/` y `src/*/docs/adr/` si hay contextos.
+- `CONTEXT.md` at root, or `CONTEXT-MAP.md` if it exists (points to a `CONTEXT.md` per context). Read each relevant one.
+- `docs/adr/` and `src/*/docs/adr/` if contexts exist.
 
-Si no existen, procede en silencio; `ooad-discover`/`ooad-requirements` los crean lazy cuando se resuelve el primer término/decisión.
+If none exist, proceed silently; `ooad-discover`/`ooad-requirements` create them lazily when the first term/decision is resolved.
 
-## Estructura
+## Structure
 
-Single-context (mayoría):
+Single-context (majority):
 
 ```
 / 
 ├── CONTEXT.md
 ├── docs/adr/
-│   ├── 0001-arquitectura-clean-4-capas.md
-│   └── 0002-postgres-para-write-model.md
+│   ├── 0001-clean-4-layer-architecture.md
+│   └── 0002-postgres-for-write-model.md
 └── src/
 ```
 
-Multi-context (si hay `CONTEXT-MAP.md`):
+Multi-context (if `CONTEXT-MAP.md` exists):
 
 ```
 / 
 ├── CONTEXT-MAP.md
-├── docs/adr/                      ← decisiones sistema
+├── docs/adr/                      ← system decisions
 └── src/
     ├── ordering/CONTEXT.md + docs/adr/
     └── billing/CONTEXT.md + docs/adr/
 ```
 
-## Usa el vocabulario del glosario
+## Use Glossary Vocabulary
 
-Nombra conceptos como en `CONTEXT.md`. No derives a sinónimos descartados. Si el concepto no existe, crea entrada o reconsidera.
+Name concepts as in `CONTEXT.md`. Do not drift to discarded synonyms. If the concept does not exist, create an entry or reconsider.
 
-## Flag conflictos con ADR
+## Flag Conflicts with ADR
 
-Si tu output contradice ADR existente, señálalo: `Contradice ADR-0002, pero vale reabrir porque...`
+If your output contradicts an existing ADR, call it out: `Contradicts ADR-0002, but worth reopening because...`

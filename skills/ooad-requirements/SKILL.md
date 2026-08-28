@@ -1,104 +1,104 @@
 ---
 name: ooad-requirements
-description: Ingeniería de Requerimientos OOAD — Elicitación → Análisis/Negociación → Especificación → Validación. Produce SRS IEEE830 o backlog US+Gherkin + glosario refinado + RTM. Lee docs/agents/workflow.md.
+description: OOAD Requirements Engineering — Elicitation → Analysis/Negotiation → Specification → Validation. Produces IEEE830 SRS or US+Gherkin backlog + refined glossary + RTM. Reads docs/agents/workflow.md.
 ---
 
 # OOAD Requirements — Requirements Engineering (RE)
 
-Cubre las 5 sub-fases de `requirements-engineering.md`: `Elicitación → Análisis/Negociación → Especificación → Validación → Gestión (transversal)`. Ver `requerimientos-y-tipos.md`, `elicitacion-requerimientos.md`, `analisis-negociacion-requerimientos.md`, `especificacion-requerimientos.md`, `criterios-aceptacion.md`, `validacion-requerimientos.md`, `gestion-requerimientos.md`.
+Covers the 5 sub-phases of `requirements-engineering.md` (ES): `Elicitation → Analysis/Negotiation → Specification → Validation → Management (cross-cutting)`. See `requerimientos-y-tipos.md` (ES), `elicitacion-requerimientos.md` (ES), `analisis-negociacion-requerimientos.md` (ES), `especificacion-requerimientos.md` (ES), `criterios-aceptacion.md` (ES), `validacion-requerimientos.md` (ES), `gestion-requerimientos.md` (ES).
 
-## Precondición
+## Preconditions
 
-- `docs/agents/workflow.md` con perfil (RUP/Waterfall/Ágil).
-- `docs/01-discovery/PRD.md` existe (o visión equivalente).
-- `CONTEXT.md` o `docs/01-discovery/glosario-draft.md` existe.
+- `docs/agents/workflow.md` with profile (RUP/Waterfall/Agile).
+- `docs/01-discovery/PRD.md` exists (or equivalent vision).
+- `CONTEXT.md` or `docs/01-discovery/glossary-draft.md` exists.
 
-## Proceso
+## Process
 
-### 1. Elicitación (fricciones crudas)
+### 1. Elicitation (raw frictions)
 
-Lee `docs/01-discovery/*`. Clasifica cada hallazgo en los 5 tipos (`requerimientos-y-tipos.md`):
+Read `docs/01-discovery/*`. Classify each finding into 5 types (`requerimientos-y-tipos.md` ES):
 
-- **Funcionales (RF)** — qué hace el sistema.
-- **No Funcionales (RNF)** — atributos calidad ISO25010 (`p95<200ms`, `99.9% uptime`, OWASP).
-- **Restricciones** — tecnológicas/legales.
-- **Reglas de Negocio** — origen dominio, no negociables.
-- **De Dominio** — compliance industria.
+- **Functional (FR)** — what the system does.
+- **Non-Functional (NFR)** — quality attributes ISO25010 (`p95<200ms`, `99.9% uptime`, OWASP).
+- **Constraints** — technological/legal.
+- **Business Rules** — domain origin, non-negotiable.
+- **Domain** — industry compliance.
 
-Técnicas: entrevista, JAD, observación, encuesta, prototipo.
+Techniques: interview, JAD, observation, survey, prototype.
 
-**Salida intermedia:** `docs/02-requirements/necesidades-crudas.md` lista `RN-001: ...`.
+**Intermediate output:** `docs/02-requirements/raw-needs.md` listing `BR-001: ...`.
 
-### 2. Análisis / Negociación
+### 2. Analysis / Negotiation
 
-- Prioriza con **MoSCoW** o **Kano** (`analisis-negociacion-requerimientos.md`).
-- Resuelve conflictos; refina glosario (`CONTEXT.md`).
-- Produce **Diagrama de Clases Conceptual (dominio)** + **Diagrama Contexto / System Boundary** (`docs/02-requirements/modelo-conceptual.puml`).
+- Prioritize with **MoSCoW** or **Kano** (`analisis-negociacion-requerimientos.md` ES).
+- Resolve conflicts; refine glossary (`CONTEXT.md`).
+- Produce **Conceptual Class Diagram (domain)** + **Context / System Boundary Diagram** (`docs/02-requirements/conceptual-model.puml`).
 
-**DoD análisis:** sin conflictos abiertos, glosario validado, boundary acordado.
+**DoD analysis:** no open conflicts, glossary validated, boundary agreed.
 
-### 3. Especificación — elige formato según perfil
+### 3. Specification — choose format by profile
 
-| Perfil | Formato obligatorio | Template | Artefacto |
-|--------|---------------------|----------|-----------|
-| **Waterfall** | **SRS IEEE830** pesado, contractual (`especificacion-requerimientos.md: SRS`, `waterfall.md`) | `templates/srs-830.md` | `docs/02-requirements/SRS.md` con `RF-NNN`, `RNF-NNN`, trazabilidad `PRD→RF→RNF`, métricas |
-| **RUP** | **CU detallados** + SRS híbrido (CU driver) (`rup.md`) | `templates/cu-detallado.md` | `docs/02-requirements/casos-de-uso/CU-001-*.md` + SRS resumido |
-| **Ágil** | **US INVEST + Gherkin AC** (`user-stories.md: Como/Quiero/Para + INVEST`, `criterios-aceptacion.md: Given/When/Then`) | `templates/us-gherkin.md` | `docs/02-requirements/backlog/US-001-*.md` con AC ejecutables |
+| Profile | Required Format | Template | Artifact |
+|---------|-----------------|----------|----------|
+| **Waterfall** | **Heavy contractual IEEE830 SRS** (`especificacion-requerimientos.md: SRS` ES, `waterfall.md` ES) | `templates/srs-830.md` | `docs/02-requirements/SRS.md` with `FR-NNN`, `NFR-NNN`, traceability `PRD→FR→NFR`, metrics |
+| **RUP** | **Detailed UCs** + hybrid SRS (UC-driven) (`rup.md` ES) | `templates/use-case-detailed.md` | `docs/02-requirements/use-cases/UC-001-*.md` + summarized SRS |
+| **Agile** | **INVEST US + Gherkin AC** (`user-stories.md: As/Want/So + INVEST` ES, `criterios-aceptacion.md: Given/When/Then` ES) | `templates/us-gherkin.md` | `docs/02-requirements/backlog/US-001-*.md` with executable AC |
 
-Híbrido permitido: RNF/restricciones en `SRS` + RF en `US/CU`. Cada RF/US referencia término glosario y `PRD`.
+Hybrid allowed: NFR/constraints in `SRS` + FR in `US/UC`. Each FR/US references glossary term and `PRD`.
 
-**Reglas:**
+**Rules:**
 
-- Cada RF/CU/US lleva `ID` único, prioridad, origen, dependencia, criterio de aceptación.
-- RNF medibles con umbral.
-- Trazabilidad `PRD → RF/CU/US → Clase conceptual` en `RTM.csv`.
+- Each FR/UC/US has unique `ID`, priority, source, dependency, acceptance criterion.
+- NFRs measurable with threshold.
+- Traceability `PRD → FR/UC/US → Conceptual Class` in `RTM.csv`.
 
-### 4. Validación
+### 4. Validation
 
-Aplica checklist Fagan (`validacion-requerimientos.md`):
+Apply Fagan checklist (`validacion-requerimientos.md` ES):
 
-- [ ] Completo, Consistente, No ambiguo, Verificable, Trazable, Correcto, Boundary definido
+- [ ] Complete, Consistent, Unambiguous, Verifiable, Traceable, Correct, Boundary defined
 
-Técnicas: inspección, walkthrough, review stakeholder, prototipo. Formaliza **sign-off** (Waterfall/RUP) o **DoD por US** (Ágil).
+Techniques: inspection, walkthrough, stakeholder review, prototype. Formalize **sign-off** (Waterfall/RUP) or **DoD per US** (Agile).
 
-**Salida:** `docs/02-requirements/validacion.md` + firmas / actas.
+**Output:** `docs/02-requirements/validation.md` + signatures / minutes.
 
-### 5. Gestión (transversal)
+### 5. Management (cross-cutting)
 
-Establece **baseline versionada** + **RTM** (`gestion-requerimientos.md`):
+Establish **versioned baseline** + **RTM** (`gestion-requerimientos.md` ES):
 
-- `docs/02-requirements/RTM.csv` — matriz trazabilidad.
-- `docs/02-requirements/CHANGELOG-RE.md` — CCB: Request → impacto → aprobar/rechazar → nueva baseline.
-- `CONTEXT.md` vivo — glosario versionado por iteración.
+- `docs/02-requirements/RTM.csv` — traceability matrix.
+- `docs/02-requirements/CHANGELOG-RE.md` — CCB: Request → impact → approve/reject → new baseline.
+- `CONTEXT.md` living — glossary versioned per iteration.
 
-### 6. Output files
+### 6. Output Files
 
 ```
 docs/02-requirements/
-├── SRS.md                  (Waterfall/RUP) o
-├── backlog/US-001-*.md     (Ágil)
-├── casos-de-uso/CU-001-*.md (RUP)
-├── glosario.md             (refinado → CONTEXT.md)
-├── modelo-conceptual.puml  + .svg
-├── contexto.puml
+├── SRS.md                  (Waterfall/RUP) or
+├── backlog/US-001-*.md     (Agile)
+├── use-cases/UC-001-*.md   (RUP)
+├── glossary.md             (refined → CONTEXT.md)
+├── conceptual-model.puml   + .svg
+├── context.puml
 ├── RTM.csv
-└── validacion.md
+└── validation.md
 ```
 
-### 7. Red flags
+### 7. Red Flags
 
-- SRS sin RNF medibles.
-- US sin AC Gherkin.
-- Glosario con sinónimos contradictorios.
-- Matriz trazabilidad vacía.
-- Avanzar a `ooad-architect` sin validación firmada (Waterfall/RUP).
+- SRS without measurable NFRs.
+- US without Gherkin AC.
+- Glossary with contradictory synonyms.
+- Empty traceability matrix.
+- Advancing to `ooad-architect` without signed validation (Waterfall/RUP).
 
-### 8. Verifica
+### 8. Verify
 
-- [ ] RF/RNF clasificados y con ID
-- [ ] SRS o backlog completo según perfil
-- [ ] CU/US con AC Gherkin
-- [ ] Modelo conceptual + contexto en PlantUML
-- [ ] RTM trazable PRD→RE
-- [ ] Validación aprobada
-- [ ] Humano aprobó artefactos antes de diseñar
+- [ ] FR/NFR classified and with ID
+- [ ] SRS or backlog complete per profile
+- [ ] UC/US with Gherkin AC
+- [ ] Conceptual model + context in PlantUML
+- [ ] RTM traceable PRD→RE
+- [ ] Validation approved
+- [ ] Human approved artifacts before design

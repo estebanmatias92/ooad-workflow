@@ -1,99 +1,99 @@
 ---
 name: ooad-architect
-description: Diseño OOAD — C4/UML + GoF + Clean 4 capas + ADR-MADR. Transforma SRS/CU/US en arquitectura. Lee docs/agents/workflow.md y docs/agents/architecture.md.
+description: OOAD Design — C4/UML + GoF + Clean 4 Layers + ADR-MADR. Transforms SRS/UC/US into architecture. Reads docs/agents/workflow.md and docs/agents/architecture.md.
 ---
 
-# OOAD Architect — Design / Arquitectura
+# OOAD Architect — Design / Architecture
 
-## Objetivo
+## Objective
 
-Transformar requisitos validados en **arquitectura**: estructura C4/UML, modelo de datos, selección de patrones GoF y disposición Clean 4 capas, con decisiones trazables en **ADR-MADR**. Ver `architecture-decision-record.md`, `software-development-life-cycle.md: Design`, `artefactos-por-fase-y-metodologia.md:93 Design`.
+Transform validated requirements into **architecture**: C4/UML structure, data model, GoF pattern selection and Clean 4 Layers layout, with traceable decisions in **ADR-MADR**. See `architecture-decision-record.md` (ES), `software-development-life-cycle.md: Design` (ES), `artefactos-por-fase-y-metodologia.md:93 Design` (ES).
 
-## Precondición
+## Preconditions
 
-- `docs/02-requirements/` validado y con baseline (SRS o backlog).
-- `docs/agents/workflow.md` + `docs/agents/architecture.md` (capas elegidas).
-- `CONTEXT.md` + `modelo-conceptual.puml` existen.
+- `docs/02-requirements/` validated and baselined (SRS or backlog).
+- `docs/agents/workflow.md` + `docs/agents/architecture.md` (chosen layers).
+- `CONTEXT.md` + `conceptual-model.puml` exist.
 
-## Proceso
+## Process
 
-### 1. Revisa RE
+### 1. Review RE
 
-Lee `docs/02-requirements/SRS.md` o `backlog/US-*.md + CU-*.md` + `RTM.csv` + `modelo-conceptual.puml` + `contexto.puml`.
+Read `docs/02-requirements/SRS.md` or `backlog/US-*.md + UC-*.md` + `RTM.csv` + `conceptual-model.puml` + `context.puml`.
 
-### 2. Propone arquitectura
+### 2. Propose Architecture
 
-Basado en requisitos, propone:
+Based on requirements, propose:
 
-- **Estilo arquitectónico**: Clean 4 capas (default) `Entities → Use Cases → Interface Adapters → Frameworks & Drivers`; alternativa MVC o Hexagonal según `docs/agents/architecture.md`.
-- **C4**: Nivel 1 Context, Nivel 2 Container, Nivel 3 Component (según tamaño).
-- **UML**: `diagrama-clases.puml` (clases, relaciones, métodos), `diagrama-secuencia.puml` por CU crítico, `diagrama-estados.puml` si aplica.
-- **Modelo de datos**: ER → esquema relacional + normalización (`Base de Datos` paradigma).
-- **Patrones GoF**: matriz selección — `Creacionales: Factory, Singleton; Estructurales: Adapter, Decorator, Composite, Proxy; Comportamiento: Observer, Strategy, State, Command` (`systems-analysis-ooad-paradigm.md:38`). Justifica cada uno (qué problema resuelve, alternativa descartada).
-- **Módulos / paquetes**: qué se crea y responsabilidad.
-- **Regla dependencia Clean**: dependencias apuntan hacia adentro (`Frameworks → Adapters → UseCases → Entities`). Marca violaciones.
+- **Architectural style**: Clean 4 Layers (default) `Entities → Use Cases → Interface Adapters → Frameworks & Drivers`; alternative MVC or Hexagonal per `docs/agents/architecture.md`.
+- **C4**: Level 1 Context, Level 2 Container, Level 3 Component (per size).
+- **UML**: `class-diagram.puml` (classes, relations, methods), `sequence-diagram.puml` per critical UC, `state-diagram.puml` if applicable.
+- **Data model**: ER → relational schema + normalization (`Base de Datos` paradigm ES).
+- **GoF patterns**: selection matrix — `Creational: Factory, Singleton; Structural: Adapter, Decorator, Composite, Proxy; Behavioral: Observer, Strategy, State, Command` (`systems-analysis-ooad-paradigm.md:38` ES). Justify each (what problem it solves, discarded alternative).
+- **Modules / packages**: what to create and responsibility.
+- **Clean dependency rule**: dependencies point inward (`Frameworks → Adapters → UseCases → Entities`). Flag violations.
 
-**No avances sin aprobación explícita del humano.** Presenta y pregunta: ¿arquitectura OK? ¿patrón preferido? ¿algo a agregar/quitar?
+**Do not proceed without explicit human approval.** Present and ask: architecture OK? preferred pattern? anything to add/remove?
 
-### 3. Produce artefactos (tras aprobación)
+### 3. Produce Artifacts (after approval)
 
 ```
 docs/03-architecture/
 ├── c4-context.puml / c4-container.puml
-├── diagrama-clases.puml       (→ .svg pre-render)
-├── diagrama-secuencia-CU-001.puml
-├── modelo-datos-er.puml
+├── class-diagram.puml       (→ .svg pre-rendered)
+├── sequence-diagram-UC-001.puml
+├── data-model-er.puml
 ├── adrs/
-│   ├── 0001-arquitectura-clean-4-capas.md  (MADR)
-│   ├── 0002-patron-strategy-para-reglas.md
+│   ├── 0001-clean-4-layer-architecture.md  (MADR)
+│   ├── 0002-strategy-pattern-for-rules.md
 │   └── 0003-orm-vs-sql.md
-└── README.md (explica capas y responsabilidades)
+└── README.md (explains layers and responsibilities)
 ```
 
-Formato ADR MADR (`architecture-decision-record.md`):
+MADR ADR format (`architecture-decision-record.md` ES):
 
 ```
-# ADR-000N: Título
-- Estado: Proposed | Accepted | Deprecated
-- Contexto: ...
-- Decisión: ...
-- Consecuencias: ...
-- Alternativas consideradas: ...
+# ADR-000N: Title
+- Status: Proposed | Accepted | Deprecated
+- Context: ...
+- Decision: ...
+- Consequences: ...
+- Alternatives considered: ...
 ```
 
-Plantillas: `templates/adr-madr.md`, `templates/c4.puml`, `templates/class-diagram.puml`.
+Templates: `templates/adr-madr.md`, `templates/c4.puml`, `templates/class-diagram.puml`.
 
-**Pre-renderiza:**
+**Pre-render:**
 
 ```bash
 plantuml -tsvg docs/03-architecture/*.puml
 ```
 
-### 4. Actualiza README scaffold
+### 4. Update Scaffold README
 
-Crea/actualiza `docs/03-architecture/README.md` con sección scaffold + SVGs incrustados:
+Create/update `docs/03-architecture/README.md` with scaffold section + embedded SVGs:
 
 ```markdown
 ![C4 Context](c4-context.svg)
-![Clases](diagrama-clases.svg)
+![Classes](class-diagram.svg)
 ```
 
-### 5. Gates por perfil
+### 5. Gates by Profile
 
-- **RUP**: Elaboration entrega baseline arquitectónico ejecutable (la arquitectura corre, aunque incompleta). ADR de estilo + C4 obligatorios.
-- **Waterfall**: SDD pesado completo, UML detallado, firmado.
-- **Ágil**: ADR por decisión significativa + C4 just-enough, UML solo lo necesario.
+- **RUP**: Elaboration delivers executable architectural baseline (architecture runs, even if incomplete). Style ADR + C4 required.
+- **Waterfall**: Complete heavy SDD, detailed UML, signed.
+- **Agile**: ADR per significant decision + just-enough C4, UML only as needed.
 
-### 6. Reglas
+### 6. Rules
 
-- Cada clase/módulo trazable a `RF/CU/US` (`RTM.csv` actualizado).
-- Cada ADR referencia RNF que lo motiva (ej. `RNF-03 p95<200ms → ADR caching`).
-- No inventes capa fuera de `docs/agents/architecture.md` sin ADR nuevo.
+- Each class/module traceable to `FR/UC/US` (`RTM.csv` updated).
+- Each ADR references motivating NFR (e.g., `NFR-03 p95<200ms → ADR caching`).
+- Do not invent a layer outside `docs/agents/architecture.md` without new ADR.
 
-### 7. Verifica
+### 7. Verify
 
-- [ ] C4/UML en PlantUML y SVGs renderizados
-- [ ] ADR-MADR con contexto/decisión/consecuencias/alternativas
-- [ ] Matriz GoF justificada
-- [ ] Regla dependencia Clean respetada
-- [ ] Humano aprobó arquitectura
+- [ ] C4/UML in PlantUML and rendered SVGs
+- [ ] ADR-MADR with context/decision/consequences/alternatives
+- [ ] Justified GoF matrix
+- [ ] Clean dependency rule respected
+- [ ] Human approved architecture

@@ -1,57 +1,57 @@
 ---
 name: ooad-ship
-description: Entrega OOAD — deployment, runbooks, changelog, pipeline. Cierra el SDLC (Deployment + Maintenance). Lee docs/agents/workflow.md.
+description: OOAD Delivery — deployment, runbooks, changelog, pipeline. Closes the SDLC (Deployment + Maintenance). Reads docs/agents/workflow.md.
 ---
 
 # OOAD Ship — Deployment / Maintenance
 
-## Objetivo
+## Objective
 
-Llevar el incremento verificado a producción con **checklist, runbooks, rollback, changelog y pipeline CI/CD**. Ver `devops-continuous-delivery.md`, `artefactos-por-fase-y-metodologia.md:121 Deployment`, `software-development-life-cycle.md: Deployment→Maintenance`.
+Ship the verified increment to production with **checklist, runbooks, rollback, changelog and CI/CD pipeline**. See `devops-continuous-delivery.md` (ES), `artefactos-por-fase-y-metodologia.md:121 Deployment` (ES), `software-development-life-cycle.md: Deployment→Maintenance` (ES).
 
-## Precondición
+## Preconditions
 
-- `ooad-verify` sin bloqueantes.
-- `CHANGELOG.md` y `docs/05-qa/reporte-qa.md` existen.
+- `ooad-verify` without blockers.
+- `CHANGELOG.md` and `docs/05-qa/qa-report.md` exist.
 
-## Proceso
+## Process
 
-### 1. Prepara entrega
+### 1. Prepare Delivery
 
-- **Release Notes**: desde commits + `RTM.csv` → `RELEASE_NOTES.md` (qué RF/CU entregados).
-- **Checklist Prod**: `docs/06-deploy/checklist-prod.md` — migraciones, env vars, secrets, feature flags.
-- **Runbooks**: `docs/06-deploy/runbooks/<servicio>.md` — cómo operar/depurar.
-- **Rollback plan**: script versionado `scripts/rollback-<version>.sh` + backup.
+- **Release Notes**: from commits + `RTM.csv` → `RELEASE_NOTES.md` (which FR/UC delivered).
+- **Prod Checklist**: `docs/06-deploy/prod-checklist.md` — migrations, env vars, secrets, feature flags.
+- **Runbooks**: `docs/06-deploy/runbooks/<service>.md` — how to operate/debug.
+- **Rollback plan**: versioned script `scripts/rollback-<version>.sh` + backup.
 
 ### 2. Pipeline
 
-Asegura `CI/CD Build→Test→Staging→Prod` (`devops-continuous-delivery.md`):
+Ensure `CI/CD Build→Test→Staging→Prod` (`devops-continuous-delivery.md` ES):
 
 ```yaml
-# .github/workflows/ci.yml o equivalente
-build → test (unit+integration+e2e Gherkin) → staging (smoke) → prod (manual gate en RUP/Waterfall, auto en Ágil)
+# .github/workflows/ci.yml or equivalent
+build → test (unit+integration+e2e Gherkin) → staging (smoke) → prod (manual gate in RUP/Waterfall, auto in Agile)
 ```
 
-IaC si aplica (`Dockerfile`, `infra/*.tf`).
+IaC if applicable (`Dockerfile`, `infra/*.tf`).
 
-### 3. Ejecuta deploy
+### 3. Execute Deploy
 
-- **RUP**: Transition — deploy por incremento, beta con usuarios piloto.
-- **Waterfall**: big-bang tras QA final, ventana planificada.
-- **Ágil**: continuo, por sprint, con feature flags.
+- **RUP**: Transition — deploy per increment, beta with pilot users.
+- **Waterfall**: big-bang after final QA, planned window.
+- **Agile**: continuous, per sprint, with feature flags.
 
 ### 4. Post-deploy
 
 - **CHANGELOG.md** (`docs/agents/workflow.md: Maintenance`) — `feat/fix/breaking`.
-- **Log deuda técnica**: `docs/06-deploy/deuda-tecnica.md`.
-- **ADRs de reversión** si se revierte decisión (`docs/03-architecture/adrs/000N-revert-*.md`).
-- **Monitoreo**: SLI/SLO/SLA, dashboards, post-mortem blameless.
+- **Technical debt log**: `docs/06-deploy/tech-debt.md`.
+- **Reversal ADRs** if decision reverted (`docs/03-architecture/adrs/000N-revert-*.md`).
+- **Monitoring**: SLI/SLO/SLA, dashboards, blameless post-mortem.
 
-### 5. Verifica
+### 5. Verify
 
-- [ ] Checklist prod + rollback probado
-- [ ] Release Notes trazables a RF/CU
-- [ ] Pipeline CI/CD verde en staging
-- [ ] CHANGELOG actualizado
-- [ ] Runbooks + rollback versionados
-- [ ] Monitoreo / alertas configuradas
+- [ ] Prod checklist + rollback tested
+- [ ] Release Notes traceable to FR/UC
+- [ ] CI/CD pipeline green on staging
+- [ ] CHANGELOG updated
+- [ ] Runbooks + rollback versioned
+- [ ] Monitoring / alerts configured

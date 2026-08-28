@@ -1,33 +1,33 @@
-# US-{{ NNN }}: {{ Título }}
+# US-{{ NNN }}: {{ Title }}
 
-> User Story INVEST + Confirmation Gherkin. Ver `user-stories.md`, `criterios-aceptacion.md`.
+> User Story INVEST + Confirmation Gherkin. See `user-stories.md` (ES), `criterios-aceptacion.md` (ES).
 
 - **ID**: US-{{ NNN }}
-- **RF trazado**: RF-{{ ... }} (si híbrido)
-- **Prioridad MoSCoW**: Must | Should | Could | Won't
-- **Estimación**: {{ story points / t-shirt }}
-- **Dependencias**: US-{{ ... }}
+- **Traced FR**: FR-{{ ... }} (if hybrid)
+- **MoSCoW Priority**: Must | Should | Could | Won't
+- **Estimate**: {{ story points / t-shirt }}
+- **Dependencies**: US-{{ ... }}
 
 ## Card
 
-> **Como** {{ rol }}
-> **Quiero** {{ acción }}
-> **Para** {{ beneficio }}
+> **As a** {{ role }}
+> **I want** {{ action }}
+> **So that** {{ benefit }}
 
-## Conversation (notas)
+## Conversation (notes)
 
-{{ contexto, mockup link, decisión }}
+{{ context, mockup link, decision }}
 
-## Confirmation — Criterios de Aceptación (Gherkin)
+## Confirmation — Acceptance Criteria (Gherkin)
 
 ```gherkin
-Feature: US-{{ NNN }} {{ Título }}
+Feature: US-{{ NNN }} {{ Title }}
   Scenario: {{ happy path }}
-    Given {{ contexto }}
-    When {{ acción }}
-    Then {{ resultado }}
+    Given {{ context }}
+    When {{ action }}
+    Then {{ result }}
 
-  Scenario: {{ borde }}
+  Scenario: {{ edge }}
     Given {{ ... }}
     When {{ ... }}
     Then {{ ... }}
@@ -37,23 +37,23 @@ Feature: US-{{ NNN }} {{ Título }}
     When {{ ... }}
     Then {{ ... }}
 
-  Scenario Outline: {{ tabla ejemplos }}
-    Given un valor <entrada>
-    When proceso
-    Then obtengo <salida>
+  Scenario Outline: {{ table examples }}
+    Given a value <input>
+    When processed
+    Then I get <output>
     Examples:
-      | entrada | salida |
-      | a       | b      |
+      | input | output |
+      | a     | b      |
 ```
 
-Reglas: un comportamiento por escenario, datos concretos, sin UI, cubrir feliz/borde/error/nulo.
+Rules: one behavior per scenario, concrete data, no UI, cover happy/edge/error/null.
 
-## DoD de esta US
+## DoD for this US
 
-- [ ] Código en Clean 4 capas + TDD verde
-- [ ] AC Gherkin automatizados (`behave/pytest-bdd/cucumber`)
-- [ ] Documentada en RTM
+- [ ] Code in Clean 4 layers + green TDD
+- [ ] Automated Gherkin AC (`behave/pytest-bdd/cucumber`)
+- [ ] Documented in RTM
 
-## Notas
+## Notes
 
 - [ ] {{ open }}

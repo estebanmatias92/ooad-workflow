@@ -1,39 +1,39 @@
 # Definition of Done — OOAD
 
-Checklist transversal que cada incremento debe pasar, cualquiera sea el perfil.
+Cross-cutting checklist that every increment must pass, regardless of profile.
 
-## Por artefacto RE
+## Per RE Artifact
 
-- [ ] RF/RNF con ID, prioridad, origen, dependencia, criterio verificable
-- [ ] RNF con métrica y target (`p95<200ms`, `99.9%`)
-- [ ] Glosario sin contradicciones, referenciado por cada RF
-- [ ] RTM trazable `PRD → RF/CU/US → Clase → ADR → Test`
-- [ ] Validación Fagan pasada (completo/consistente/no-ambiguo/verificable/trazable)
+- [ ] FR/NFR with ID, priority, source, dependency, verifiable criterion
+- [ ] NFR with metric and target (`p95<200ms`, `99.9%`)
+- [ ] Glossary consistent, referenced by every FR
+- [ ] RTM traceable `PRD → FR/UC/US → Class → ADR → Test`
+- [ ] Fagan inspection passed (complete/consistent/unambiguous/verifiable/traceable)
 
-## Por arquitectura
+## Per Architecture
 
-- [ ] C4/UML en PlantUML + SVGs renderizados
-- [ ] ADR-MADR con alternativas y consecuencias
-- [ ] Regla dependencia Clean respetada (import hacia adentro)
-- [ ] GoF justificado (no patrón por moda)
+- [ ] C4/UML in PlantUML + rendered SVGs
+- [ ] ADR-MADR with alternatives and consequences
+- [ ] Clean dependency rule respected (imports point inward)
+- [ ] GoF justified (no pattern for fashion)
 
-## Por código
+## Per Code
 
-- [ ] TDD RED→GREEN, tests por comportamiento no por privados
-- [ ] Pirámide 80/15/5, cobertura ≥80%
-- [ ] Build + lint verde
-- [ ] Traza `// RF-001 / CU-001` en cada módulo
-- [ ] OpenAPI si hay API
+- [ ] TDD RED→GREEN, tests by behavior not privates
+- [ ] Pyramid 80/15/5, coverage ≥80%
+- [ ] Build + lint green
+- [ ] Trace `// FR-001 / UC-001` in each module
+- [ ] OpenAPI if API exists
 
-## Por QA
+## Per QA
 
-- [ ] Cada RF/CU/US con caso Gherkin feliz+borde+error+nulo
-- [ ] Suite automatizada verde
-- [ ] Sin bug bloqueante
+- [ ] Each FR/UC/US with Gherkin case happy+edge+error+null
+- [ ] Automated suite green
+- [ ] No blocking bug
 
-## Por entrega
+## Per Delivery
 
-- [ ] Checklist prod + rollback probado
-- [ ] Release Notes trazables a RF/CU
-- [ ] CHANGELOG actualizado
-- [ ] Runbooks versionados
+- [ ] Prod checklist + rollback tested
+- [ ] Release Notes traceable to FR/UC
+- [ ] CHANGELOG updated
+- [ ] Runbooks versioned

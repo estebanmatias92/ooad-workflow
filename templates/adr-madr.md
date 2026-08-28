@@ -1,35 +1,35 @@
-# ADR-{{ NNN }}: {{ Título }}
+# ADR-{{ NNN }}: {{ Title }}
 
-- **Estado**: Proposed <!-- Proposed | Accepted | Deprecated | Superseded by ADR-xxx -->
-- **Fecha**: {{ YYYY-MM-DD }}
-- **Decisores**: {{ nombres }}
-- **Consultados**: {{ ... }}
+- **Status**: Proposed <!-- Proposed | Accepted | Deprecated | Superseded by ADR-xxx -->
+- **Date**: {{ YYYY-MM-DD }}
+- **Deciders**: {{ names }}
+- **Consulted**: {{ ... }}
 
-## Contexto
+## Context
 
-{{ qué problema, qué RNF/RF lo motiva, qué fuerzas en tensión }}
+{{ what problem, which NFR/FR motivates it, what forces are in tension }}
 
-## Decisión
+## Decision
 
-{{ qué se decide, en una frase }}
+{{ what is decided, in one sentence }}
 
-## Consecuencias
+## Consequences
 
-- **Positivas**: {{ ... }}
-- **Negativas / Costos**: {{ ... }}
-- **Riesgos**: {{ ... }}
+- **Positive**: {{ ... }}
+- **Negative / Costs**: {{ ... }}
+- **Risks**: {{ ... }}
 
-## Alternativas consideradas
+## Alternatives Considered
 
-| Alternativa | Pros | Contras | Por qué no |
-|-------------|------|---------|------------|
-| {{ ej: MVC simple }} | {{ simple }} | {{ acopla framework }} | {{ viola Clean }} |
+| Alternative | Pros | Cons | Why not |
+|-------------|------|------|---------|
+| {{ e.g.: simple MVC }} | {{ simple }} | {{ couples to framework }} | {{ violates Clean }} |
 
-## Cumplimiento
+## Compliance
 
-{{ cómo se verifica: test, métrica, review }}
+{{ how to verify: test, metric, review }}
 
-## Referencias
+## References
 
-- {{ RF-xxx, RNF-xxx, CU-xxx }}
-- {{ link a issue/PR }}
+- {{ FR-xxx, NFR-xxx, UC-xxx }}
+- {{ link to issue/PR }}

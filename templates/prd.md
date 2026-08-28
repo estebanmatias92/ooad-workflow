@@ -1,46 +1,46 @@
-# PRD: {{ Nombre Producto }}
+# PRD: {{ Product Name }}
 
-## 1. Visión / Elevator Pitch
+## 1. Vision / Elevator Pitch
 
-{{ qué + para quién + por qué ahora (Inception RUP) }}
+{{ what + for whom + why now (RUP Inception) }}
 
-## 2. Usuarios / Personas
+## 2. Users / Personas
 
-| Persona | Objetivo | Dolor actual |
-|---------|----------|--------------|
-| {{ nombre }} | {{ qué quiere lograr }} | {{ fricción }} |
+| Persona | Goal | Current Pain |
+|---------|------|--------------|
+| {{ name }} | {{ what they want to achieve }} | {{ friction }} |
 
-## 3. KPIs / Success Criteria (medibles)
+## 3. KPIs / Success Criteria (measurable)
 
-| KPI | Target | Cómo se mide |
+| KPI | Target | How Measured |
 |-----|--------|--------------|
-| {{ ej: activación }} | {{ ej: 70% en 7d }} | {{ evento }} |
+| {{ e.g.: activation }} | {{ e.g.: 70% in 7d }} | {{ event }} |
 
-## 4. Features (priorizadas MoSCoW)
+## 4. Features (prioritized MoSCoW)
 
-| ID | Feature | Prioridad | Rationale |
-|----|---------|-----------|-----------|
-| F-001 | {{ título }} | Must | {{ por qué }} |
+| ID | Feature | Priority | Rationale |
+|----|---------|----------|-----------|
+| F-001 | {{ title }} | Must | {{ why }} |
 
-> Waterfall: narrativa completa con flujos. Ágil: lista priorizada con US por feature. RUP: casos de negocio + riesgos.
+> Waterfall: complete narrative with flows. Agile: prioritized list with US per feature. RUP: business cases + risks.
 
 ## 5. Out of Scope
 
-{{ qué explícitamente NO se hace }}
+{{ what is explicitly NOT done }}
 
-## 6. Supuestos / Riesgos
+## 6. Assumptions / Risks
 
-| Supuesto | Impacto si falla | Mitigación |
-|----------|------------------|------------|
-| {{ ej: SES disponible }} | Alto | {{ plan B }} |
+| Assumption | Impact if False | Mitigation |
+|------------|-----------------|------------|
+| {{ e.g.: SES available }} | High | {{ plan B }} |
 
 ## 7. Open Questions
 
-- [ ] {{ pregunta → owner → fecha }}
+- [ ] {{ question → owner → date }}
 
-## Aprobación
+## Approval
 
-| Rol | Fecha | Firma |
-|-----|-------|-------|
+| Role | Date | Signature |
+|------|------|-----------|
 | PO/Stakeholder | | |
 | Tech Lead | | |

@@ -1,30 +1,30 @@
-# Architecture — Clean 4 capas (default)
+# Architecture — Clean 4 Layers (default)
 
-## Capas
+## Layers
 
 ```
 Frameworks & Drivers  →  Interface Adapters  →  Use Cases  →  Entities
-(externo, web/db)        (controllers,      (application    (enterprise
+(external, web/db)        (controllers,      (application    (enterprise
                           presenters,        business       business
                           gateways, repo)    rules)         rules)
 ```
 
-Regla de dependencia: flechas apuntan hacia adentro. `Entities` no conoce nada externo. `Use Cases` no importa `Frameworks`.
+Dependency rule: arrows point inward. `Entities` know nothing external. `Use Cases` do not import `Frameworks`.
 
-## RUP/Waterfall vs Ágil
+## RUP/Waterfall vs Agile
 
-- RUP/Waterfall: documenta en `docs/03-architecture/` con C4 + UML detallado + ADR por decisión.
-- Ágil: ADR + C4 just-enough; UML solo lo crítico.
+- RUP/Waterfall: document in `docs/03-architecture/` with C4 + detailed UML + ADR per decision.
+- Agile: ADR + just-enough C4; UML only for critical parts.
 
-## Patrones GoF asociados
+## Associated GoF Patterns
 
-| Capa | Patrón típico | Uso |
-|------|---------------|-----|
-| Use Cases | Strategy, Command, State | reglas intercambiables |
-| Adapters | Adapter, Proxy, Decorator | desacoplar framework |
-| Frameworks | Factory, Singleton (con cautela) | creación configurada |
+| Layer | Typical Pattern | Use |
+|-------|-----------------|-----|
+| Use Cases | Strategy, Command, State | interchangeable rules |
+| Adapters | Adapter, Proxy, Decorator | decouple framework |
+| Frameworks | Factory, Singleton (with caution) | configured creation |
 
-## Cómo verificar
+## How to Verify
 
-- Import graph no viola dirección (lint `dependency-cruiser` o review).
-- Cada UseCase mapeado a CU/US.
+- Import graph does not violate direction (lint `dependency-cruiser` or review).
+- Each UseCase mapped to UC/US.

@@ -1,3 +1,3 @@
-PRD_F,RF_ID,CU_US_ID,Clase_Conceptual,ADR,Test_Feature,Estado
-F-001,RF-001,CU-001,Usuario,ADR-0001,features/CU-001.feature,Especificado
-F-001,RNF-001,,*,ADR-0002,perf/RNF-001.feature,Especificado
+PRD_F,FR_ID,UC_US_ID,Conceptual_Class,ADR,Test_Feature,Status
+F-001,FR-001,UC-001,User,ADR-0001,features/UC-001.feature,Specified
+F-001,NFR-001,,*,ADR-0002,perf/NFR-001.feature,Specified

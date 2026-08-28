@@ -1,89 +1,89 @@
 ---
 name: ooad-verify
-description: Verificación OOAD — plan de pruebas, Gherkin, reportes QA. Deriva casos de prueba desde SRS/CU/US + arquitectura. Complementa TDD de ooad-build.
+description: OOAD Verification — test plan, Gherkin, QA reports. Derives test cases from SRS/UC/US + architecture. Complements TDD from ooad-build.
 ---
 
 # OOAD Verify — Testing / QA
 
-## Objetivo
+## Objective
 
-Derivar y ejecutar el **plan de pruebas** desde los artefactos RE (SRS/CU/US + AC Gherkin), no desde el código. Verifica caja negra/blanca, integración y UAT. Ver `artefactos-por-fase-y-metodologia.md:112 Testing`, `validacion-requerimientos.md`, `criterios-aceptacion.md`.
+Derive and execute the **test plan** from RE artifacts (SRS/UC/US + Gherkin AC), not from code. Verify black-box/white-box, integration and UAT. See `artefactos-por-fase-y-metodologia.md:112 Testing` (ES), `validacion-requerimientos.md` (ES), `criterios-aceptacion.md` (ES).
 
-## Precondición
+## Preconditions
 
-- `docs/02-requirements/` + `docs/03-architecture/` existen.
-- `src/` build verde (al menos un slice de `ooad-build`).
+- `docs/02-requirements/` + `docs/03-architecture/` exist.
+- `src/` build green (at least one slice from `ooad-build`).
 
-## Proceso
+## Process
 
-### 1. Deriva casos de prueba
+### 1. Derive Test Cases
 
-Desde cada `RF/CU/US+AC`:
+From each `FR/UC/US+AC`:
 
-| Fuente RE | Caso de prueba | Técnica |
-|-----------|----------------|---------|
-| RF funcional + flujo CU | `cases/CU-001-happy.feature` | Partición equivalencia, valores borde |
-| RNF rendimiento | `perf/RNF-003-p95.feature` | Prueba carga, p95<200ms |
-| Regla negocio | `cases/RN-001-regla.feature` | Tabla decisión |
-| AC Gherkin de US | ya es caso ejecutable | `Given/When/Then` directo |
+| RE Source | Test Case | Technique |
+|-----------|-----------|-----------|
+| Functional FR + UC flow | `cases/UC-001-happy.feature` | Equivalence partitioning, boundary values |
+| NFR performance | `perf/NFR-003-p95.feature` | Load test, p95<200ms |
+| Business rule | `cases/BR-001-rule.feature` | Decision table |
+| Gherkin AC from US | already executable case | `Given/When/Then` direct |
 
-Plantilla Gherkin (`criterios-aceptacion.md`):
+Gherkin template (`criterios-aceptacion.md` ES):
 
 ```gherkin
-Feature: CU-001 Crear cuenta
-  Scenario: Alta exitosa con email válido
-    Given un usuario no registrado con email "a@b.com"
-    When solicita crear cuenta con datos válidos
-    Then la cuenta queda en estado "pendiente verificacion"
-    And se registra RF-001 en RTM como cubierto
+Feature: UC-001 Create account
+  Scenario: Successful registration with valid email
+    Given an unregistered user with email "a@b.com"
+    When they request to create account with valid data
+    Then the account is in state "pending verification"
+    And FR-001 is recorded in RTM as covered
 
-  Scenario: Email duplicado
-    Given un usuario existente con email "a@b.com"
-    When solicita crear cuenta con el mismo email
-    Then el sistema rechaza con error "email ya existe"
+  Scenario: Duplicate email
+    Given an existing user with email "a@b.com"
+    When they request to create account with same email
+    Then the system rejects with error "email already exists"
 ```
 
-**Reglas Gherkin:** un comportamiento por escenario, datos concretos, sin UI, cubrir feliz/borde/error/nulo.
+**Gherkin rules:** one behavior per scenario, concrete data, no UI, cover happy/edge/error/null.
 
-### 2. Escribe estructura
+### 2. Write Structure
 
 ```
 tests/
-├── unit/           # entities/usecases (TDD, pirámide 80%)
+├── unit/           # entities/usecases (TDD, pyramid 80%)
 ├── integration/    # adapters + db (15%)
-├── e2e/            # flujo CU completo (5%)
+├── e2e/            # complete UC flow (5%)
 └── cases/
-    ├── CU-001-happy.feature
-    └── RNF-003.feature
+    ├── UC-001-happy.feature
+    └── NFR-003.feature
 
 docs/05-qa/
-├── plan-pruebas.md      (estrategia, niveles, criterios entrada/salida)
-├── casos-prueba.md      (matriz RF→caso→resultado)
-├── reporte-qa.md
-└── reporte-bugs.md      (issue tracker)
+├── test-plan.md         (strategy, levels, entry/exit criteria)
+├── test-cases.md        (FR→case→result matrix)
+├── qa-report.md
+└── bug-report.md        (issue tracker)
 ```
 
-### 3. Ejecuta
+### 3. Execute
 
 ```bash
 pytest tests/unit --cov
 pytest tests/integration
-behave tests/cases/        # o cucumber / pytest-bdd
+behave tests/cases/        # or cucumber / pytest-bdd
 ```
 
-Valida: caja blanca (cobertura, ramas), caja negra (partición), UAT con stakeholder.
+Validate: white-box (coverage, branches), black-box (partitioning), UAT with stakeholder.
 
-### 4. Gates por perfil
+### 4. Gates by Profile
 
-- **Waterfall**: Plan de pruebas completo al inicio, formal, evidencias documentales.
-- **RUP**: Plan por iteración, automatizado incremental.
-- **Ágil**: Plan emergente por sprint, todo automatizado en CI/CD, evidencias en pipeline.
+- **Waterfall**: Complete test plan upfront, formal, documentary evidence.
+- **RUP**: Plan per iteration, incremental automation.
+- **Agile**: Emergent plan per sprint, all automated in CI/CD, evidence in pipeline.
 
-### 5. Verifica
+### 5. Verify
 
-- [ ] Cada RF/CU/US tiene al menos 1 caso Gherkin
-- [ ] Pirámide respetada (80/15/5)
-- [ ] Casos cubren feliz + borde + error + nulo
-- [ ] Suite automatizada verde
-- [ ] Reporte QA sin bloqueantes
-- [ ] Trazabilidad `RF→caso` en RTM
+- [ ] Each FR/UC/US has at least 1 Gherkin case
+- [ ] Pyramid respected (80/15/5)
+- [ ] Cases cover happy + edge + error + null
+- [ ] Automated suite green
+- [ ] QA report without blockers
+- [ ] Traceability `FR→case` in RTM

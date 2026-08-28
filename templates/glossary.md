@@ -1,20 +1,20 @@
-# Glosario de Dominio — Ubiquitous Language
+# Domain Glossary — Ubiquitous Language
 
-> Living dictionary. Ver `glosario-dominio.md`. Cada entrada referencia origen y regla asociada.
+> Living dictionary. See `glosario-dominio.md` (ES). Each entry references source and associated rule.
 
-| Término | Definición | Sinónimos a evitar | Relacionado | Regla / RNF | Fuente (PRD/RF/CU) |
-|---------|------------|--------------------|-------------|-------------|--------------------|
-| {{ término }} | {{ definición precisa, sin ambigüedad }} | {{ alias descartado }} | {{ entidad asociada }} | {{ RN-xxx / RNF-xxx }} | {{ PRD F-001 }} |
+| Term | Definition | Synonyms to Avoid | Related | Rule / NFR | Source (PRD/FR/UC) |
+|------|------------|-------------------|---------|------------|---------------------|
+| {{ term }} | {{ precise, unambiguous definition }} | {{ discarded alias }} | {{ associated entity }} | {{ BR-xxx / NFR-xxx }} | {{ PRD F-001 }} |
 
-## Términos descartados
+## Discarded Terms
 
-| Término evitado | Usar en su lugar | Razón |
-|-----------------|------------------|-------|
-| {{ ej: cuenta }} | {{ Usuario }} | {{ colisión con Cuenta bancaria }} |
+| Avoided Term | Use Instead | Reason |
+|--------------|-------------|--------|
+| {{ e.g.: account }} | {{ User }} | {{ collision with Bank Account }} |
 
-## Notas de evolución
+## Evolution Notes
 
-- Waterfall: congelado tras baseline.
-- RUP/Ágil: PR por iteración/sprint, validado en `ooad-requirements` análisis.
+- Waterfall: frozen after baseline.
+- RUP/Agile: PR per iteration/sprint, validated in `ooad-requirements` analysis.
 
-> Consumido por todas las skills como vocabulario canónico. Si un término no existe aquí, es señal de crear entrada o reconsiderar lenguaje.
+> Consumed by all skills as canonical vocabulary. If a term does not exist here, it signals to create an entry or reconsider language.
