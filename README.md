@@ -12,17 +12,19 @@ Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Anal
 
 The same 7-phase SDLC base (`Discovery → RE → Design → Implementation → Testing → Deployment → Maintenance`) is scheduled differently per profile (`artefactos-por-fase-y-metodologia.md:72-149` — *artifacts-by-phase-and-methodology*, ES).
 
-## Skills (manual activation, suggested order)
+## Skills (all `disable-model-invocation: true`, human calls `/name`)
 
-1. `/setup-ooad` — configure profile + tracker + architecture + domain docs (once per repo)
-2. `/ooad-discover` — PRD + Vision + personas + draft glossary
-3. `/ooad-requirements` — SRS **or** US+UC+Gherkin + conceptual model + RTM + Fagan validation
-4. `/ooad-architect` — C4/UML + data model + GoF + Clean 4 Layers + ADR-MADR
-5. `/ooad-build` — Clean code (entities/usecases/adapters/frameworks) + TDD + OpenAPI
-6. `/ooad-verify` — test plan + executable Gherkin (pyramid 80/15/5)
-7. `/ooad-ship` — prod checklist + runbooks + rollback + changelog + pipeline
+Router: `/ask-ooad` — “which skill fits?” (one trigger per branch). Then:
 
-> Suggested order, not enforced: brownfield can start at `ooad-architect` with gap → US.
+1. `/setup-ooad` — RUP/Waterfall/Agile + Clean Architecture — bootstrap repo (once)
+2. `/ooad-discover` — RUP Inception + Vision + MoSCoW — PRD + draft glossary
+3. `/ooad-requirements` — IEEE 29148 + UC/INVEST/Gherkin + Fagan + RTM
+4. `/ooad-architect` — C4 + UML + GoF + Clean 4 Layers + ADR-MADR
+5. `/ooad-build` — Clean 4 Layers + TDD (Beck) + OpenAPI — slice by UC/US
+6. `/ooad-verify` — BDD/Gherkin + Test Pyramid 80/15/5 — RTM-traced
+7. `/ooad-ship` — Continuous Delivery + SRE — checklist + rollback + changelog
+
+> Suggested order, not enforced: brownfield can start at `ooad-architect` with gap → US. Not sure? `/ask-ooad`.
 
 ## Installation
 
@@ -62,13 +64,14 @@ ooad-workflow/.opencode/skills/  # if you prefer not to use global
  /ooad-ship          # release
 ```
 
-Each skill reads `docs/agents/workflow.md` to decide template and gate.
+Each skill reads `docs/agents/workflow.md` for profile gating (`templates/workflow.md`). Shared vocabulary in `references/ooad-vocabulary.md` — no synonym drift.
 
 ## Structure
 
 ```
 ooad-workflow/
 ├── skills/
+│   ├── ask-ooad/ (router)
 │   ├── setup-ooad/
 │   ├── ooad-discover/
 │   ├── ooad-requirements/
@@ -83,7 +86,8 @@ ooad-workflow/
 │   └── workflow.md, domain.md, architecture.md, issue-tracker-*.md
 └── references/
     ├── artifacts-matrix.md
-    └── definition-of-done.md
+    ├── definition-of-done.md
+    └── ooad-vocabulary.md  # shared leading words (single source)
 ```
 
 ## Comparison
@@ -102,3 +106,4 @@ ooad-workflow/
 - `artefactos-por-fase-y-metodologia.md` (ES)
 - `requirements-engineering.md` + 5 RE sub-phases (ES)
 - `architecture-decision-record.md` (MADR) (ES)
+- `references/ooad-vocabulary.md` — single source for leading words (writing-for-agents)

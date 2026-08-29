@@ -1,57 +1,62 @@
 ---
 name: ooad-ship
-description: OOAD Delivery — deployment, runbooks, changelog, pipeline. Closes the SDLC (Deployment + Maintenance). Reads docs/agents/workflow.md.
+description: Continuous Delivery (Humble/Farley) + SRE (Google) — ship via CI/CD pipeline, prod checklist, rollback & changelog. Use after verify has no blockers.
+disable-model-invocation: true
 ---
 
 # OOAD Ship — Deployment / Maintenance
 
-## Objective
-
-Ship the verified increment to production with **checklist, runbooks, rollback, changelog and CI/CD pipeline**. See `devops-continuous-delivery.md` (ES), `artefactos-por-fase-y-metodologia.md:121 Deployment` (ES), `software-development-life-cycle.md: Deployment→Maintenance` (ES).
+Ships verified increment to production with **checklist, runbooks, rollback, changelog, pipeline**. Closes SDLC `Deployment → Maintenance`. See `references/ooad-vocabulary.md`.
 
 ## Preconditions
 
-- `ooad-verify` without blockers.
-- `CHANGELOG.md` and `docs/05-qa/qa-report.md` exist.
+- `ooad-verify` without blockers; `qa-report.md` exists.
+- `CHANGELOG.md` exists (or will be created).
 
 ## Process
 
-### 1. Prepare Delivery
+### 1. Prepare delivery
 
-- **Release Notes**: from commits + `RTM.csv` → `RELEASE_NOTES.md` (which FR/UC delivered).
-- **Prod Checklist**: `docs/06-deploy/prod-checklist.md` — migrations, env vars, secrets, feature flags.
-- **Runbooks**: `docs/06-deploy/runbooks/<service>.md` — how to operate/debug.
-- **Rollback plan**: versioned script `scripts/rollback-<version>.sh` + backup.
+- **Release Notes**: commits + `RTM.csv` → `RELEASE_NOTES.md` (which `FR/UC` delivered).
+- **Prod Checklist**: `docs/06-deploy/prod-checklist.md` (`templates/prod-checklist.md`) — migrations, env vars, secrets, feature flags.
+- **Runbooks**: `docs/06-deploy/runbooks/<service>.md` — operate/debug.
+- **Rollback**: versioned `scripts/rollback-<version>.sh` + backup, tested on staging (Humble `Rollback` pattern).
 
-### 2. Pipeline
+**Done when:** `RELEASE_NOTES.md`, `prod-checklist.md`, runbooks and `rollback-*.sh` exist and rollback works on staging.
 
-Ensure `CI/CD Build→Test→Staging→Prod` (`devops-continuous-delivery.md` ES):
+### 2. Pipeline — Continuous Delivery (Humble/Farley)
+
+Ensure `Build → Test → Staging → Prod` (`CI/CD`):
 
 ```yaml
-# .github/workflows/ci.yml or equivalent
+# .github/workflows/ci.yml
 build → test (unit+integration+e2e Gherkin) → staging (smoke) → prod (manual gate in RUP/Waterfall, auto in Agile)
 ```
 
-IaC if applicable (`Dockerfile`, `infra/*.tf`).
+IaC if needed (`Dockerfile`, `infra/*.tf`). **Done when:** workflow file exists and staging deploy is green.
 
-### 3. Execute Deploy
+### 3. Deploy
 
-- **RUP**: Transition — deploy per increment, beta with pilot users.
-- **Waterfall**: big-bang after final QA, planned window.
-- **Agile**: continuous, per sprint, with feature flags.
+- **RUP (Jacobson)**: Transition — per increment, beta with pilot users.
+- **Waterfall (Royce)**: Big-bang after final QA, planned window.
+- **Agile (Schwaber)**: Continuous per sprint, feature flags (`Blue-Green / Canary — Fowler`).
+
+**Done when:** deployed version matches `RELEASE_NOTES.md`; health checks green.
 
 ### 4. Post-deploy
 
-- **CHANGELOG.md** (`docs/agents/workflow.md: Maintenance`) — `feat/fix/breaking`.
-- **Technical debt log**: `docs/06-deploy/tech-debt.md`.
-- **Reversal ADRs** if decision reverted (`docs/03-architecture/adrs/000N-revert-*.md`).
-- **Monitoring**: SLI/SLO/SLA, dashboards, blameless post-mortem.
+- **CHANGELOG.md** (`Keep a Changelog + SemVer + Conventional Commits`): `feat/fix/breaking`.
+- **Tech debt**: `docs/06-deploy/tech-debt.md`.
+- **Reversal ADR** if needed: `docs/03-architecture/adrs/000N-revert-*.md`.
+- **Monitoring (SRE — Beyer/Jones)**: `SLI/SLO/SLA`, dashboards, blameless post-mortem; `DORA` metrics if tracked.
 
-### 5. Verify
+**Done when:** `CHANGELOG.md` updated, tech debt logged, dashboards show `SLI/SLO`.
 
-- [ ] Prod checklist + rollback tested
-- [ ] Release Notes traceable to FR/UC
-- [ ] CI/CD pipeline green on staging
-- [ ] CHANGELOG updated
-- [ ] Runbooks + rollback versioned
-- [ ] Monitoring / alerts configured
+## Reference
+
+### Verify
+
+- [ ] Prod checklist + rollback tested on staging
+- [ ] `RELEASE_NOTES.md` traced `FR/UC`; `CHANGELOG.md` SemVer
+- [ ] Pipeline green on staging; runbooks + rollback versioned
+- [ ] Monitoring / alerts configured (SLI/SLO)

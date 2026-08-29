@@ -1,104 +1,87 @@
 ---
 name: ooad-requirements
-description: OOAD Requirements Engineering — Elicitation → Analysis/Negotiation → Specification → Validation. Produces IEEE830 SRS or US+Gherkin backlog + refined glossary + RTM. Reads docs/agents/workflow.md.
+description: IEEE 29148 (ex-830) SRS + Use Cases (Cockburn) + INVEST/Gherkin (Wake/North) + Fagan (Fagan) — Elicitation→Validation with RTM. Use after PRD/Vision exists.
+disable-model-invocation: true
 ---
 
-# OOAD Requirements — Requirements Engineering (RE)
+# OOAD Requirements — Requirements Engineering
 
-Covers the 5 sub-phases of `requirements-engineering.md` (ES): `Elicitation → Analysis/Negotiation → Specification → Validation → Management (cross-cutting)`. See `requerimientos-y-tipos.md` (ES), `elicitacion-requerimientos.md` (ES), `analisis-negociacion-requerimientos.md` (ES), `especificacion-requerimientos.md` (ES), `criterios-aceptacion.md` (ES), `validacion-requerimientos.md` (ES), `gestion-requerimientos.md` (ES).
+Covers 5 sub-phases: `Elicitation → Analysis/Negotiation → Specification → Validation → Management`. See `references/ooad-vocabulary.md` (IEEE 29148, UC, INVEST, Gherkin/BDD, Fagan, RTM, MoSCoW/Kano, ISO 25010).
 
 ## Preconditions
 
 - `docs/agents/workflow.md` with profile (RUP/Waterfall/Agile).
-- `docs/01-discovery/PRD.md` exists (or equivalent vision).
+- `docs/01-discovery/PRD.md` exists.
 - `CONTEXT.md` or `docs/01-discovery/glossary-draft.md` exists.
 
 ## Process
 
-### 1. Elicitation (raw frictions)
+### 1. Elicitation — raw frictions
 
-Read `docs/01-discovery/*`. Classify each finding into 5 types (`requerimientos-y-tipos.md` ES):
+Read `docs/01-discovery/*`. Classify into 5 types:
 
-- **Functional (FR)** — what the system does.
-- **Non-Functional (NFR)** — quality attributes ISO25010 (`p95<200ms`, `99.9% uptime`, OWASP).
-- **Constraints** — technological/legal.
-- **Business Rules** — domain origin, non-negotiable.
-- **Domain** — industry compliance.
+- **FR** — what system does. **NFR** — quality (`ISO 25010`, `p95<200ms`). **Constraints** — tech/legal. **Business Rules (BR)** — domain, non-negotiable. **Domain compliance**.
 
 Techniques: interview, JAD, observation, survey, prototype.
 
-**Intermediate output:** `docs/02-requirements/raw-needs.md` listing `BR-001: ...`.
+**Done when:** `docs/02-requirements/raw-needs.md` lists every finding with ID `FR-NNN/NFR-NNN/BR-NNN` and source PRD reference.
 
 ### 2. Analysis / Negotiation
 
-- Prioritize with **MoSCoW** or **Kano** (`analisis-negociacion-requerimientos.md` ES).
-- Resolve conflicts; refine glossary (`CONTEXT.md`).
-- Produce **Conceptual Class Diagram (domain)** + **Context / System Boundary Diagram** (`docs/02-requirements/conceptual-model.puml`).
+- Prioritize with **MoSCoW (Dai Clegg)** or **Kano (Noriaki Kano)**; resolve conflicts; refine `CONTEXT.md`.
+- Produce **Conceptual Class Diagram** + **System Boundary / C4 Context** (`docs/02-requirements/conceptual-model.puml`, `context.puml`).
 
-**DoD analysis:** no open conflicts, glossary validated, boundary agreed.
+**Done when:** no open conflicts; glossary validated; system boundary agreed; model renders via `plantuml -tsvg`.
 
 ### 3. Specification — choose format by profile
 
 | Profile | Required Format | Template | Artifact |
 |---------|-----------------|----------|----------|
-| **Waterfall** | **Heavy contractual IEEE830 SRS** (`especificacion-requerimientos.md: SRS` ES, `waterfall.md` ES) | `templates/srs-830.md` | `docs/02-requirements/SRS.md` with `FR-NNN`, `NFR-NNN`, traceability `PRD→FR→NFR`, metrics |
-| **RUP** | **Detailed UCs** + hybrid SRS (UC-driven) (`rup.md` ES) | `templates/use-case-detailed.md` | `docs/02-requirements/use-cases/UC-001-*.md` + summarized SRS |
-| **Agile** | **INVEST US + Gherkin AC** (`user-stories.md: As/Want/So + INVEST` ES, `criterios-aceptacion.md: Given/When/Then` ES) | `templates/us-gherkin.md` | `docs/02-requirements/backlog/US-001-*.md` with executable AC |
+| **Waterfall (Royce)** | Heavy `SRS IEEE 29148` contractual | `templates/srs-830.md` | `docs/02-requirements/SRS.md` (`FR-NNN`, `NFR-NNN`, `PRD→FR→NFR` traceability, metrics) |
+| **RUP (Jacobson)** | Detailed UCs + hybrid SRS (UC-driven) | `templates/use-case-detailed.md` | `docs/02-requirements/use-cases/UC-001-*.md` + summarized SRS |
+| **Agile (Schwaber / Wake / North)** | `INVEST (Wake)` US + `Gherkin/BDD (North)` AC `Given/When/Then` | `templates/us-gherkin.md` | `docs/02-requirements/backlog/US-001-*.md` with executable AC |
 
-Hybrid allowed: NFR/constraints in `SRS` + FR in `US/UC`. Each FR/US references glossary term and `PRD`.
+Hybrid allowed: NFR/constraints in `SRS` + FR in `US/UC`. Every FR/US references glossary term + `PRD`.
 
-**Rules:**
+Rules: unique `ID`, priority, source, dependency, acceptance criterion per item. NFRs measurable with threshold. Traceability `PRD → FR/UC/US → Conceptual Class` in `RTM.csv`.
 
-- Each FR/UC/US has unique `ID`, priority, source, dependency, acceptance criterion.
-- NFRs measurable with threshold.
-- Traceability `PRD → FR/UC/US → Conceptual Class` in `RTM.csv`.
+**Done when:** all FR/NFR have IDs and measurable criteria; every UC/US has `Given/When/Then` AC; `RTM.csv` covers `PRD → FR/UC/US → Class`.
 
-### 4. Validation
+### 4. Validation — Fagan Inspection (Michael Fagan)
 
-Apply Fagan checklist (`validacion-requerimientos.md` ES):
+Apply checklist: complete, consistent, unambiguous, verifiable, traceable, correct, boundary defined. Techniques: inspection, walkthrough, stakeholder review, prototype. Formalize **sign-off** (Waterfall/RUP) or **DoD per US** (Agile).
 
-- [ ] Complete, Consistent, Unambiguous, Verifiable, Traceable, Correct, Boundary defined
+**Done when:** `docs/02-requirements/validation.md` exists with signatures/minutes and zero open Fagan defects.
 
-Techniques: inspection, walkthrough, stakeholder review, prototype. Formalize **sign-off** (Waterfall/RUP) or **DoD per US** (Agile).
+### 5. Management — baseline + RTM
 
-**Output:** `docs/02-requirements/validation.md` + signatures / minutes.
+Versioned baseline + `RTM.csv` traceability; `CHANGELOG-RE.md` (CCB: Request → impact → approve/reject → new baseline); `CONTEXT.md` living per iteration.
 
-### 5. Management (cross-cutting)
+**Done when:** `RTM.csv` + `CHANGELOG-RE.md` committed; baseline tagged; human approved all artifacts before `ooad-architect`.
 
-Establish **versioned baseline** + **RTM** (`gestion-requerimientos.md` ES):
+## Reference
 
-- `docs/02-requirements/RTM.csv` — traceability matrix.
-- `docs/02-requirements/CHANGELOG-RE.md` — CCB: Request → impact → approve/reject → new baseline.
-- `CONTEXT.md` living — glossary versioned per iteration.
-
-### 6. Output Files
+### Output files
 
 ```
 docs/02-requirements/
-├── SRS.md                  (Waterfall/RUP) or
+├── SRS.md                  (Waterfall/RUP)
 ├── backlog/US-001-*.md     (Agile)
 ├── use-cases/UC-001-*.md   (RUP)
-├── glossary.md             (refined → CONTEXT.md)
-├── conceptual-model.puml   + .svg
+├── glossary.md → CONTEXT.md
+├── conceptual-model.puml + .svg
 ├── context.puml
 ├── RTM.csv
 └── validation.md
 ```
 
-### 7. Red Flags
+### Red flags — do not advance if:
 
-- SRS without measurable NFRs.
-- US without Gherkin AC.
-- Glossary with contradictory synonyms.
-- Empty traceability matrix.
-- Advancing to `ooad-architect` without signed validation (Waterfall/RUP).
+SRS without measurable NFRs; US without Gherkin AC; glossary with contradictory synonyms; empty RTM; validation not signed (Waterfall/RUP).
 
-### 8. Verify
+### Verify
 
-- [ ] FR/NFR classified and with ID
-- [ ] SRS or backlog complete per profile
-- [ ] UC/US with Gherkin AC
-- [ ] Conceptual model + context in PlantUML
-- [ ] RTM traceable PRD→RE
-- [ ] Validation approved
-- [ ] Human approved artifacts before design
+- [ ] Every FR/NFR classified, with ID and verifiable criterion
+- [ ] SRS or backlog complete per profile; every UC/US has Gherkin AC
+- [ ] Conceptual model + context render; `plantuml -tsvg` green
+- [ ] RTM `PRD→RE` fully traced; Fagan passed with sign-off

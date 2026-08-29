@@ -1,13 +1,12 @@
 ---
 name: ooad-build
-description: OOAD Implementation — Clean 4 Layers + TDD + OpenAPI/Migrations. Builds from docs/03-architecture, traced to FR/UC/US. Reads docs/agents/workflow.md.
+description: Clean Architecture (Robert C. Martin) + TDD (Kent Beck) RED→GREEN + OpenAPI — vertical slice by UC/US in 4 layers. Use after architecture is approved.
+disable-model-invocation: true
 ---
 
 # OOAD Build — Implementation
 
-## Objective
-
-Write code in Clean layers + TDD tests that satisfy RE and architecture artifacts, traced to requirements. See `xp.md: TDD/CI/Refactoring` (ES), `artefactos-por-fase-y-metodologia.md: Implementation` (ES), `software-development-life-cycle.md:Implementation` (ES).
+Writes code in Clean layers + TDD satisfying RE and architecture, traced `FR/UC/US`. See `references/ooad-vocabulary.md`.
 
 ## Preconditions
 
@@ -17,9 +16,9 @@ Write code in Clean layers + TDD tests that satisfy RE and architecture artifact
 
 ## Process
 
-### 1. Prepare Environment
+### 1. Prepare environment
 
-Per stack (chosen in `ooad-architect`):
+Per stack chosen in `ooad-architect`:
 
 | Stack | Files |
 |-------|-------|
@@ -28,69 +27,70 @@ Per stack (chosen in `ooad-architect`):
 | node | `package.json + tsconfig` |
 | any | `README.md + .gitignore` |
 
-Reuse prior infra if it exists (idempotency). See `templates/gitignore-template.md`.
+Reuse prior infra if exists. **Done when:** `build` and `lint` commands run without error.
 
-### 2. Slicing — by UC/US, not massive horizontal
+### 2. Slice vertically — by UC/US, not horizontal
 
-Do not build all DB, then all API, then all UI. Vertical slice per UC/US but respecting Clean layers:
+One slice = `Entity + UseCase + Adapter Repo + Controller` that compiles and passes tests. Example:
 
 ```
-Slice 1: UC-001 Create account (Entity User + UseCase CreateUser + Adapter Repo + Controller) → TDD → green → commit
-Slice 2: UC-002 Login (UseCase Auth + Strategy for encryption) → TDD → commit
+Slice 1: UC-001 Create account → TDD → green → commit
+Slice 2: UC-002 Login (Strategy for encryption) → TDD → commit
 ```
 
-Each slice leaves the system compilable and tests green.
+**Done when:** slice leaves system compilable and suite green.
 
-### 3. Coding Rules
+### 3. Code — SOLID (Martin) + GRASP (Larman) + GoF (Gamma) only when ADR-justified
 
-1.  **Trace**: each module/class starts with comment `// FR-001 / UC-001 — title` or `# FR-001`.
-2.  **Clean 4 Layers** (default):
-    ```
-    src/
-    ├── entities/        # Enterprise Business Rules (pure domain)
-    ├── usecases/        # Application Business Rules (use cases)
-    ├── adapters/        # Interface Adapters (repo, presenter, gateway)
-    └── frameworks/      # Frameworks & Drivers (web, db, config)
-    ```
-    Dependencies only inward. Never `entities` imports `frameworks`.
+- **Trace**: each module header `// FR-001 / UC-001 — title` or `# FR-001`.
+- **Clean 4 Layers**:
+  ```
+  src/
+  ├── entities/        (Enterprise Rules)
+  ├── usecases/        (Application Rules)
+  ├── adapters/        (gateways, repo, presenter)
+  └── frameworks/      (web, db, config)
+  ```
+  Dependencies only inward. Never `entities → frameworks`.
+- **Clean Code**: descriptive names, short functions, no duplication.
 
-3.  **SOLID + GRASP + GoF**: single responsibility per class; assign responsibility to information expert; use GoF only when justified by ADR.
-4.  **Clean Code**: descriptive names, short functions, no duplication.
-5.  **TDD**: `RED → GREEN → REFACTOR`. One test per behavior, not per private method. See `criterios-aceptacion.md: Gherkin` (ES).
+**Done when:** every new class has trace comment and single responsibility; import graph respects Dependency Rule.
 
-### 4. TDD Loop per Slice
+### 4. TDD loop per slice (Kent Beck) — RED → GREEN → REFACTOR
 
 ```bash
-# RED: write failing test (unit in entities/usecases, integration in adapters)
-pytest tests/test_create_user.py -v   # should fail
+# RED: failing test (unit in entities/usecases, integration in adapters)
+pytest tests/test_create_user.py -v   # must fail
 # GREEN: minimal code to pass
-# REFACTOR: clean up, tests stay green
-# VERIFY: run suite
+# REFACTOR: clean, tests stay green
 pytest && npm test / go test ./...
 ```
 
-Prefer `real implementation > fake > stub > mock` (mock only at slow boundaries).
+Prefer `real > fake > stub > mock` (mock only at slow boundaries). One test per behavior, not per private method.
 
-### 5. API Specification
+**Done when:** failing test existed before code, passes after, and stays green after refactor.
 
-If REST API exists: `openapi.yaml` (contract-first) in `docs/03-architecture/` or `api/` — generate before or alongside controller.
+### 5. API spec (if REST)
 
-### 6. Do Not Edit Upstream Artifacts
+Contract-first `openapi.yaml` in `docs/03-architecture/` or `api/`, generated before/alongside controller.
 
-Do not modify `docs/02-requirements/` nor `docs/03-architecture/` without approval. If inconsistency, ask.
+**Done when:** `openapi.yaml` validates and matches controller routes.
 
-### 7. Verify
+### 6. Do not edit upstream
 
-- [ ] Each class traceable to FR/UC/US
-- [ ] Clean dependency rule respected
-- [ ] TDD: test fails before, passes after
-- [ ] Suite green (`pytest`, `go test`, `npm test` per stack)
-- [ ] Build + lint ok
-- [ ] OpenAPI if applicable
-- [ ] Atomic commit per slice (`feat: UC-001 CreateUser entity+usecase`)
+Do not modify `docs/02-requirements/` or `docs/03-architecture/` without approval. On inconsistency, ask.
 
-### 8. Gates by Profile
+## Reference
+
+### Verify
+
+- [ ] Every class traced `FR/UC/US`; Dependency Rule green (`dependency-cruiser` or review)
+- [ ] TDD: test failed before, passes after; suite green
+- [ ] `build + lint` green; `openapi.yaml` valid if API exists
+- [ ] Atomic commit per slice `feat: UC-001 CreateUser entity+usecase`
+
+### Gates by profile
 
 - **RUP**: Construction iterates slices; each iteration delivers executable increment.
-- **Waterfall**: Build at the end, after complete design.
-- **Agile**: Build per sprint, slice = US, CI runs per push.
+- **Waterfall**: Build after complete design.
+- **Agile**: Build per sprint, slice = US, CI per push.

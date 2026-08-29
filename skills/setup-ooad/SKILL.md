@@ -1,98 +1,79 @@
 ---
 name: setup-ooad
-description: Configure a repo for the professional OOAD workflow (RUP/Waterfall/Agile). Choose methodology profile, tracker, architecture and docs layout. Run once per repo before using ooad-* skills.
-disable-model-invocation: false
+description: RUP/Waterfall/Agile + Clean Architecture (Robert C. Martin) — configure methodology profile, issue tracker and 4-layer layout. Use when bootstrapping a repo before any ooad-* skill.
+disable-model-invocation: true
 ---
 
 # Setup OOAD Workflow
 
-Scaffold the per-repo configuration that `ooad-*` skills assume. Inspired by `setup-matt-pocock-skills` but for the `OOAD + Clean Architecture` paradigm (`systems-analysis-ooad-paradigm.md:3`, `artefactos-por-fase-y-metodologia.md:137-149` (ES)).
+Scaffold the per-repo configuration `ooad-*` skills assume. One run per repo; re-run only to change profile/tracker. See `references/ooad-vocabulary.md` for leading words (RUP, Clean 4 Layers, IEEE 29148, etc.).
 
-- **Methodology profile**: RUP (default) / Waterfall / Agile — determines which artifacts are required and which gates apply.
-- **Issue tracker**: where issues live (GitHub / GitLab / Local markdown / Other).
-- **Architecture**: Clean 4 Layers (default) / Classic MVC Layers / Hexagonal.
-- **Domain docs layout**: single-context vs multi-context.
+## Preconditions
 
-Prompt-driven skill, not a deterministic script. Explore, present, confirm and write.
+- Repo is `git init`'d (remote may be empty).
 
 ## Process
 
-### 1. Explore
+### 1. Explore — do not assume
 
-Read initial state; do not assume:
+Read whatever exists:
 
-- `git remote -v` and `.git/config`: GitHub? GitLab? no remote?
-- `AGENTS.md` / `CLAUDE.md` at root: does `## Agent skills` exist? which to edit?
-- `CONTEXT.md` and `CONTEXT-MAP.md` at root
-- `docs/adr/` and `src/*/docs/adr/`
-- `docs/agents/`: does `workflow.md` / `issue-tracker.md` / `domain.md` already exist?
-- `.scratch/`: indicates prior local-markdown tracker
-- `pnpm-workspace.yaml`, `package.json:workspaces`, `packages/*`: monorepo signal → multi-context
-- `ooad-workflow/templates/workflow.md`: base template
+- `git remote -v` → GitHub / GitLab / none
+- `AGENTS.md` / `CLAUDE.md` → does `## Agent skills (OOAD)` exist?
+- `CONTEXT.md`, `CONTEXT-MAP.md`, `docs/adr/`, `src/*/docs/adr/`, `docs/agents/`
+- `.scratch/` → prior local-markdown tracker
+- `pnpm-workspace.yaml` / `package.json:workspaces` / `packages/*` → monorepo signal
+- `ooad-workflow/templates/workflow.md` — base template
 
-### 2. Present and Ask
+**Done when:** profile, tracker, architecture, and domain layout are all known or known-missing.
 
-Summarize findings and missing pieces. One section, one answer, then the next. Lead with the recommended answer so the user can accept in one word. Skip already-resolved sections.
+### 2. Present and Ask — one section, one answer
 
-**Section A: Methodology profile (required).**
+Lead each question with the recommended answer so user can accept in one word. Skip resolved sections.
 
-> Profile defines which artifacts are required and the gating. See `artefactos-por-fase-y-metodologia.md:72-129` (ES).
+**A — Methodology profile (required).** Determines required artifacts and gates (`references/artifacts-matrix.md`).
 
-- **Iterative RUP (recommended, default)** — 4 phases `Inception/Elaboration/Construction/Transition`, UC-driven, heavy UML, iterations within phases. Ideal for Systems Analysis curriculum (`rup.md` ES). Required artifacts: `Vision + glossary + detailed UCs + C4/UML + ADR`.
-- **Sequential Waterfall** — heavy `SRS IEEE830 + heavy SDD` signed, legal gate, pure sequential (`waterfall.md` ES). Required artifacts: `complete PRD + SRS + SDD + formal Test Plan`.
-- **Iterative Agile / Scrum** — `living PRD + INVEST US + Gherkin AC` per sprint, just-enough ADR (`agile-scrum.md`, `user-stories.md`, `criterios-aceptacion.md` ES). Required artifacts: `US backlog + executable AC + ADR`.
+- **Iterative RUP (Jacobson/Kruchten) — default** — `Inception/Elaboration/Construction/Transition`, UC-driven, heavy UML, iterations within phases. Required: `Vision + glossary + detailed UCs + C4/UML + ADR`.
+- **Sequential Waterfall (Royce)** — `SRS IEEE 29148` + heavy `SDD` signed, legal gate. Required: `complete PRD + SRS + SDD + formal Test Plan`.
+- **Iterative Agile/Scrum (Schwaber/Sutherland/Beck)** — `living PRD + INVEST (Wake) US + Gherkin/BDD (North) AC` per sprint, just-enough ADR. Required: `US backlog + executable AC + ADR`.
 
-Question: `Profile? [RUP* / Waterfall / Agile]`
+Ask: `Profile? [RUP* / Waterfall / Agile]`
 
-Save to `docs/agents/workflow.md` (see template `templates/workflow.md`).
+**B — Issue tracker.** Where `ooad-*` issues live.
 
-**Section B: Issue tracker.**
-
-> Where `ooad-*` issues live. See `setup-matt-pocock-skills:issue-tracker-*.md`.
-
-- **GitHub** (default if remote points to github.com): `gh issue create/view/list` (`issue-tracker-github.md:5`)
+- **GitHub** (default if remote → github.com): `gh issue create/view/list` (`templates/issue-tracker-github.md:5`)
 - **GitLab**: `glab issue create/view/list`
-- **Local markdown**: `.scratch/<feature>/spec.md + issues/NN-slug.md` (`issue-tracker-local.md:5`)
-- **Other** (Jira/Linear/etc.): describe workflow in one paragraph; saved as freeform prose
+- **Local Markdown**: `.scratch/<feature>/spec.md + issues/NN-slug.md` (`templates/issue-tracker-local.md:5`)
+- **Other** (Jira/Linear/etc.): one paragraph workflow → saved as prose
 
-Question: `Tracker? [GitHub* / GitLab / Local / Other]`
+Ask: `Tracker? [GitHub* / GitLab / Local / Other]`
 
-Save to `docs/agents/issue-tracker.md`.
+**C — Architecture (default: Clean 4 Layers).**
 
-**Section C: Architecture.**
+- **Clean 4 Layers (Robert C. Martin) — default** — `Entities → Use Cases → Interface Adapters → Frameworks` (`references/ooad-vocabulary.md`).
+- **Classic MVC (Reenskaug)** — `Presentation → Business Logic → Data`.
+- **Hexagonal / Ports & Adapters (Cockburn)** — explicit ports/adapters.
 
-- **Clean 4 Layers (recommended, default)** — `Entities → Use Cases → Interface Adapters → Frameworks` (majority of curriculum, `systems-analysis-ooad-paradigm.md:49` ES).
-- **Classic MVC Layers** — `Presentation → Business Logic → Data`.
-- **Hexagonal (Ports & Adapters)** — explicit ports/adapters.
+Ask: `Architecture? [Clean4* / MVC / Hexagonal]`
 
-Question: `Architecture? [Clean4* / MVC / Hexagonal]`
+**D — Domain docs layout.** Default `single-context` (`CONTEXT.md + docs/adr/`). Offer `multi-context` (`CONTEXT-MAP.md`) only if monorepo signal found.
 
-Save to `docs/agents/architecture.md`.
-
-**Section D: Domain docs layout.** Default **single-context** (`CONTEXT.md + docs/adr/`). Offer **multi-context** (`CONTEXT-MAP.md` per context) only if monorepo signal found. If no signal, write single without asking.
-
-Save to `docs/agents/domain.md` (see `domain.md:14`).
+**Done when:** user answered A (and B/C/D if not auto-resolved).
 
 ### 3. Confirm and Edit
 
-Show draft of:
+Show drafts of:
 
-- Block `## Agent skills (OOAD)` for `CLAUDE.md` / `AGENTS.md`.
-- Contents of `docs/agents/workflow.md`, `issue-tracker.md`, `architecture.md`, `domain.md`.
+- `## Agent skills (OOAD)` block for `CLAUDE.md` / `AGENTS.md`
+- `docs/agents/workflow.md`, `issue-tracker.md`, `architecture.md`, `domain.md`
 
 Let user edit before writing.
 
 ### 4. Write
 
-**Pick file to edit:**
+Pick file to edit: if `CLAUDE.md` exists → edit it; else `AGENTS.md`; if neither → ask which to create (never create both).
 
-- If `CLAUDE.md` exists, edit it.
-- Else `AGENTS.md`.
-- If neither exists, ask which to create; do not choose.
-
-Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa). If block `## Agent skills (OOAD)` already exists, update in-place.
-
-**Block:**
+If block exists, update in-place:
 
 ```markdown
 ## Agent skills (OOAD)
@@ -114,15 +95,17 @@ Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa). If blo
 [single-context | multi-context]. See `docs/agents/domain.md`.
 ```
 
-Write `docs/agents/*.md` using templates in `ooad-workflow/templates/`:
+Write `docs/agents/*.md` from `ooad-workflow/templates/`:
 
-- `workflow.md` — profile + artifacts matrix by phase
-- `issue-tracker-github.md` / `issue-tracker-gitlab.md` / `issue-tracker-local.md`
+- `workflow.md` — profile + artifacts matrix
+- `issue-tracker-github.md` / `issue-tracker-local.md` (or freeform for Other)
 - `domain.md` — CONTEXT/ADR consumption rules
-- `architecture.md` — layers + dependency rules
+- `architecture.md` — layers + Dependency Rule
 
-For `Other` tracker, write `issue-tracker.md` from scratch with user description.
+**Done when:** all four files written; `AGENTS.md`/`CLAUDE.md` block updated; user can open each path and see expected content.
 
-### 5. Done
+## Reference
 
-Tell user setup is complete and which `ooad-*` skills will now read the config. Mention `docs/agents/*.md` is hand-editable; re-running `setup-ooad` is only needed to change profile/tracker.
+### Done
+
+Setup complete when `docs/agents/workflow.md` is readable and `/ask-ooad` lists the next skill. Mention files are hand-editable; re-running is only for profile/tracker change.
