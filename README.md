@@ -92,6 +92,10 @@ ooad-workflow/
 
 ## Comparison
 
+> **Which cycle to follow?** Side-by-side activity diagram + origin, step-by-step outputs/state,
+> profile variants and decision table: [`docs/dev-cycle-comparison.md`](docs/dev-cycle-comparison.md)
+> — diagram source `docs/diagrams/dev-cycle-comparison.puml` (render: `plantuml -tsvg docs/diagrams/dev-cycle-comparison.puml`).
+
 | OOAD Criterion | `ooad-workflow` | Matt Pocock | AddyOsmani |
 |----------------|-----------------|-------------|------------|
 | IEEE830/FR-xxx | ✅ native per profile | ❌ DDD User Stories | ❌ SaaS PRD |

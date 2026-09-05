@@ -1,0 +1,302 @@
+@startuml dev-cycle-comparison
+' dev-cycle-comparison — Matt Pocock (DDD / seam-biased) vs OOAD-workflow (UC-driven, RUP default)
+' Render: plantuml -tsvg docs/diagrams/dev-cycle-comparison.puml
+' Swimlanes side-by-side via partition + fork/split. Notes on the right are outputs / state changes.
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "Helvetica"
+skinparam defaultFontSize 13
+skinparam activity {
+  BackgroundColor #F9F9F9
+  BorderColor #333333
+  ArrowColor #333333
+}
+skinparam note {
+  BackgroundColor #FFFEF0
+  BorderColor #C0C0A0
+}
+skinparam partition {
+  BackgroundColor #F4F6F9
+  BorderColor #6B7C93
+  FontColor #2C3E50
+}
+skinparam title {
+  FontSize 16
+  FontColor #1A1A1A
+}
+skinparam legend {
+  BackgroundColor #FFFEF0
+  BorderColor #C0C0A0
+}
+skinparam arrow {
+  Color #333333
+}
+
+title Dev-cycle comparison — Matt Pocock (DDD / seam-biased) vs OOAD-workflow (UC-driven, RUP default)
+
+start
+
+:Choose bias;
+note right
+  <b>Router only</b> — no state change.
+  Matt: <b>/ask-matt</b> → main flow idea→ship
+  OOAD: <b>/ask-ooad</b> → one trigger per branch
+  See docs/dev-cycle-comparison.md decision table.
+end note
+
+fork
+partition "Matt Pocock — DDD / seam-biased" {
+  :/setup-matt-pocock-skills\n(once per repo);
+  note right
+    <b>Skill:</b> setup-matt-pocock-skills
+    <b>State change:</b> scaffolds per-repo config
+    • <b>docs/agents/issue-tracker.md</b> (GitHub/GitLab/Local)
+    • <b>docs/agents/domain.md</b> (CONTEXT.md + ADR layout)
+    • <b>docs/agents/triage-labels.md</b> (if triage installed)
+    No product artifact.
+  end note
+
+  partition "Sharpen idea (loop until frontier empty)" #EAF2FF {
+    :/grill-with-docs\n(grilling rounds + domain-modeling);
+    note right
+      <b>Skill:</b> grill-with-docs = grilling + domain-modeling
+      <b>Loop:</b> design-tree frontier — ask whole
+      frontier per round, recompute after answers.
+      Facts = agent, decisions = user.
+      <b>Outputs / state:</b>
+      • <b>CONTEXT.md</b> terms sharpened inline
+      • <b>docs/adr/*.md</b> — sparse, only if hard-to-reverse
+        + surprising + real trade-off
+      <b>Exit:</b> frontier empty → shared understanding
+    end note
+  }
+
+  if (Needs runnable answer?) then (yes)
+    :/handoff → /prototype → /handoff\n(optional detour);
+    note right
+      <b>Skills:</b> handoff + prototype
+      <b>When:</b> state/logic/UI question that needs
+      throwaway code to settle.
+      <b>Output:</b> <b>prototype/&lt;name&gt;</b> branch (primary source)
+      referenced from idea thread. Portable via /handoff.
+    end note
+  else (no)
+  endif
+
+  :/to-spec\n(no interview — synthesize thread);
+  note right
+    <b>Skill:</b> to-spec
+    <b>Input:</b> thread + codebase + CONTEXT/ADRs
+    <b>Pre-step:</b> sketch & confirm <b>seams</b>
+    (highest testable boundary)
+    <b>Output / state:</b> spec issue published to tracker
+    • Problem / Solution / extensive <b>User Stories</b>
+    • <b>Implementation Decisions</b> (modules, interfaces, seams)
+    • <b>Testing Decisions</b>
+    • Out of Scope — label <b>ready-for-agent</b>
+  end note
+
+  partition "Decompose (quiz loop)" #FFF4E6 {
+    :/to-tickets\n(tracer-bullet vertical slices);
+    note right
+      <b>Skill:</b> to-tickets
+      <b>Rule:</b> each slice = complete path through every
+      layer (schema→API→UI→tests), demoable alone,
+      fits one context window.
+      Wide refactor → expand–contract exception.
+      Declares <b>Blocked by</b> edges.
+      <b>Output / state:</b>
+      • <b>.scratch/&lt;feature&gt;/issues/NN-*.md</b> or
+        GitHub blocking-link issues
+      • Subject to user quiz on granularity/edges
+    end note
+    if (Granularity & edges OK?) then (no)
+      ->[revise breakdown] :/to-tickets;
+    else (yes)
+    endif
+  }
+
+  partition "Build (per ticket, fresh context)" #E8F5E9 {
+    repeat
+      :/implement per ticket;
+      note right
+        <b>Skill:</b> implement (= /to-implement)
+        <b>State per ticket:</b> fresh window, frontier ticket
+        • drives <b>/tdd</b> internally: RED→GREEN at
+          pre-agreed <b>seam</b>, one slice at a time
+        • runs <b>/code-review</b> on diff
+        • <b>commit</b> on branch
+        • <b>/clear</b> between tickets
+      end note
+    repeat while (Tickets remain?) is (yes) not (no)
+  }
+
+  :/code-review\n(optional standalone);
+  note right
+    <b>Skill:</b> code-review (model-invoked)
+    <b>Input:</b> fixed point (e.g. main / SHA)
+    <b>Process:</b> two parallel sub-agents:
+    • <b>Standards</b> — repo standards + Fowler smells
+    • <b>Spec</b> — missing / creep / wrong vs spec
+    Aggregate only — no rerank.
+    <b>Output:</b> report (no state change).
+  end note
+
+  stop
+}
+fork again
+partition "OOAD-workflow — UC-driven (RUP default*)" {
+  :/setup-ooad\n(once per repo);
+  note right
+    <b>Skill:</b> setup-ooad
+    <b>State change:</b> scaffolds per-repo config
+    • <b>docs/agents/workflow.md</b> (profile RUP*)
+    • <b>docs/agents/architecture.md</b> (Clean 4 default)
+    • <b>docs/agents/issue-tracker.md</b>
+    • <b>docs/agents/domain.md</b> (CONTEXT/ADR rules)
+    <b>Profile matrix:</b> RUP / Waterfall / Agile
+    Selected here: <b>Iterative RUP</b> (default).
+  end note
+
+  :/ooad-discover\n(RUP Inception + Vision);
+  note right
+    <b>Skill:</b> ooad-discover
+    <b>Outputs:</b>
+    • <b>docs/01-discovery/PRD.md</b> (Vision, KPIs, MoSCoW, scope)
+    • <b>docs/01-discovery/personas.md</b>
+    • <b>docs/01-discovery/glossary-draft.md</b> → CONTEXT.md
+    • <b>docs/01-discovery/context-tentative.puml</b> (C4 L1 opt.)
+    <b>Gate:</b> human approves PRD before RE.
+  end note
+
+  if (PRD approved?) then (no)
+    :Revise Vision / KPIs / scope;
+    note right
+      <b>Back-edge:</b> explicit assumptions
+      listed, stakeholder review again.
+    end note
+  else (yes)
+  endif
+
+  partition "Requirements Engineering — 5 sub-phases" #EAF2FF {
+    :/ooad-requirements\nElicitation → Analysis →\nSpecification → Validation → Management;
+    note right
+      <b>Skill:</b> ooad-requirements
+      <b>Sub-phases:</b>
+      1) <b>Elicitation</b> — raw-needs (FR/NFR/BR/Constraint)
+      2) <b>Analysis</b> — MoSCoW/Kano, conflicts, refine CONTEXT
+      3) <b>Specification</b> — by profile:
+         RUP: detailed <b>UC-*.md</b> + hybrid SRS
+         Waterfall: heavy <b>SRS IEEE 29148</b>
+         Agile: <b>US-*.md + Gherkin AC</b>
+      4) <b>Validation</b> — Fagan inspection
+      5) <b>Management</b> — baseline + CCB
+      <b>Outputs / state:</b>
+      • <b>docs/02-requirements/raw-needs.md</b>
+      • <b>docs/02-requirements/SRS.md</b> or UC/US
+      • <b>docs/02-requirements/conceptual-model.puml</b>+.svg
+      • <b>docs/02-requirements/RTM.csv</b> (PRD→FR/UC/US→Class)
+      • <b>docs/02-requirements/validation.md</b> (sign-off)
+      • <b>CHANGELOG-RE.md</b> + tagged baseline
+      <b>Gate:</b> measurable NFRs, every UC/US has
+      Gherkin AC, CONTEXT consistent, RTM traced,
+      Fagan complete/consistent/unambiguous/verifiable.
+    end note
+  }
+
+  if (Fagan + sign-off?) then (no)
+    ->[fix defects] :/ooad-requirements;
+  else (yes)
+  endif
+
+  partition "Architecture (human approval required)" #FFF4E6 {
+    :/ooad-architect\n(C4 + UML + GoF + Clean 4 + ADR-MADR);
+    note right
+      <b>Skill:</b> ooad-architect
+      <b>Inputs:</b> SRS/backlog + RTM + conceptual-model
+      <b>Proposes (requires explicit approval):</b>
+      • style <b>Clean 4 Layers</b>* / MVC / Hexagonal
+      • <b>C4</b> L1 Context, L2 Container, L3 Component
+      • <b>UML</b> class / sequence per UC / state / ER
+      • <b>GoF</b> matrix — each pattern justified
+      <b>Outputs / state:</b>
+      • <b>docs/03-architecture/c4-*.puml</b> + .svg
+      • <b>docs/03-architecture/class-diagram.puml</b>+.svg
+      • <b>docs/03-architecture/sequence-UC-*.puml</b>
+      • <b>docs/03-architecture/adrs/NNNN-*.md</b> (MADR)
+      • <b>docs/03-architecture/README.md</b> (embedded SVGs)
+      • <b>RTM.csv</b> updated FR→Class→ADR
+      <b>Rule:</b> Dependency Rule — imports point inward
+      (Frameworks→Adapters→UseCases→Entities)
+    end note
+  }
+
+  if (Architecture approved?\nstyle + C4 + GoF) then (no)
+    ->[revise] :/ooad-architect;
+  else (yes)
+  endif
+
+  partition "Construction loop (RUP iterative)" #E8F5E9 {
+    repeat
+      :/ooad-build\nvertical slice by UC/US • TDD;
+      note right
+        <b>Skill:</b> ooad-build
+        <b>Rule:</b> slice = <b>Entity + UseCase + Adapter + Controller</b>
+        compiles & suite stays green.
+        <b>TDD loop per slice:</b> RED (fail) → GREEN (pass) → REFACTOR
+        prefer real > fake > stub > mock (mock only at slow boundary)
+        <b>Outputs / state:</b>
+        • <b>src/entities|usecases|adapters|frameworks/</b> (Clean 4)
+        • trace header <b>// FR-001 / UC-001</b> per module
+        • <b>openapi.yaml</b> (if REST)
+        • atomic <b>commit per slice</b>: feat: UC-001 ...
+      end note
+
+      :/ooad-verify\n(BDD + Test Pyramid 80/15/5);
+      note right
+        <b>Skill:</b> ooad-verify — derives from RE, not code
+        Complements build's TDD.
+        <b>Outputs / state:</b>
+        • <b>tests/unit|integration|e2e/ + cases/*.feature</b>
+          (Gherkin happy/edge/error/null per FR/UC/US)
+        • <b>docs/05-qa/test-plan.md</b> (entry/exit) +
+          <b>test-cases.md + qa-report.md + bug-report.md</b>
+        • <b>RTM.csv</b> extended: FR→case
+        <b>Gate:</b> suite green, coverage ≥80%, no blockers.
+      end note
+    repeat while (Suite green + coverage ≥80%\n+ no blockers?) is (no: fix in build) not (yes)
+  }
+
+  :/ooad-ship\n(Continuous Delivery + SRE);
+  note right
+    <b>Skill:</b> ooad-ship — Deployment → Maintenance
+    <b>Outputs / state:</b>
+    • <b>RELEASE_NOTES.md</b> (FR/UC traced via RTM)
+    • <b>docs/06-deploy/prod-checklist.md</b> + runbooks
+    • <b>scripts/rollback-&lt;ver&gt;.sh</b> (tested on staging)
+    • <b>CI/CD</b> Build→Test→Staging→Prod
+      (RUP: Transition beta; Waterfall: big-bang;
+       Agile: continuous + flags)
+    • <b>CHANGELOG.md</b> (SemVer + Conventional Commits)
+    • <b>docs/06-deploy/tech-debt.md</b>
+    • <b>SLI/SLO dashboards</b> + post-mortem
+  end note
+
+  stop
+}
+end fork
+
+legend right
+  |= Notation |= Meaning |
+  | <b>Diamond</b> | Human gate / decision — must pass to advance |
+  | <b>Note right</b> | Outputs & state changes produced by preceding step |
+  | <b>Repeat / backward arrow</b> | Intended iteration / back-edge |
+  | <b>Colored partition</b> | Iteration scope (grill / tickets / construction) |
+  * RUP is the rendered path. Waterfall & Agile gates:
+  Waterfall: PRD pre-signed → heavy SRS+SDD signed → Build at end → formal QA → big-bang release.
+  Agile: 1-page living PRD → INVEST backlog (5–10 US) → per-sprint Build (slice = US) → emergent QA in CI → continuous ship via flags.
+  See references/artifacts-matrix.md and templates/workflow.md for full gating.
+endlegend
+
+footer OOAD-workflow docs/diagrams/dev-cycle-comparison.puml — sources: skills/*/SKILL.md · references/ooad-vocabulary.md · artifacts-matrix.md
+@enduml
