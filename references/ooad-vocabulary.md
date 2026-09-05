@@ -61,3 +61,4 @@ Use these terms exactly. Do not substitute `component, service, API, boundary, l
 
 - Skills repeat the token (`RUP`, `Clean 4 Layers`, `Gherkin`) — do not redefine. Link here on first mention if needed.
 - Adding a new leading word? Add it here first, then use token-only elsewhere.
+- Human index: `docs/glossary.md` — acronym expansion + A–Z index into sections above (no definitions duplicated).

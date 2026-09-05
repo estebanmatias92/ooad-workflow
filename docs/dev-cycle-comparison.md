@@ -96,4 +96,4 @@ Skills from both packs are `disable-model-invocation: true` — the human picks 
 
 ---
 
-*See also:* `README.md:Comparison`, `references/artifacts-matrix.md`, `templates/workflow.md`, `docs/systems-analysis-ooad-paradigm.md`.
+*See also:* `docs/glossary.md` (acronym/term index) · `README.md:Comparison` · `references/artifacts-matrix.md` · `references/ooad-vocabulary.md` (single source) · `templates/workflow.md` · `docs/systems-analysis-ooad-paradigm.md`.

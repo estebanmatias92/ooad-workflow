@@ -84,10 +84,14 @@ ooad-workflow/
 │   ├── glossary.md, rtm.csv, adr-madr.md
 │   ├── c4.puml, class-diagram.puml, sequence-diagram.puml
 │   └── workflow.md, domain.md, architecture.md, issue-tracker-*.md
-└── references/
-    ├── artifacts-matrix.md
-    ├── definition-of-done.md
-    └── ooad-vocabulary.md  # shared leading words (single source)
+├── docs/
+ │   ├── glossary.md               # term & acronym index → references/ooad-vocabulary.md (single source)
+ │   ├── dev-cycle-comparison.md   # DDD vs OOAD comparison + activity diagram
+ │   └── diagrams/dev-cycle-comparison.puml+.svg
+ └── references/
+     ├── artifacts-matrix.md
+     ├── definition-of-done.md
+     └── ooad-vocabulary.md  # shared leading words (single source; human index: docs/glossary.md)
 ```
 
 ## Comparison
@@ -106,8 +110,9 @@ ooad-workflow/
 
 ## References
 
-- `systems-analysis-ooad-paradigm.md` (ES)
+- `docs/glossary.md` — acronym & term index (human entry point)
+- `references/ooad-vocabulary.md` — single source for leading words (writing-for-agents)
+- `docs/systems-analysis-ooad-paradigm.md` (ES) (canonical is `docs/systems-analysis-ooad-paradigm.md`)
 - `artefactos-por-fase-y-metodologia.md` (ES)
 - `requirements-engineering.md` + 5 RE sub-phases (ES)
 - `architecture-decision-record.md` (MADR) (ES)
-- `references/ooad-vocabulary.md` — single source for leading words (writing-for-agents)
