@@ -21,7 +21,7 @@
 
 * **Swimlanes:** left = Matt Pocock, right = OOAD (RUP default — see §4 for Waterfall/Agile variants).
 * **Diamonds:** human gates — nothing advances without an explicit decision (PRD approval, Fagan sign-off + baseline, architecture approval of style + C4 + GoF, frontier-empty, ticket granularity quiz). The diagram distinguishes intended iteration from accidental rework.
-* **`note right`:** outputs and state changes produced by the preceding step — per your ask, comments sit beside the step rather than inside it.
+* **`note right`:** outputs and state changes produced by the preceding step, shown as notes beside the step.
 * **Colored partitions:** iteration scopes (grill rounds, tickets quiz, construction loop). Backward arrows = back-edges (e.g. `ooad-verify → ooad-build` on failure).
 * **Shared START:** `Choose bias` — `ask-matt` vs `ask-ooad` — router only, no state change. Either branch is self-contained after that diamond.
 
@@ -76,19 +76,7 @@ Regeneration is the same as every other `*.puml` in the pack (`ooad-requirements
 
 Skills from both packs are `disable-model-invocation: true` — the human picks the router (`ask-matt` vs `ask-ooad`). Do not mix vocabularies mid-repo (DDD's aggregates/events vs OOAD's GoF/Clean 4).
 
-## 6. Skill-name mapping (names you listed → actual IDs)
-
-| You wrote | Actual skill ID | Installed at |
-| ----------- | ----------------- | -------------- |
-| `/setup-matt-pocock-skills` | `setup-matt-pocock-skills` | `~/.agents/skills/setup-matt-pocock-skills/SKILL.md` |
-| `/grill-with-docs` | `grill-with-docs` (= `grilling` + `domain-modeling`) | `~/.agents/skills/grill-with-docs/SKILL.md` |
-| `/to-spec` | `to-spec` | `~/.agents/skills/to-spec/SKILL.md` |
-| `/to-ticket` | **`to-tickets`** | `~/.agents/skills/to-tickets/SKILL.md` |
-| `/to-implement` | **`implement`** | `~/.agents/skills/implement/SKILL.md` |
-| `/code-review` | `code-review` | `~/.agents/skills/code-review/SKILL.md` |
-| `ask-*` routers | `ask-matt` vs `ask-ooad` | `~/.agents/skills/ask-matt/SKILL.md` vs `skills/ask-ooad/SKILL.md` |
-
-## 7. Maintenance
+## 6. Maintenance
 
 * Update this doc when either pack changes its flow (new skill, new gate, vocabulary drift).
 * Re-render the diagram after editing the `.puml`: `plantuml -tsvg docs/diagrams/dev-cycle-comparison.puml` and commit both files.
