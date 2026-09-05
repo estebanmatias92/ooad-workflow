@@ -32,7 +32,7 @@ Regeneration is the same as every other `*.puml` in the pack (`ooad-requirements
 ### Matt Pocock (left lane)
 
 | Step | Flow & iterations | Outputs / state change |
-|------|-------------------|------------------------|
+| ------ | ------------------- | ------------------------ |
 | `setup-matt-pocock-skills` (once) | Linear, once per repo | `docs/agents/issue-tracker.md` + `domain.md` (+ `triage-labels.md`). No product artifact. |
 | `grill-with-docs` | **Loop:** design-tree frontier — ask whole frontier per round, recompute after answers. Facts = agent, decisions = user. Exit when frontier empty. | `CONTEXT.md` terms sharpened inline + sparse `docs/adr/*.md` (only if hard-to-reverse + surprising + real trade-off). |
 | `prototype` detour | **Branch** — only if a question needs runnable answer (state, logic, UI). `/handoff` out → `prototype` → `/handoff` back. | `prototype/<name>` branch (throwaway, kept as primary source). |
@@ -44,13 +44,13 @@ Regeneration is the same as every other `*.puml` in the pack (`ooad-requirements
 ### OOAD-workflow, RUP default (right lane)
 
 | Step | Flow & iterations | Outputs / state change |
-|------|-------------------|------------------------|
+| ------ | ------------------- | ------------------------ |
 | `setup-ooad` (once) | Linear, once per repo | `docs/agents/workflow.md` (profile = RUP) + `architecture.md` (Clean 4) + `issue-tracker.md` + `domain.md`. |
 | `ooad-discover` (RUP Inception) | Linear → **gate: human approves PRD**. Back-edge revises Vision/KPIs/scope. | `docs/01-discovery/PRD.md` (Vision + KPIs + MoSCoW + scope/assumptions) + `personas.md` + `glossary-draft.md → CONTEXT.md` + tentative `context-tentative.puml` (C4 L1 optional). |
 | `ooad-requirements` (5 sub-phases) | **Sequential inside the skill:** Elicitation → Analysis/Negotiation (MoSCoW/Kano) → Specification (by profile) → Validation (Fagan) → Management (baseline + RTM). Back-edge on Fagan failure. | `raw-needs.md` (FR/NFR/BR/Constraint IDs) + `SRS.md` or `use-cases/UC-*.md` / `backlog/US-*.md+Gherkin` + `conceptual-model.puml`+.svg + `RTM.csv` (PRD→FR/UC/US→Class) + `validation.md` (sign-off) + `CHANGELOG-RE.md` + tagged baseline. Gate: measurable NFRs, every UC/US has Gherkin AC, no Fagan defects. |
 | `ooad-architect` | Linear → **gate: explicit approval of style + C4 + GoF**. Back-edge revises design. | `c4-context/container.puml`+.svg + `class-diagram.puml`+.svg + `sequence-UC-*.puml` + `data-model-er.puml` + `adrs/NNNN-*.md` (MADR) + `README.md` with embedded SVGs + `RTM.csv` updated `FR→Class→ADR`. Rule: Dependency Rule imports inward. |
-| `ooad-build` | **Part of construction repeat** — vertical slice by UC/US (`Entity + UseCase + Adapter + Controller`) compiles & suite green. | `src/entities|usecases|adapters|frameworks/` + trace header `// FR-001 / UC-001` + `openapi.yaml` + atomic commit `feat: UC-001 ...`. |
-| `ooad-verify` | **Part of same repeat** — derives `*.feature` (happy/edge/error/null) from RE (not code), pyramid 80/15/5. **Back-edge:** failure → `ooad-build`. | `tests/unit|integration|e2e/` + `cases/*.feature` + `docs/05-qa/test-plan.md` + `test-cases.md` + `qa-report.md` + `bug-report.md` + `RTM.csv` extended `FR→case`. Gate: suite green, cov ≥80%, no blockers. |
+| `ooad-build` | **Part of construction repeat** — vertical slice by UC/US (`Entity + UseCase + Adapter + Controller`) compiles & suite green. | `src/entities/` + `src/usecases/` + `src/adapters/` + `src/frameworks/` + trace header `// FR-001 / UC-001` + `openapi.yaml` + atomic commit `feat: UC-001 ...`. |
+| `ooad-verify` | **Part of same repeat** — derives `*.feature` (happy/edge/error/null) from RE (not code), pyramid 80/15/5. **Back-edge:** failure → `ooad-build`. | `tests/unit/` + `tests/integration/` + `tests/e2e/` + `cases/*.feature` + `docs/05-qa/test-plan.md` + `test-cases.md` + `qa-report.md` + `bug-report.md` + `RTM.csv` extended `FR→case`. Gate: suite green, cov ≥80%, no blockers. |
 | `ooad-ship` | Linear (RUP Transition). Pipeline `Build→Test→Staging→Prod`. | `RELEASE_NOTES.md` (FR/UC via RTM) + `prod-checklist.md` + runbooks + `rollback-<ver>.sh` (tested on staging) + workflow file + `CHANGELOG.md` (SemVer) + `tech-debt.md` + SLI/SLO dashboards. |
 
 **Key structural difference:** Matt iterates around **conversation → seams → tickets** (idea stays conversational until `to-spec` collapses it); OOAD iterates around **baselined documents → gates → Construction increments** (each phase leaves a reviewed, RTM-traced artifact before the next begins).
@@ -66,7 +66,7 @@ Regeneration is the same as every other `*.puml` in the pack (`ooad-requirements
 ## 5. Which bias to choose
 
 | If… | Follow | Reason |
-|-----|--------|--------|
+| ----- | -------- | -------- |
 | Curriculum or contract requires `IEEE 29148` FR/NFR, detailed UCs, UC→sequence→class derivation, or signed RTM | **OOAD** (RUP or Waterfall) | Native artifacts; graded/contractual obligation. |
 | Contract or regulation fixes full scope upfront | **OOAD Waterfall** | Signed SRS/SDD gates, big-bang release. |
 | Medium product, small-to-medium team, evolving requirements with risk | **OOAD RUP (default)** | Vision→UCs→C4/ADR baseline → iterative increments with per-iteration RTM. |
@@ -79,7 +79,7 @@ Skills from both packs are `disable-model-invocation: true` — the human picks 
 ## 6. Skill-name mapping (names you listed → actual IDs)
 
 | You wrote | Actual skill ID | Installed at |
-|-----------|-----------------|--------------|
+| ----------- | ----------------- | -------------- |
 | `/setup-matt-pocock-skills` | `setup-matt-pocock-skills` | `~/.agents/skills/setup-matt-pocock-skills/SKILL.md` |
 | `/grill-with-docs` | `grill-with-docs` (= `grilling` + `domain-modeling`) | `~/.agents/skills/grill-with-docs/SKILL.md` |
 | `/to-spec` | `to-spec` | `~/.agents/skills/to-spec/SKILL.md` |
