@@ -37,6 +37,8 @@ Este es el año clave donde se concentran los conceptos que venías integrando:
 
 - _Diseño:_ Catálogo de Patrones GoF (Creacionales: _Factory_, _Singleton_; Estructurales: _Composite_, _Decorator_, _Adapter_, _Proxy_; Comportamiento: _Observer_, _State_, _Strategy_, _Command_).
 
+- _Diseño de responsabilidades:_ RDD con tarjetas CRC (Wirfs-Brock — doing/knowing + colaboradores) y asignación GRASP (Larman — Information Expert, Creator, Controller, Low Coupling, High Cohesion, Polymorphism, Indirection, Pure Fabrication, Protected Variations). Es el puente entre Caso de Uso → Secuencia → Clases: cada mensaje de secuencia cita su patrón GRASP y cada Protected Variation nombra el GoF que la implementa.
+
 - _Código:_ Refactoring hacia patrones, pruebas (unitarias, integración, aceptación) y **TDD (Test-Driven Development)**.
 
 - **Base de Datos:** Modelo Entidad-Relación, Álgebra Relacional, SQL y Transacciones.
@@ -54,6 +56,8 @@ Este es el año clave donde se concentran los conceptos que venías integrando:
 Para maximizar tu rendimiento académico y profesional alineado con la carrera, enfoca tu energía en este circuito:
 
 1. **De Casos de Uso a Diagramas de Secuencia (Ing. de Software I + Algoritmos II):** Entender cómo los pasos narrativos de un Caso de Uso se traducen en llamadas a métodos entre clases en UML.
+
+1b. **De responsabilidades a clases con CRC + GRASP (Algoritmos II):** Caminar cada flujo de Caso de Uso contra tarjetas CRC (responsabilidades doing/knowing + colaboradores) y asignar cada mensaje de secuencia con un patrón GRASP explícito (Creator para agregados, Controller = Caso de Uso, Information Expert por defecto). Sin esta capa, el salto UC → clases queda arbitrario.
 
 2. **Patrones de Diseño GoF y Refactoring (Algoritmos II):** Dominar cuándo aplicar _Strategy_ para reemplazar condicionales o _Adapter_ para desacoplar interfaces.
 

@@ -13,6 +13,10 @@
 
 {{ what is decided, in one sentence }}
 
+## Responsibility assignment (GRASP)
+
+{{ per new class/operation: GRASP pattern — e.g. Creator for Order.create(), Controller for CreateUserUseCase, Protected Variations → Strategy for validation rules }}
+
 ## Consequences
 
 - **Positive**: {{ ... }}

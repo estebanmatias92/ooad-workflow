@@ -40,9 +40,10 @@ Slice 2: UC-002 Login (Strategy for encryption) → TDD → commit
 
 **Done when:** slice leaves system compilable and suite green.
 
-### 3. Code — SOLID (Martin) + GRASP (Larman) + GoF (Gamma) only when ADR-justified
+### 3. Code — SOLID (Martin) + GRASP (Larman) + RDD (Wirfs-Brock) + GoF (Gamma) only when ADR-justified
 
-- **Trace**: each module header `// FR-001 / UC-001 — title` or `# FR-001`.
+- **Trace**: each module header `// FR-001 / UC-001 [GRASP-pattern] — title` or `# FR-001 [GRASP-pattern]` (e.g. `// FR-001 / UC-001 [Creator] Order.create()`).
+- **GRASP guardrails**: Controller logic lives in `usecases/`, never in `frameworks/`; creation follows Creator (aggregate root creates its parts); behavior on type codes uses Polymorphism; cross-layer helpers are explicit Pure Fabrications with a cohesion note; every Protected Variation cites its GoF in the ADR.
 - **Clean 4 Layers**:
   ```
   src/
@@ -54,7 +55,7 @@ Slice 2: UC-002 Login (Strategy for encryption) → TDD → commit
   Dependencies only inward. Never `entities → frameworks`.
 - **Clean Code**: descriptive names, short functions, no duplication.
 
-**Done when:** every new class has trace comment and single responsibility; import graph respects Dependency Rule.
+**Done when:** every new class has trace comment with GRASP pattern and single responsibility; import graph respects Dependency Rule.
 
 ### 4. TDD loop per slice (Kent Beck) — RED → GREEN → REFACTOR
 
@@ -84,7 +85,7 @@ Do not modify `docs/02-requirements/` or `docs/03-architecture/` without approva
 
 ### Verify
 
-- [ ] Every class traced `FR/UC/US`; Dependency Rule green (`dependency-cruiser` or review)
+- [ ] Every class traced `FR/UC/US [GRASP-pattern]`; Controller in `usecases/`; Dependency Rule green (`dependency-cruiser` or review)
 - [ ] TDD: test failed before, passes after; suite green
 - [ ] `build + lint` green; `openapi.yaml` valid if API exists
 - [ ] Atomic commit per slice `feat: UC-001 CreateUser entity+usecase`

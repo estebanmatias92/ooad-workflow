@@ -16,12 +16,13 @@
 | ADR | Architecture Decision Record | [ADR / MADR](../references/ooad-vocabulary.md#architecture--design) |
 | BDD | Behavior-Driven Development | [Gherkin / BDD](../references/ooad-vocabulary.md#requirements) |
 | BR | Business Rule | [BR — Business Rule](../references/ooad-vocabulary.md#requirements) |
+| CRC | Class-Responsibilities-Collaborators cards | [RDD](../references/ooad-vocabulary.md#architecture--design) |
 | C4 | C4 Model (Context, Container, Component) | [C4](../references/ooad-vocabulary.md#architecture--design) |
 | CCB | Change Control Board | [RTM — Requirements Traceability Matrix](../references/ooad-vocabulary.md#requirements) (CHANGELOG-RE) |
 | DORA | DevOps Research and Assessment metrics | [SRE](../references/ooad-vocabulary.md#delivery) |
 | FR | Functional Requirement | [FR / NFR](../references/ooad-vocabulary.md#requirements) |
 | GoF | Gang of Four (Gamma et al.) | [GoF](../references/ooad-vocabulary.md#architecture--design) |
-| GRASP | General Responsibility Assignment Software Patterns | [SOLID + GRASP](../references/ooad-vocabulary.md#architecture--design) |
+| GRASP | General Responsibility Assignment Software Patterns (9 patterns: Information Expert, Creator, Controller, Low Coupling, High Cohesion, Polymorphism, Indirection, Pure Fabrication, Protected Variations) | [GRASP](../references/ooad-vocabulary.md#architecture--design) |
 | INVEST | Independent, Negotiable, Valuable, Estimable, Small, Testable | [User Story — US](../references/ooad-vocabulary.md#requirements) |
 | ISTQB | International Software Testing Qualifications Board | [ISTQB](../references/ooad-vocabulary.md#verification) |
 | KPI | Key Performance Indicator | [MoSCoW / Kano](../references/ooad-vocabulary.md#requirements) (PRD) |
@@ -30,6 +31,7 @@
 | MVC | Model-View-Controller | [MVC — Classic](../references/ooad-vocabulary.md#architecture--design) |
 | NFR | Non-Functional Requirement | [FR / NFR](../references/ooad-vocabulary.md#requirements) |
 | PRD | Product Requirements Document | [RUP — Vision](../references/ooad-vocabulary.md#methodology) |
+| RDD | Responsibility-Driven Design | [RDD](../references/ooad-vocabulary.md#architecture--design) |
 | RTM | Requirements Traceability Matrix | [RTM — Requirements Traceability Matrix](../references/ooad-vocabulary.md#requirements) |
 | RUP | Rational Unified Process | [RUP](../references/ooad-vocabulary.md#methodology) |
 | SDD | Software Design Description | [RUP](../references/ooad-vocabulary.md#methodology) / [ADR / MADR](../references/ooad-vocabulary.md#architecture--design) |
@@ -37,7 +39,7 @@
 | SLA | Service Level Agreement | [SRE](../references/ooad-vocabulary.md#delivery) |
 | SLI | Service Level Indicator | [SRE](../references/ooad-vocabulary.md#delivery) |
 | SLO | Service Level Objective | [SRE](../references/ooad-vocabulary.md#delivery) |
-| SOLID | Single responsibility, Open/closed, Liskov, Interface segregation, Dependency inversion | [SOLID + GRASP](../references/ooad-vocabulary.md#architecture--design) |
+| SOLID | Single responsibility, Open/closed, Liskov, Interface segregation, Dependency inversion | [SOLID](../references/ooad-vocabulary.md#architecture--design) |
 | SRS | Software Requirements Specification (IEEE 29148 ex-830) | [IEEE 29148](../references/ooad-vocabulary.md#requirements) |
 | SRE | Site Reliability Engineering | [SRE](../references/ooad-vocabulary.md#delivery) |
 | TDD | Test-Driven Development | [TDD](../references/ooad-vocabulary.md#implementation) |
@@ -53,7 +55,7 @@ Links below are entry points into `../references/ooad-vocabulary.md`; the canoni
 
 * **Methodology:** [RUP](../references/ooad-vocabulary.md#methodology) · [Waterfall](../references/ooad-vocabulary.md#methodology) · [Agile / Scrum](../references/ooad-vocabulary.md#methodology)
 * **Requirements:** [IEEE 29148](../references/ooad-vocabulary.md#requirements) · [FR / NFR](../references/ooad-vocabulary.md#requirements) · [Use Case — UC](../references/ooad-vocabulary.md#requirements) · [User Story — US](../references/ooad-vocabulary.md#requirements) · [Gherkin / BDD](../references/ooad-vocabulary.md#requirements) · [RTM](../references/ooad-vocabulary.md#requirements) · [Fagan Inspection](../references/ooad-vocabulary.md#requirements) · [MoSCoW / Kano](../references/ooad-vocabulary.md#requirements) · [BR](../references/ooad-vocabulary.md#requirements)
-* **Architecture & Design:** [Clean Architecture / Clean 4 Layers](../references/ooad-vocabulary.md#architecture--design) · [MVC — Classic](../references/ooad-vocabulary.md#architecture--design) · [Hexagonal / Ports & Adapters](../references/ooad-vocabulary.md#architecture--design) · [C4](../references/ooad-vocabulary.md#architecture--design) · [UML 2.5.1](../references/ooad-vocabulary.md#architecture--design) · [GoF](../references/ooad-vocabulary.md#architecture--design) · [SOLID + GRASP](../references/ooad-vocabulary.md#architecture--design) · [ADR / MADR](../references/ooad-vocabulary.md#architecture--design)
+* **Architecture & Design:** [Clean Architecture / Clean 4 Layers](../references/ooad-vocabulary.md#architecture--design) · [MVC — Classic](../references/ooad-vocabulary.md#architecture--design) · [Hexagonal / Ports & Adapters](../references/ooad-vocabulary.md#architecture--design) · [C4](../references/ooad-vocabulary.md#architecture--design) · [UML 2.5.1](../references/ooad-vocabulary.md#architecture--design) · [RDD](../references/ooad-vocabulary.md#architecture--design) · [GRASP](../references/ooad-vocabulary.md#architecture--design) · [GoF](../references/ooad-vocabulary.md#architecture--design) · [SOLID](../references/ooad-vocabulary.md#architecture--design) · [ADR / MADR](../references/ooad-vocabulary.md#architecture--design)
 * **Implementation:** [TDD](../references/ooad-vocabulary.md#implementation) · [OpenAPI 3.1](../references/ooad-vocabulary.md#implementation)
 * **Verification:** [Test Pyramid](../references/ooad-vocabulary.md#verification) · [ISTQB](../references/ooad-vocabulary.md#verification) · [Gherkin execution](../references/ooad-vocabulary.md#verification)
 * **Delivery:** [Continuous Delivery](../references/ooad-vocabulary.md#delivery) · [SRE](../references/ooad-vocabulary.md#delivery) · [Keep a Changelog + SemVer + Conventional Commits](../references/ooad-vocabulary.md#delivery) · [Infrastructure as Code / 12-Factor](../references/ooad-vocabulary.md#delivery)

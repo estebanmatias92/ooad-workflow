@@ -18,9 +18,9 @@ Router: `/ask-ooad` — “which skill fits?” (one trigger per branch). Then:
 
 1. `/setup-ooad` — RUP/Waterfall/Agile + Clean Architecture — bootstrap repo (once)
 2. `/ooad-discover` — RUP Inception + Vision + MoSCoW — PRD + draft glossary
-3. `/ooad-requirements` — IEEE 29148 + UC/INVEST/Gherkin + Fagan + RTM
-4. `/ooad-architect` — C4 + UML + GoF + Clean 4 Layers + ADR-MADR
-5. `/ooad-build` — Clean 4 Layers + TDD (Beck) + OpenAPI — slice by UC/US
+3. `/ooad-requirements` — IEEE 29148 + UC/INVEST/Gherkin + RDD/CRC + Fagan + RTM
+4. `/ooad-architect` — C4 + UML + RDD→GRASP + GoF + Clean 4 Layers + ADR-MADR
+5. `/ooad-build` — Clean 4 Layers + GRASP-guarded TDD (Beck) + OpenAPI — slice by UC/US
 6. `/ooad-verify` — BDD/Gherkin + Test Pyramid 80/15/5 — RTM-traced
 7. `/ooad-ship` — Continuous Delivery + SRE — checklist + rollback + changelog
 
@@ -103,7 +103,7 @@ ooad-workflow/
 | OOAD Criterion | `ooad-workflow` | Matt Pocock | AddyOsmani |
 |----------------|-----------------|-------------|------------|
 | IEEE830/FR-xxx | ✅ native per profile | ❌ DDD User Stories | ❌ SaaS PRD |
-| UC→Sequence→Classes | ✅ | ❌ seams | ❌ VSA |
+| UC→CRC→Sequence→Classes (RDD→GRASP) | ✅ CRC cards + 9 GRASP cited per mapping | ❌ seams | ❌ VSA |
 | GoF + Clean 4 | ✅ MADR justified | Deep modules | Generic contract-first |
 | TDD | ✅ RED→GREEN per layer | seam-based | ✅ |
 | MVC/Layers | ✅ default | VSA | VSA SaaS |

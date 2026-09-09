@@ -55,6 +55,12 @@ Regeneration is the same as every other `*.puml` in the pack (`ooad-requirements
 
 **Key structural difference:** Matt iterates around **conversation → seams → tickets** (idea stays conversational until `to-spec` collapses it); OOAD iterates around **baselined documents → gates → Construction increments** (each phase leaves a reviewed, RTM-traced artifact before the next begins).
 
+### Responsibility assignment — RDD/GRASP (OOAD-side only)
+
+OOAD assigns behavior with **RDD → GRASP → GoF**: `ooad-requirements` walks UC flows against **CRC cards (Wirfs-Brock)** — doing/knowing responsibilities + collaborators; `ooad-architect` maps every sequence message to an operation citing one of Larman's 9 **GRASP** patterns (Information Expert default, Creator for aggregates, Controller = UseCase, Protected Variations → GoF); `ooad-build` carries the pattern in the trace header (`// FR-001 / UC-001 [Creator]`). See `references/ooad-vocabulary.md#architecture--design`.
+
+Do not mix this with Matt-side **seams / deep modules**: seams choose the highest testable boundary, GRASP chooses which object owns the behavior. A seam never justifies a God-controller or a misplaced creation — GRASP does that job, and the ADR records it.
+
 ## 4. Profile variants (why the diagram shows RUP only)
 
 `references/artifacts-matrix.md` and `templates/workflow.md` govern all three profiles over the same 7-phase SDLC (`artefactos-por-fase-y-metodologia.md:72`). Rendering all three as parallel lanes makes the diagram unreadable, so RUP is the drawn path and the others are gates in the legend:

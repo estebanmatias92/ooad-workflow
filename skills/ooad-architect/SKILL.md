@@ -1,12 +1,12 @@
 ---
 name: ooad-architect
-description: C4 (Simon Brown) + UML + GoF (Gamma) + Clean Architecture (Robert C. Martin) + ADR-MADR — design with Dependency Rule. Use after RE baseline exists.
+description: C4 (Simon Brown) + UML + RDD/CRC (Wirfs-Brock) + GRASP (Larman) + GoF (Gamma) + Clean Architecture (Robert C. Martin) + ADR-MADR — design with Dependency Rule. Use after RE baseline exists.
 disable-model-invocation: true
 ---
 
 # OOAD Architect — Design
 
-Transforms validated RE into **architecture**: C4/UML, data model, GoF selection, Clean 4 Layers layout with ADR-MADR. See `references/ooad-vocabulary.md`.
+Transforms validated RE into **architecture**: C4/UML, RDD→GRASP responsibility assignment, data model, GoF selection, Clean 4 Layers layout with ADR-MADR. See `references/ooad-vocabulary.md`.
 
 ## Preconditions
 
@@ -31,10 +31,11 @@ Propose:
 - **UML (OMG)**: `class-diagram.puml`, `sequence-diagram.puml` per critical UC, `state-diagram.puml` if applicable.
 - **Data model**: ER → relational schema + normalization.
 - **GoF (Gamma et al.)**: selection matrix `Factory/Singleton | Adapter/Decorator/Proxy/Composite | Observer/Strategy/State/Command` — justify each (problem solved, discarded alternative).
+- **Responsibility assignment — RDD → GRASP (Wirfs-Brock → Larman)**: start from `docs/02-requirements/crc-cards.md`; map every sequence message to a class operation and cite one GRASP pattern per mapping (default: Information Expert; creation: Creator; system events: Controller = UseCase, never UI/Framework; variation points: Protected Variations + the GoF that implements it; no-fit helpers: Pure Fabrication with cohesion rationale). Reject God-controllers and feature-envy assignments (Low Coupling / High Cohesion check).
 - **Modules/packages**: responsibility per package.
 - **Dependency Rule (Martin)**: imports point inward (`Frameworks → Adapters → UseCases → Entities`); flag violations.
 
-**Done when:** user explicitly approves style, C4 levels, and GoF choices (ask: architecture OK? preferred pattern? add/remove?).
+**Done when:** user explicitly approves style, C4 levels, responsibility assignment (CRC→GRASP map), and GoF choices (ask: architecture OK? preferred pattern? add/remove?).
 
 ### 3. Produce artifacts (after approval)
 
@@ -53,7 +54,7 @@ docs/03-architecture/
 
 MADR format: Context → Decision → Consequences → Alternatives. Templates: `templates/adr-madr.md`, `templates/c4.puml`, `templates/class-diagram.puml`. Pre-render `plantuml -tsvg docs/03-architecture/*.puml`.
 
-**Done when:** all PUML render to SVG; each ADR has Context/Decision/Consequences/Alternatives and references a motivating `NFR-xxx`; `RTM.csv` updated with `FR→Class→ADR`.
+**Done when:** all PUML render to SVG; each ADR has Context/Decision/Consequences/Alternatives and references a motivating `NFR-xxx`; every sequence message cites its GRASP pattern; `RTM.csv` updated with `FR→Class→ADR`.
 
 ### 4. Update scaffold README
 
@@ -72,6 +73,8 @@ Create/update `docs/03-architecture/README.md` embedding SVGs:
 
 - [ ] C4/UML in PlantUML and SVGs rendered (`plantuml -tsvg` green)
 - [ ] Every ADR has context/decision/consequences/alternatives; justified GoF matrix
+- [ ] Every sequence-message → operation mapping cites a GRASP pattern; Controller is a UseCase; Protected Variations names its GoF
+- [ ] No God-controller / feature envy (Low Coupling + High Cohesion reviewed against CRC cards)
 - [ ] Dependency Rule respected; no `Entities` imports `Frameworks`
 - [ ] Every class/module traced `FR/UC/US → RTM.csv`; NFR → ADR
 - [ ] Human approval recorded

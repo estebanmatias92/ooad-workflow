@@ -30,13 +30,24 @@ Use these terms exactly. Do not substitute `component, service, API, boundary, l
 - **C4 (Simon Brown)** — L1 Context, L2 Container, L3 Component. Predecessor `Kruchten 4+1 Views`.
 - **UML 2.5.1 (OMG/Booch)** — class, sequence, state diagrams in PlantUML.
 - **GoF (Gamma, Helm, Johnson, Vlissides, 1994)** — creational: Factory, Singleton; structural: Adapter, Decorator, Composite, Proxy; behavioral: Observer, Strategy, State, Command. Justify per ADR.
-- **SOLID (Martin)** + **GRASP (Craig Larman)** — single responsibility, information expert, etc.
+- **RDD — Responsibility-Driven Design (Wirfs-Brock, Wilkerson, Wiener, 1990; Wirfs-Brock & McKean, 2003)** — design by assigning doing/knowing responsibilities to objects with collaborators. Technique: `CRC cards` (Class / Responsibilities / Collaborators) walked through against UC flows. Role stereotypes: Information holder, Structurer, Service provider, Coordinator, Controller, Interfacer. CRC output feeds GRASP assignment in `ooad-architect`.
+- **GRASP (Craig Larman, Applying UML and Patterns)** — 9 responsibility-assignment patterns. Use to justify every sequence-message → operation mapping; cite the pattern in the trace header and ADR:
+  - **Information Expert** — assign to the class holding the data needed (default first choice).
+  - **Creator** — assign creation to the aggregate/container that owns or closely uses the parts.
+  - **Controller** — a non-UI UseCase object receives system events; UI/Framework controllers only delegate.
+  - **Low Coupling** — prefer the assignment that minimizes dependencies between classes.
+  - **High Cohesion** — keep each class focused on one responsibility area; split God classes.
+  - **Polymorphism** — vary behavior by type/subtype instead of conditionals on type codes.
+  - **Indirection** — insert a mediator to decouple sender from receiver.
+  - **Pure Fabrication** — invent a non-domain helper (e.g. saver, validator) to preserve cohesion when no domain class fits.
+  - **Protected Variations** — wrap likely-to-change variation points behind a stable interface; each instance must name the GoF pattern that implements it.
+- **SOLID (Martin)** — single responsibility, open/closed, Liskov, interface segregation, dependency inversion. Complements GRASP; cite per ADR when it drives a split.
 - **ADR / MADR (Michael Nygard / Oliver Starke)** — Architecture Decision Record, MADR variant: Context → Decision → Consequences → Alternatives.
 
 ## Implementation
 
 - **TDD (Kent Beck)** — `RED → GREEN → REFACTOR`. One test per behavior, not per private method. Prefer `real > fake > stub > mock` (mock only at slow boundaries).
-- **SOLID/GRASP/GoF** — apply only when justified by ADR, not by fashion.
+- **SOLID / GRASP / GoF / RDD** — apply only when justified by ADR, not by fashion. Every new class cites its GRASP pattern in the trace header (`// FR-001 / UC-001 [Creator]`).
 - **OpenAPI 3.1 (Swagger)** — contract-first REST spec, generated before/alongside controller.
 
 ## Verification

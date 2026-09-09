@@ -7,6 +7,8 @@
 | RE | Use Cases | **Detailed** | Yes | Lightweight |
 | RE | User Stories + Gherkin | Optional | No | **INVEST required** |
 | RE | Glossary + Context + RTM | Refined per iteration | Formal upfront | Emergent living |
+| RE | CRC cards (RDD) | **Required** (`crc-cards.md`) | Optional | Lightweight |
+| Design | Responsibility assignment (GRASP) | Per sequence message | Per SDD class | Just-enough |
 | Design | ADR-MADR | Per significant decision | Rarely | Per decision |
 | Design | C4 / UML | Executable baseline | Heavy SDD | Just-enough |
 | Design | Data Model ER | Formal | Formal | Versioned |

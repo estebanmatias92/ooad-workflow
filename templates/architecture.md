@@ -18,11 +18,14 @@ Dependency rule: arrows point inward. `Entities` know nothing external. `Use Cas
 
 ## Associated GoF Patterns
 
-| Layer | Typical Pattern | Use |
-|-------|-----------------|-----|
-| Use Cases | Strategy, Command, State | interchangeable rules |
-| Adapters | Adapter, Proxy, Decorator | decouple framework |
-| Frameworks | Factory, Singleton (with caution) | configured creation |
+| Layer | Typical Pattern | GRASP driver | Use |
+|-------|-----------------|--------------|-----|
+| Use Cases | Strategy, Command, State | Protected Variations / Polymorphism | interchangeable rules |
+| Use Cases | (UseCase as Controller) | Controller | system-event entry point, never UI logic |
+| Adapters | Adapter, Proxy, Decorator | Indirection / Protected Variations | decouple framework |
+| Entities | (creation via aggregate root) | Creator / Information Expert | ownership-driven construction |
+| Any | — helper with no domain fit | Pure Fabrication | preserve High Cohesion, note rationale |
+| Frameworks | Factory, Singleton (with caution) | Creator | configured creation |
 
 ## How to Verify
 

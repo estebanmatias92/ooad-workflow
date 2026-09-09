@@ -7,7 +7,9 @@ participant Repo as Repo
 database DB
 
 User -> Ctrl : POST /users {dto}
+' GRASP Controller — Ctrl only delegates, UC handles the system event
 Ctrl -> UC : execute(dto)
+' GRASP Creator — UC creates the aggregate it owns
 UC -> Ent : create(data)
 Ent -> Ent : validate rules (Strategy)
 Ent --> UC : User created

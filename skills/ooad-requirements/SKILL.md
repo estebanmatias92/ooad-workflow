@@ -1,6 +1,6 @@
 ---
 name: ooad-requirements
-description: IEEE 29148 (ex-830) SRS + Use Cases (Cockburn) + INVEST/Gherkin (Wake/North) + Fagan (Fagan) — Elicitation→Validation with RTM. Use after PRD/Vision exists.
+description: IEEE 29148 (ex-830) SRS + Use Cases (Cockburn) + RDD/CRC (Wirfs-Brock) + INVEST/Gherkin (Wake/North) + Fagan (Fagan) — Elicitation→Validation with RTM. Use after PRD/Vision exists.
 disable-model-invocation: true
 ---
 
@@ -30,8 +30,9 @@ Techniques: interview, JAD, observation, survey, prototype.
 
 - Prioritize with **MoSCoW (Dai Clegg)** or **Kano (Noriaki Kano)**; resolve conflicts; refine `CONTEXT.md`.
 - Produce **Conceptual Class Diagram** + **System Boundary / C4 Context** (`docs/02-requirements/conceptual-model.puml`, `context.puml`).
+- Run a **CRC workshop — RDD (Wirfs-Brock)**: one card per candidate class (`templates/crc-card.md` — Class / Responsibilities doing+knowing / Collaborators / UC source). Derive candidates from UC nouns, responsibilities from UC verbs, collaborators from UC steps. Walk each UC flow against the cards; filter with Information Expert + High Cohesion; record role stereotype per card. Output `docs/02-requirements/crc-cards.md` (RUP: required; Agile: lightweight, one card per backlog entity).
 
-**Done when:** no open conflicts; glossary validated; system boundary agreed; model renders via `plantuml -tsvg`.
+**Done when:** no open conflicts; glossary validated; system boundary agreed; every conceptual class traces to a CRC card with UC source; model renders via `plantuml -tsvg`.
 
 ### 3. Specification — choose format by profile
 
@@ -70,6 +71,7 @@ docs/02-requirements/
 ├── use-cases/UC-001-*.md   (RUP)
 ├── glossary.md → CONTEXT.md
 ├── conceptual-model.puml + .svg
+├── crc-cards.md            (RDD — one card per class, template templates/crc-card.md)
 ├── context.puml
 ├── RTM.csv
 └── validation.md
@@ -84,4 +86,5 @@ SRS without measurable NFRs; US without Gherkin AC; glossary with contradictory 
 - [ ] Every FR/NFR classified, with ID and verifiable criterion
 - [ ] SRS or backlog complete per profile; every UC/US has Gherkin AC
 - [ ] Conceptual model + context render; `plantuml -tsvg` green
+- [ ] CRC cards exist with responsibilities + collaborators + UC source (lightweight in Agile)
 - [ ] RTM `PRD→RE` fully traced; Fagan passed with sign-off

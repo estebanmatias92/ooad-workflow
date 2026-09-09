@@ -18,7 +18,9 @@
 | `docs/02-requirements/use-cases/UC-*.md` | **Detailed required** | Yes | Lightweight or US |
 | `docs/02-requirements/backlog/US-*.md + Gherkin` | Optional | No | **Required INVEST + AC** |
 | `docs/02-requirements/glossary.md + RTM.csv` | Required, refined per iteration | Required upfront, formal | Emergent, living |
+| `docs/02-requirements/crc-cards.md` (RDD) | Required | Optional | Lightweight |
 | `docs/03-architecture/C4.puml + UML` | Executable baseline at Elaboration | Heavy SDD, detailed UML | Just-enough |
+| `docs/03-architecture/` GRASP assignment | Per sequence message | Per SDD class | Just-enough |
 | `docs/03-architecture/adrs/` | ADR per significant decision | Rarely (did not exist originally) | ADR per decision |
 | `src/` Clean 4 layers | Iterative (Construction) | At the end | Per sprint |
 | `docs/05-qa/test-plan*.feature` | Per iteration | Complete upfront, formal | Emergent automated |

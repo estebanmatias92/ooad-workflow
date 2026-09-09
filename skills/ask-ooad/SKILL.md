@@ -13,8 +13,8 @@ User-invoked router over the `ooad-workflow` pack. Never fires autonomously — 
 One trigger per branch — collapse synonyms:
 
 - **No PRD / lost vision** → `/ooad-discover` (RUP Inception + Vision + MoSCoW) → produces `docs/01-discovery/PRD.md`.
-- **PRD exists, needs SRS or backlog** → `/ooad-requirements` (IEEE 29148 + UC/INVEST/Gherkin + Fagan + RTM).
-- **RE baselined, needs architecture** → `/ooad-architect` (C4 + UML + GoF + Clean 4 Layers + ADR-MADR).
+- **PRD exists, needs SRS or backlog** → `/ooad-requirements` (IEEE 29148 + UC/INVEST/Gherkin + RDD/CRC + Fagan + RTM).
+- **RE baselined, needs architecture** → `/ooad-architect` (C4 + UML + RDD→GRASP + GoF + Clean 4 Layers + ADR-MADR).
 - **Architecture approved, needs code** → `/ooad-build` (Clean 4 Layers + TDD + OpenAPI) — slice by UC/US.
 - **Code slice green, needs test plan** → `/ooad-verify` (BDD/Gherkin + Test Pyramid 80/15/5).
 - **QA green, needs release** → `/ooad-ship` (Continuous Delivery + SRE).

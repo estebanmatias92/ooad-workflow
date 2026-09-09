@@ -195,6 +195,8 @@ partition "OOAD-workflow — UC-driven (RUP default*)" {
       • <b>docs/02-requirements/raw-needs.md</b>
       • <b>docs/02-requirements/SRS.md</b> or UC/US
       • <b>docs/02-requirements/conceptual-model.puml</b>+.svg
+      • <b>docs/02-requirements/crc-cards.md</b> (RDD —
+        Class/Responsibilities/Collaborators per UC flow)
       • <b>docs/02-requirements/RTM.csv</b> (PRD→FR/UC/US→Class)
       • <b>docs/02-requirements/validation.md</b> (sign-off)
       • <b>CHANGELOG-RE.md</b> + tagged baseline
@@ -218,7 +220,11 @@ partition "OOAD-workflow — UC-driven (RUP default*)" {
       • style <b>Clean 4 Layers</b>* / MVC / Hexagonal
       • <b>C4</b> L1 Context, L2 Container, L3 Component
       • <b>UML</b> class / sequence per UC / state / ER
+      • <b>RDD → GRASP</b> — CRC cards feed responsibility
+        assignment; every sequence message cites one
+        GRASP pattern (Controller = UseCase)
       • <b>GoF</b> matrix — each pattern justified
+        (Protected Variations names its GoF)
       <b>Outputs / state:</b>
       • <b>docs/03-architecture/c4-*.puml</b> + .svg
       • <b>docs/03-architecture/class-diagram.puml</b>+.svg
@@ -243,6 +249,7 @@ partition "OOAD-workflow — UC-driven (RUP default*)" {
         <b>Skill:</b> ooad-build
         <b>Rule:</b> slice = <b>Entity + UseCase + Adapter + Controller</b>
         compiles & suite stays green.
+        Trace header carries GRASP: <b>// FR-001 / UC-001 [Creator]</b>
         <b>TDD loop per slice:</b> RED (fail) → GREEN (pass) → REFACTOR
         prefer real > fake > stub > mock (mock only at slow boundary)
         <b>Outputs / state:</b>
