@@ -30,8 +30,8 @@ Propose:
 - **C4 (Simon Brown)**: L1 Context, L2 Container, L3 Component (per size).
 - **UML (OMG)**: `class-diagram.puml`, `sequence-diagram.puml` per critical UC, `state-diagram.puml` if applicable.
 - **Data model**: ER → relational schema + normalization.
-- **GoF (Gamma et al.)**: selection matrix `Factory/Singleton | Adapter/Decorator/Proxy/Composite | Observer/Strategy/State/Command` — justify each (problem solved, discarded alternative).
-- **Responsibility assignment — RDD → GRASP (Wirfs-Brock → Larman)**: start from `docs/02-requirements/crc-cards.md`; map every sequence message to a class operation and cite one GRASP pattern per mapping (default: Information Expert; creation: Creator; system events: Controller = UseCase, never UI/Framework; variation points: Protected Variations + the GoF that implements it; no-fit helpers: Pure Fabrication with cohesion rationale). Reject God-controllers and feature-envy assignments (Low Coupling / High Cohesion check).
+- **GoF (Gamma et al.)**: selection matrix `Factory/Singleton | Adapter/Decorator/Proxy/Composite | Observer/Strategy/State/Command` — justify each (problem solved, discarded alternative, and the tradeoff accepted — GoF's Mission is named solutions with evaluated consequences, not fashion).
+- **Responsibility assignment — RDD → GRASP (Wirfs-Brock → Larman)**: start from `docs/02-requirements/crc-cards.md`; map every sequence message to a class operation and cite one GRASP pattern per mapping (default: Information Expert; creation: Creator; system events: Controller = UseCase, never UI/Framework; variation points: Protected Variations + the GoF that implements it; no-fit helpers: Pure Fabrication with cohesion rationale). Each mapping states the pattern's `Mission:` from `references/ooad-vocabulary.md` (one line — why this owner, not another). Reject God-controllers and feature-envy assignments (Low Coupling / High Cohesion check).
 - **Modules/packages**: responsibility per package.
 - **Dependency Rule (Martin)**: imports point inward (`Frameworks → Adapters → UseCases → Entities`); flag violations.
 
@@ -73,7 +73,7 @@ Create/update `docs/03-architecture/README.md` embedding SVGs:
 
 - [ ] C4/UML in PlantUML and SVGs rendered (`plantuml -tsvg` green)
 - [ ] Every ADR has context/decision/consequences/alternatives; justified GoF matrix
-- [ ] Every sequence-message → operation mapping cites a GRASP pattern; Controller is a UseCase; Protected Variations names its GoF
+- [ ] Every sequence-message → operation mapping cites a GRASP pattern plus its one-line `Mission:`; Controller is a UseCase; Protected Variations names its GoF
 - [ ] No God-controller / feature envy (Low Coupling + High Cohesion reviewed against CRC cards)
 - [ ] Dependency Rule respected; no `Entities` imports `Frameworks`
 - [ ] Every class/module traced `FR/UC/US → RTM.csv`; NFR → ADR

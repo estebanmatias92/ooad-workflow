@@ -30,7 +30,7 @@ Techniques: interview, JAD, observation, survey, prototype.
 
 - Prioritize with **MoSCoW (Dai Clegg)** or **Kano (Noriaki Kano)**; resolve conflicts; refine `CONTEXT.md`.
 - Produce **Conceptual Class Diagram** + **System Boundary / C4 Context** (`docs/02-requirements/conceptual-model.puml`, `context.puml`).
-- Run a **CRC workshop — RDD (Wirfs-Brock)**: one card per candidate class (`templates/crc-card.md` — Class / Responsibilities doing+knowing / Collaborators / UC source). Derive candidates from UC nouns, responsibilities from UC verbs, collaborators from UC steps. Walk each UC flow against the cards; filter with Information Expert + High Cohesion; record role stereotype per card. Output `docs/02-requirements/crc-cards.md` (RUP: required; Agile: lightweight, one card per backlog entity).
+- Run a **CRC workshop — RDD (Wirfs-Brock)**: one card per candidate class (`templates/crc-card.md` — Class / Responsibilities doing+knowing / Collaborators / UC source). Derive candidates from UC nouns, responsibilities from UC verbs, collaborators from UC steps. Walk each UC flow against the cards; filter with Information Expert + High Cohesion; record role stereotype per card. Why cards before classes: RDD's Mission is flexibility/reusability/encapsulation, and responsibilities are cheapest to move before they fossilize in UML — see `references/ooad-vocabulary.md`. Output `docs/02-requirements/crc-cards.md` (RUP: required; Agile: lightweight, one card per backlog entity).
 
 **Done when:** no open conflicts; glossary validated; system boundary agreed; every conceptual class traces to a CRC card with UC source; model renders via `plantuml -tsvg`.
 

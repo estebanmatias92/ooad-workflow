@@ -15,7 +15,7 @@
 
 ## Responsibility assignment (GRASP)
 
-{{ per new class/operation: GRASP pattern — e.g. Creator for Order.create(), Controller for CreateUserUseCase, Protected Variations → Strategy for validation rules }}
+{{ per new class/operation: GRASP pattern + its one-line Mission from references/ooad-vocabulary.md — e.g. Creator for Order.create() (one stable owner per lifecycle), Controller for CreateUserUseCase (single entry point per system operation), Protected Variations → Strategy for validation rules (instability never leaks to clients) }}
 
 ## Consequences
 

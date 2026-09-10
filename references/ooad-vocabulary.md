@@ -24,30 +24,31 @@ Use these terms exactly. Do not substitute `component, service, API, boundary, l
 
 ## Architecture & Design
 
-- **Clean Architecture / Clean 4 Layers (Robert C. Martin)** — `Entities → Use Cases → Interface Adapters → Frameworks & Drivers`. Dependency Rule: imports point inward, `Entities` know nothing external.
+- **Clean Architecture / Clean 4 Layers (Robert C. Martin, Clean Architecture, 2017, ch.22)** — `Entities → Use Cases → Interface Adapters → Frameworks & Drivers`. Dependency Rule: imports point inward, `Entities` know nothing external. `Mission:` framework-independent, testable business rules — swappable UI/database with core untouched. `Symptom if ignored:` framework annotations in entities, slow/fragile tests, UI-or-DB change rewrites business rules.
 - **MVC — Classic (Reenskaug/Krasner)** — `Presentation → Business Logic → Data` layered alternative.
 - **Hexagonal / Ports & Adapters (Alistair Cockburn)** — explicit ports/adapters, alternative to Clean 4.
 - **C4 (Simon Brown)** — L1 Context, L2 Container, L3 Component. Predecessor `Kruchten 4+1 Views`.
 - **UML 2.5.1 (OMG/Booch)** — class, sequence, state diagrams in PlantUML.
-- **GoF (Gamma, Helm, Johnson, Vlissides, 1994)** — creational: Factory, Singleton; structural: Adapter, Decorator, Composite, Proxy; behavioral: Observer, Strategy, State, Command. Justify per ADR.
-- **RDD — Responsibility-Driven Design (Wirfs-Brock, Wilkerson, Wiener, 1990; Wirfs-Brock & McKean, 2003)** — design by assigning doing/knowing responsibilities to objects with collaborators. Technique: `CRC cards` (Class / Responsibilities / Collaborators) walked through against UC flows. Role stereotypes: Information holder, Structurer, Service provider, Coordinator, Controller, Interfacer. CRC output feeds GRASP assignment in `ooad-architect`.
-- **GRASP (Craig Larman, Applying UML and Patterns)** — 9 responsibility-assignment patterns. Use to justify every sequence-message → operation mapping; cite the pattern in the trace header and ADR:
-  - **Information Expert** — assign to the class holding the data needed (default first choice).
-  - **Creator** — assign creation to the aggregate/container that owns or closely uses the parts.
-  - **Controller** — a non-UI UseCase object receives system events; UI/Framework controllers only delegate.
-  - **Low Coupling** — prefer the assignment that minimizes dependencies between classes.
-  - **High Cohesion** — keep each class focused on one responsibility area; split God classes.
-  - **Polymorphism** — vary behavior by type/subtype instead of conditionals on type codes.
-  - **Indirection** — insert a mediator to decouple sender from receiver.
-  - **Pure Fabrication** — invent a non-domain helper (e.g. saver, validator) to preserve cohesion when no domain class fits.
-  - **Protected Variations** — wrap likely-to-change variation points behind a stable interface; each instance must name the GoF pattern that implements it.
-- **SOLID (Martin)** — single responsibility, open/closed, Liskov, interface segregation, dependency inversion. Complements GRASP; cite per ADR when it drives a split.
+- **GoF (Gamma, Helm, Johnson, Vlissides, Design Patterns, 1994, Preface + ch.1)** — creational: Factory, Singleton; structural: Adapter, Decorator, Composite, Proxy; behavioral: Observer, Strategy, State, Command. Justify per ADR. `Mission:` record recurring designs as named, evaluated solutions — shared vocabulary plus explicit tradeoffs/consequences, so designs are reusable and their intent is documented. `Symptom if ignored:` unnamed ad-hoc structures nobody recognizes, repeated design debates, pattern applied for fashion with no stated forces.
+- **RDD — Responsibility-Driven Design (Wirfs-Brock, Wilkerson, Wiener, OOPSLA 1989; Wirfs-Brock & McKean, Object Design, 2003)** — design by assigning doing/knowing responsibilities to objects with collaborators. Technique: `CRC cards` (Class / Responsibilities / Collaborators) walked through against UC flows. Role stereotypes: Information holder, Structurer, Service provider, Coordinator, Controller, Interfacer. CRC output feeds GRASP assignment in `ooad-architect`. `Mission:` architectural capability goals — maximize flexibility, reusability, and encapsulation via the client–server contract (clients see intent, servers hide how). `Symptom if ignored:` data-bag classes with procedural controllers, responsibilities discovered only during coding when they are expensive to move.
+- **GRASP (Craig Larman, Applying UML and Patterns, 3rd ed., ch.17 + ch.22)** — 9 responsibility-assignment patterns: a methodical, explainable way to decide what goes where, with Low Coupling as the continual evaluative goal. Use to justify every sequence-message → operation mapping; cite the pattern in the trace header and ADR:
+  - **Information Expert** — assign to the class holding the data needed (default first choice). `Mission:` co-locate behavior with information so coupling stays low.
+  - **Creator** — assign creation to the aggregate/container that owns or closely uses the parts. `Mission:` one stable owner per lifecycle, no scattered `new`.
+  - **Controller** — a non-UI UseCase object receives system events; UI/Framework controllers only delegate. `Mission:` single entry point per system operation, UI stays thin.
+  - **Low Coupling** — prefer the assignment that minimizes dependencies between classes. `Mission:` independent classes; change stops rippling.
+  - **High Cohesion** — keep each class focused on one responsibility area; split God classes. `Mission:` every class earns its keep; fixes land in one place.
+  - **Polymorphism** — vary behavior by type/subtype instead of conditionals on type codes. `Mission:` new variants without touching tested code.
+  - **Indirection** — insert a mediator to decouple sender from receiver. `Mission:` both sides depend on something stable.
+  - **Pure Fabrication** — invent a non-domain helper (e.g. saver, validator) to preserve cohesion when no domain class fits. `Mission:` protect domain cohesion; all GoF patterns are fabrications of this kind.
+  - **Protected Variations** — wrap likely-to-change variation points behind a stable interface; each instance must name the GoF pattern that implements it. `Mission:` predicted instability never leaks to clients.
+  - `Symptom if ignored:` God-controller, Feature Envy, repeated type-code switches, creation logic smeared across callers.
+- **SOLID (Robert C. Martin, Design Principles and Design Patterns, 2000; Agile Software Development, 2003)** — five class-design principles that fight design rot (rigidity, fragility, immobility): SRP — one reason to change; OCP — open for extension, closed for modification; LSP — subtypes substitutable for base types; ISP — no client forced onto unused interfaces; DIP — depend on abstractions. Complements GRASP; cite per ADR when it drives a split. `Mission:` designs that stay soft under growth — flexible, robust, reusable. `Symptom if ignored:` shotgun surgery (one change scatters across files), divergent change (one module changes for unrelated reasons), speculative generality.
 - **ADR / MADR (Michael Nygard / Oliver Starke)** — Architecture Decision Record, MADR variant: Context → Decision → Consequences → Alternatives.
 
 ## Implementation
 
 - **TDD (Kent Beck)** — `RED → GREEN → REFACTOR`. One test per behavior, not per private method. Prefer `real > fake > stub > mock` (mock only at slow boundaries).
-- **SOLID / GRASP / GoF / RDD** — apply only when justified by ADR, not by fashion. Every new class cites its GRASP pattern in the trace header (`// FR-001 / UC-001 [Creator]`).
+- **SOLID / GRASP / GoF / RDD** — apply only when justified by ADR, not by fashion, and state which `Mission:` the choice serves. Every new class cites its GRASP pattern in the trace header (`// FR-001 / UC-001 [Creator]`).
 - **OpenAPI 3.1 (Swagger)** — contract-first REST spec, generated before/alongside controller.
 
 ## Verification

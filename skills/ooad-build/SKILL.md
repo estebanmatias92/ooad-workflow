@@ -42,7 +42,7 @@ Slice 2: UC-002 Login (Strategy for encryption) → TDD → commit
 
 ### 3. Code — SOLID (Martin) + GRASP (Larman) + RDD (Wirfs-Brock) + GoF (Gamma) only when ADR-justified
 
-- **Trace**: each module header `// FR-001 / UC-001 [GRASP-pattern] — title` or `# FR-001 [GRASP-pattern]` (e.g. `// FR-001 / UC-001 [Creator] Order.create()`).
+- **Trace**: each module header `// FR-001 / UC-001 [GRASP-pattern] — title` or `# FR-001 [GRASP-pattern]` (e.g. `// FR-001 / UC-001 [Creator] Order.create()`). The pattern tag is a Mission claim — it must match the `Mission:` in `references/ooad-vocabulary.md`, or the reviewer challenges it.
 - **GRASP guardrails**: Controller logic lives in `usecases/`, never in `frameworks/`; creation follows Creator (aggregate root creates its parts); behavior on type codes uses Polymorphism; cross-layer helpers are explicit Pure Fabrications with a cohesion note; every Protected Variation cites its GoF in the ADR.
 - **Clean 4 Layers**:
   ```
