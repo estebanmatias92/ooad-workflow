@@ -36,6 +36,7 @@ Each skill reads `docs/agents/workflow.md` for profile gating (`templates/workfl
 - Do not version `.tmp/` or `.scratch/`
 - Global symlink: `~/.config/opencode/skills/ooad-workflow → $(pwd)` (see `README.md:34`)
 - Leading words: use tokens exactly as in `ooad-vocabulary.md` (no synonym drift; see `docs/glossary.md` for acronym expansion); descriptions front-load them
+- Skill descriptions: user-invoked skills keep trigger tokens in `description` (intentional deviation from strict SKILL-MECHANICS one-line human summary — the global symlink exposes descriptions to model discovery, so triggers earn their load; do not strip them)
 
 ## Agent Skills
 

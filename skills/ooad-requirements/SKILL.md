@@ -52,7 +52,7 @@ Rules: unique `ID`, priority, source, dependency, acceptance criterion per item.
 
 Apply checklist: complete, consistent, unambiguous, verifiable, traceable, correct, boundary defined. Techniques: inspection, walkthrough, stakeholder review, prototype. Formalize **sign-off** (Waterfall/RUP) or **DoD per US** (Agile).
 
-**Done when:** `docs/02-requirements/validation.md` exists with signatures/minutes and zero open Fagan defects.
+**Done when:** `docs/02-requirements/validation.md` exists with signatures/minutes and zero open Fagan defects (summary under 400 words).
 
 ### 5. Management — baseline + RTM
 

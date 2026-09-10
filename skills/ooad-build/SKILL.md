@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # OOAD Build — Implementation
 
-Writes code in Clean layers + TDD satisfying RE and architecture, traced `FR/UC/US`. See `references/ooad-vocabulary.md`.
+Writes code in Clean layers + TDD satisfying RE and architecture, traced `FR/UC/US`. See `references/ooad-vocabulary.md`. Length is earned (Clean 4 + TDD + OpenAPI + GRASP guardrails are graded artifacts) — do not thin to pure delegation.
 
 ## Preconditions
 

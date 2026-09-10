@@ -69,7 +69,7 @@ behave tests/cases/  # or cucumber / pytest-bdd
 
 Validate white-box (coverage, branches), black-box (partitioning), UAT with stakeholder.
 
-**Done when:** suite green, coverage ≥80%, no blocking bug, `qa-report.md` with trace `FR→case` in `RTM.csv`.
+**Done when:** suite green, coverage ≥80%, no blocking bug, `qa-report.md` with trace `FR→case` in `RTM.csv` (per-section summaries under 400 words).
 
 ## Reference
 

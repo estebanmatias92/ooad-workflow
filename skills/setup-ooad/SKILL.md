@@ -56,7 +56,7 @@ Ask: `Tracker? [GitHub* / GitLab / Local / Other]`
 
 Ask: `Architecture? [Clean4* / MVC / Hexagonal]`
 
-**D — Domain docs layout.** Default `single-context` (`CONTEXT.md + docs/adr/`). Offer `multi-context` (`CONTEXT-MAP.md`) only if monorepo signal found.
+**D — Domain docs layout (skip unless step 1 found a monorepo signal).** Default `single-context` (`CONTEXT.md + docs/adr/`) — record it without asking when no signal. Offer `multi-context` (`CONTEXT-MAP.md`) only when step 1 found one.
 
 **Done when:** user answered A (and B/C/D if not auto-resolved).
 

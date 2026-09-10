@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Ask OOAD — Router
 
-User-invoked router over the `ooad-workflow` pack. Never fires autonomously — human must call `/ask-ooad`. Cures cognitive load of remembering 7 skill names (`SKILL-MECHANICS.md:20`).
+User-invoked router over the `ooad-workflow` pack. Never fires autonomously — human must call `/ask-ooad`. Cures cognitive load of remembering 7 skill names (one router to remember instead of many).
 
 ## When to Use (branches)
 
@@ -38,7 +38,7 @@ Map answer to branch above. If ambiguous, grill for blocker:
 
 ### 2. Dispatch
 
-Tell user: `Run /<skill>` and show next artifact path from `references/artifacts-matrix.md`. Do not start the skill — user must invoke it (router never fires model-invoked skills, per `SKILL-MECHANICS.md:9`).
+Tell user: `Run /<skill>` and show next artifact path from `references/artifacts-matrix.md`. Do not start the skill — user must invoke it (user-invoked skills fire only by human call, never by dispatch).
 
 **Done when:** user knows which `/ooad-*` to run next and why.
 
@@ -51,4 +51,5 @@ Shared leading words live in `references/ooad-vocabulary.md` — router repeats 
 ### Related
 
 - `ooad-workflow` pack is distribution-only; consumer repo workflow lives in `docs/agents/workflow.md`.
+- Which bias? See `docs/dev-cycle-comparison.md` §5 decision table (OOAD vs Matt Pocock) before dispatching brownfield repos — do not mix vocabularies mid-repo.
 - Future composable skills (model-invoked) will be discoverable here when `disable-model-invocation: false` is added.
