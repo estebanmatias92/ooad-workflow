@@ -43,6 +43,8 @@ Regeneration is the same as every other `*.puml` in the pack (`ooad-requirements
 
 ### OOAD-workflow, RUP default (right lane)
 
+RUP default order is `setup-ooad` (once) → `ooad-discover` → `ooad-requirements` → `ooad-architect` → `ooad-build` ↔ `ooad-verify` → `ooad-ship` (`↔` = Construction loop; consumer docs `docs/01-discovery → 02-requirements → 03-architecture → src/ → 05-qa → 06-deploy`).
+
 | Step | Flow & iterations | Outputs / state change |
 | ------ | ------------------- | ------------------------ |
 | `setup-ooad` (once) | Linear, once per repo | `docs/agents/workflow.md` (profile = RUP) + `architecture.md` (Clean 4) + `issue-tracker.md` + `domain.md`. |

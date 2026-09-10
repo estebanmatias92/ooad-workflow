@@ -10,16 +10,16 @@ User-invoked router over the `ooad-workflow` pack. Never fires autonomously — 
 
 ## When to Use (branches)
 
-One trigger per branch — collapse synonyms:
+Lifecycle order — one trigger per branch (collapse synonyms):
 
-- **No PRD / lost vision** → `/ooad-discover` (RUP Inception + Vision + MoSCoW) → produces `docs/01-discovery/PRD.md`.
-- **PRD exists, needs SRS or backlog** → `/ooad-requirements` (IEEE 29148 + UC/INVEST/Gherkin + RDD/CRC + Fagan + RTM).
-- **RE baselined, needs architecture** → `/ooad-architect` (C4 + UML + RDD→GRASP + GoF + Clean 4 Layers + ADR-MADR).
-- **Architecture approved, needs code** → `/ooad-build` (Clean 4 Layers + TDD + OpenAPI) — slice by UC/US.
-- **Code slice green, needs test plan** → `/ooad-verify` (BDD/Gherkin + Test Pyramid 80/15/5).
-- **QA green, needs release** → `/ooad-ship` (Continuous Delivery + SRE).
-- **Repo not bootstrapped** → `/setup-ooad` (RUP/Waterfall/Agile + tracker + architecture) — once per repo.
-- **Brownfield gap** → start at `/ooad-architect` with gap → US (documented in `README.md:25`).
+0. **Repo not bootstrapped** → `/setup-ooad` (RUP/Waterfall/Agile + tracker + architecture) — once per repo.
+1. **No PRD / lost vision** → `/ooad-discover` (RUP Inception + Vision + MoSCoW) → produces `docs/01-discovery/PRD.md`.
+2. **PRD exists, needs SRS or backlog** → `/ooad-requirements` (IEEE 29148 + UC/INVEST/Gherkin + RDD/CRC + Fagan + RTM).
+3. **RE baselined, needs architecture** → `/ooad-architect` (C4 + UML + RDD→GRASP + GoF + Clean 4 Layers + ADR-MADR).
+4. **Architecture approved, needs code** → `/ooad-build` (Clean 4 Layers + TDD + OpenAPI) — slice by UC/US.
+5. **Code slice green, needs test plan** → `/ooad-verify` (BDD/Gherkin + Test Pyramid 80/15/5) — `4 ↔ 5` iterates per UC/US until green.
+6. **QA green, needs release** → `/ooad-ship` (Continuous Delivery + SRE).
+- **Brownfield gap** → start at `/ooad-architect` with gap → US (documented in `README.md:31`).
 
 ## Process
 
@@ -29,7 +29,7 @@ Read `docs/agents/workflow.md` if it exists to know profile (`RUP/Waterfall/Agil
 
 Ask user one-branch question:
 
-> `Which fits? [discover / requirements / architect / build / verify / ship / setup] — or describe your goal in one sentence.`
+> `Which fits? [setup / discover / requirements / architect / build / verify / ship] — or describe your goal in one sentence.`
 
 Map answer to branch above. If ambiguous, grill for blocker:
 
@@ -38,7 +38,7 @@ Map answer to branch above. If ambiguous, grill for blocker:
 
 ### 2. Dispatch
 
-Tell user: `Run /<skill>` and show next artifact path from `references/artifacts-matrix.md`. Do not start the skill — user must invoke it (user-invoked skills fire only by human call, never by dispatch).
+Tell user: `Run /<skill>` and show next artifact path from `references/artifacts-matrix.md` plus the next skill in lifecycle order. Do not start the skill — user must invoke it (user-invoked skills fire only by human call, never by dispatch).
 
 **Done when:** user knows which `/ooad-*` to run next and why.
 

@@ -2,6 +2,10 @@
 
 Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Analysis paradigm (`systems-analysis-ooad-paradigm.md:3` — `IEEE830/Use Cases → UML/GoF → TDD → MVC/Layers`). Professional alternative to `mattpocock/skills` (DDD/VSA) and `addyosmani/agent-skills` (PRD→VSA SaaS).
 
+![OOAD lifecycle — phase sequence](docs/diagrams/lifecycle.svg)
+
+*Source:* `docs/diagrams/lifecycle.puml` — boxes use literal trigger stems (`setup` = `/setup-ooad`, `discover` = `/ooad-discover`, etc.); copy full triggers from the Skills list below. Regenerate with `plantuml -tsvg docs/diagrams/lifecycle.puml`.
+
 ## Methodology Profiles (selectable via `setup-ooad`)
 
 | Profile | When | Required Artifact |
@@ -13,6 +17,10 @@ Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Anal
 The same 7-phase SDLC base (`Discovery → RE → Design → Implementation → Testing → Deployment → Maintenance`) is scheduled differently per profile (`artefactos-por-fase-y-metodologia.md:72-149` — *artifacts-by-phase-and-methodology*, ES).
 
 ## Skills (all `disable-model-invocation: true`, human calls `/name`)
+
+Lifecycle order: `/setup-ooad` (once) → `/ooad-discover` → `/ooad-requirements` → `/ooad-architect` → `/ooad-build` ↔ `/ooad-verify` → `/ooad-ship`.
+
+`↔` = Construction loop per UC/US until green (suite green, cov ≥80%, no blockers). Consumer docs mirror the order: `docs/01-discovery → 02-requirements → 03-architecture → src/ → 05-qa → 06-deploy`. RUP iterates, Waterfall runs once end-to-end, Agile slices per sprint.
 
 Router: `/ask-ooad` — “which skill fits?” (one trigger per branch). Then:
 

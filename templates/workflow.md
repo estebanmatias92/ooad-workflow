@@ -23,9 +23,11 @@ Source: `artefactos-por-fase-y-metodologia.md:68-149` (ES).
 
 ## Gates
 
-- **RUP**: Inception (Vision ok) → Elaboration (architecture runs) → Construction (increments) → Transition (beta→prod)
-- **Waterfall**: SRS signed → SDD signed → Build → Formal QA → Release
-- **Agile**: Living PRD → Sprint Planning (US+AC) → Build+TDD → Review → Ship
+Lifecycle order (`setup-ooad` once → `ooad-discover` → `ooad-requirements` → `ooad-architect` → `ooad-build` ↔ `ooad-verify` → `ooad-ship`; `↔` = Construction loop per UC/US until green):
+
+- **RUP**: Inception (`ooad-discover`: Vision ok) → Elaboration (`ooad-requirements` + `ooad-architect`: architecture runs) → Construction (`ooad-build` ↔ `ooad-verify`: increments) → Transition (`ooad-ship`: beta→prod)
+- **Waterfall**: SRS signed (`ooad-requirements`) → SDD signed (`ooad-architect`) → Build (`ooad-build`) → Formal QA (`ooad-verify`) → Release (`ooad-ship`)
+- **Agile**: Living PRD (`ooad-discover`) → Sprint Planning (`ooad-requirements`: US+AC) → Build+TDD (`ooad-build`) → Review (`ooad-verify`) → Ship (`ooad-ship`)
 
 ## How to Change Profile
 

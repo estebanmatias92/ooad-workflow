@@ -1,0 +1,83 @@
+@startuml lifecycle
+' lifecycle — OOAD phase sequence (display shorthand, triggers in legend + README caption)
+' Render: plantuml -tsvg docs/diagrams/lifecycle.puml
+' Box labels are literal trigger stems: setup = /setup-ooad, discover = /ooad-discover, etc.
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName "Helvetica"
+skinparam defaultFontSize 13
+skinparam activity {
+  BackgroundColor #F9F9F9
+  BorderColor #333333
+  ArrowColor #333333
+}
+skinparam note {
+  BackgroundColor #FFFEF0
+  BorderColor #C0C0A0
+}
+skinparam title {
+  FontSize 16
+  FontColor #1A1A1A
+}
+skinparam legend {
+  BackgroundColor #FFFEF0
+  BorderColor #C0C0A0
+}
+skinparam arrow {
+  Color #333333
+}
+
+title OOAD lifecycle — phase sequence (RUP default)
+
+start
+
+:setup;
+note right
+  once per repo
+end note
+
+:discover;
+
+if (PRD approved?) then (no)
+  ->[revise] :discover;
+else (yes)
+endif
+
+:requirements;
+
+if (Fagan + sign-off?) then (no)
+  ->[fix] :requirements;
+else (yes)
+endif
+
+:architect;
+
+if (Architecture approved?) then (no)
+  ->[revise] :architect;
+else (yes)
+endif
+
+repeat
+  :build;
+  :verify;
+repeat while (green + cov >= 80%?) is (no: fix in build) not (yes)
+
+:ship;
+
+stop
+
+legend right
+  |= Label |= Trigger |
+  | setup | /setup-ooad (once) |
+  | discover | /ooad-discover |
+  | requirements | /ooad-requirements |
+  | architect | /ooad-architect |
+  | build | /ooad-build |
+  | verify | /ooad-verify |
+  | ship | /ooad-ship |
+  * Boxes abbreviate the prefix; copy triggers from the Skills list.
+  RUP iterates, Waterfall runs once end-to-end, Agile slices per sprint.
+endlegend
+
+footer OOAD-workflow docs/diagrams/lifecycle.puml — boxes = literal trigger stems, legend = full triggers
+@enduml
