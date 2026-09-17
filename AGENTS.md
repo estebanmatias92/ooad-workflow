@@ -51,6 +51,12 @@ This pack does not track its own issues here (distribution pack). Consumer repos
 
 Single-context in consumer repos (`CONTEXT.md + docs/adr/`). See `templates/domain.md`.
 
+## Maintaining this repo (pack releases)
+
+- Root `templates/` + `references/` are source of truth. After editing either, run `./scripts/sync-skill-bundles.sh` and commit the copies under `skills/*/`.
+- With each change, add `.changeset/<slug>.md` declaring the bump: `patch` = typo/re-sync/docs · `minor` = new skill/template (compatible) · `major` = trigger rename, frontmatter change, layout change, dropped skill. README-only edits need no changeset.
+- PR checks (guards) enforce the above; releases cut via the `chore: version ooad-workflow` PR → merge → tag. Details: `README.md:Contributing`.
+
 ## References
 
 - `systems-analysis-ooad-paradigm.md` (ES)
