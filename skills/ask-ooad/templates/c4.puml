@@ -1,0 +1,14 @@
+@startuml C4-Context — {{ System }}
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title C4 Level 1 — Context — {{ System }}
+
+Person(user, "User", "Primary actor")
+System(system, "{{ System }}", "{{ description }}")
+System_Ext(ext, "External System", "{{ e.g.: payment gateway }}")
+
+Rel(user, system, "Uses", "HTTPS")
+Rel(system, ext, "Calls", "REST")
+
+SHOW_LEGEND()
+@enduml

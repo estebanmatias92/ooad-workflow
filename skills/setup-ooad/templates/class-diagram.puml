@@ -1,0 +1,44 @@
+@startuml Class Diagram — {{ Domain }} — based on UC-{{ NNN }}, FR-{{ NNN }}
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Entities (Clean core)
+class User {
+  + id: UUID
+  + email: string
+  + status: UserStatus
+  + create(data): User
+}
+
+class Order {
+  + id: UUID
+  + total: Money
+  + addItem(item): void
+}
+
+' Use Cases
+class CreateUserUseCase {
+  + execute(dto: CreateUserDTO): User
+}
+
+' Value Objects
+class Email {
+  + value: string
+  + validate(): boolean
+}
+
+User --> Email : uses
+CreateUserUseCase ..> User : creates ' GRASP Creator — aggregate/container creates its parts
+Order --> User : belongs to
+
+note right of User
+  Entity — rule: unique email
+  FR-001 / UC-001 [Information Expert]
+  CRC: User card — knows email, validates uniqueness
+end note
+note right of CreateUserUseCase
+  GRASP Controller — UseCase receives
+  system event, Framework controller
+  only delegates
+end note
+@enduml

@@ -36,6 +36,39 @@ Router: `/ask-ooad` — “which skill fits?” (one trigger per branch). Then:
 
 ## Installation
 
+### Via `skills.sh` (recommended for consumers)
+
+Works with OpenCode, Claude Code, Codex, Cursor, and other agents:
+
+```bash
+# List available skills without installing
+npx skills@latest add estebanmatias92/ooad-workflow --list
+
+# Install all skills into the current project
+npx skills@latest add estebanmatias92/ooad-workflow --all
+
+# Install a single skill (always include setup-ooad: it bootstraps the repo)
+npx skills@latest add estebanmatias92/ooad-workflow --skill setup-ooad
+
+# Install globally (available across all projects)
+npx skills@latest add estebanmatias92/ooad-workflow --all -g
+
+# Pull latest changes later
+npx skills update
+```
+
+Target specific agents with `-a` (e.g. `-a opencode -a claude-code`); use `--copy` instead of the default symlink if your filesystem needs it.
+
+### Via Claude Code plugin
+
+```bash
+/plugin marketplace add estebanmatias92/ooad-workflow
+/plugin install ooad-workflow@ooad-workflow
+```
+
+Plugin skills are namespaced (`/ooad-workflow:setup-ooad` instead of `/setup-ooad`).
+Pick one channel per project — installing both leaves you with every skill twice.
+
 ### Development (this repo)
 
 Skills live in `./ooad-workflow/` and are exposed to opencode via global symlink:
@@ -124,3 +157,19 @@ ooad-workflow/
 - `artefactos-por-fase-y-metodologia.md` (ES)
 - `requirements-engineering.md` + 5 RE sub-phases (ES)
 - `architecture-decision-record.md` (MADR) (ES)
+
+## Contributing
+
+`templates/` and `references/` at the repo root are the source of truth. Each
+skill folder contains committed copies (`skills/<name>/templates/`,
+`skills/<name>/references/`) so single-skill installs via `npx skills add`
+stay self-contained. After editing any template or reference, re-sync before
+committing:
+
+```bash
+./scripts/sync-skill-bundles.sh
+```
+
+## License
+
+MIT — see `LICENSE`.
