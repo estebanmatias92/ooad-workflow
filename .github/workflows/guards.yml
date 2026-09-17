@@ -1,0 +1,57 @@
+name: Guards
+
+# Tier 1 release guardrails: catch mechanical mistakes on PRs.
+# Humans still write changesets and merge Version PRs; this workflow only fails fast.
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  guards:
+    name: Release guards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Bundles in sync
+        # skills/<name>/{templates,references} are generated copies of the
+        # root dirs. A release shipping stale copies breaks single-skill installs.
+        run: |
+          ./scripts/sync-skill-bundles.sh
+          git diff --exit-code -- skills/ \
+            || (echo "::error::Bundled copies are stale. Run ./scripts/sync-skill-bundles.sh and commit." && exit 1)
+
+      - name: Plugin version in sync
+        run: npm run check-plugin-version
+
+      - name: Changeset present
+        # Any PR touching more than README.md must add a .changeset/*.md file.
+        # README-only edits are exempt.
+        run: |
+          BASE="origin/${{ github.base_ref }}"
+          CHANGED=$(git diff --name-only "$BASE"...HEAD -- . ':!README.md')
+          if [ -z "$CHANGED" ]; then
+            echo "README-only change, changeset not required."
+            exit 0
+          fi
+          echo "Changed files requiring a changeset:"
+          echo "$CHANGED"
+          NEW_CHANGESETS=$(git diff --name-only --diff-filter=A "$BASE"...HEAD -- .changeset/ ':!.changeset/config.json')
+          if [ -z "$NEW_CHANGESETS" ]; then
+            echo "::error::No changeset file added. Run 'npx changeset' (patch/minor/major) — see README Contributing."
+            exit 1
+          fi
+          echo "Changeset(s) found:"
+          echo "$NEW_CHANGESETS"

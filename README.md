@@ -190,6 +190,28 @@ committing:
 > is Unix-style. (This note is maintainer-only; installing and using the
 > skills via `npx skills add` or the Claude plugin works on native Windows.)
 
+### Releasing
+
+Releases run on [changesets](https://github.com/changesets/changesets):
+
+```bash
+# 1. With each change, add a changeset (pick patch/minor/major):
+npx changeset
+# 2. Merge to main → the release workflow opens/updates the
+#    "chore: version ooad-workflow" PR (bumps versions, CHANGELOG, plugin.json)
+# 3. Merge that PR when ready → tag cut, release done
+```
+
+Bump rubric for this pack:
+
+- `patch` — typo/wording fix, bundle re-sync, docs tweak
+- `minor` — new skill, template, or reference; backward-compatible change
+- `major` — trigger rename, required-frontmatter change, `skills/*` layout change, dropped skill
+
+PR guardrails (`.github/workflows/guards.yml`) fail fast on: stale bundled
+copies, `plugin.json` version drift, and missing changesets. README-only
+edits are exempt from the changeset requirement.
+
 ## License
 
 MIT — see `LICENSE`.
