@@ -1,10 +1,10 @@
 # OOAD Workflow — Professional Agentic Framework
 
-Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Analysis paradigm (`systems-analysis-ooad-paradigm.md:3` — `IEEE830/Use Cases → UML/GoF → TDD → MVC/Layers`). Professional alternative to `mattpocock/skills` (DDD/VSA) and `addyosmani/agent-skills` (PRD→VSA SaaS).
+Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Analysis paradigm (`IEEE830/Use Cases → UML/GoF → TDD → MVC/Layers`). Professional alternative to `mattpocock/skills` (DDD/VSA) and `addyosmani/agent-skills` (PRD→VSA SaaS).
 
 ![OOAD lifecycle — phase sequence](docs/diagrams/lifecycle.svg)
 
-*Source:* `docs/diagrams/lifecycle.puml` — boxes use literal trigger stems (`setup` = `/setup-ooad`, `discover` = `/ooad-discover`, etc.); copy full triggers from the Skills list below. Regenerate with `plantuml -tsvg docs/diagrams/lifecycle.puml`.
+*Source:* `docs/diagrams/lifecycle.puml` — boxes use literal trigger stems (`setup` = `/setup-ooad`, `discover` = `/ooad-discover`, etc.). Regenerate with `plantuml -tsvg docs/diagrams/lifecycle.puml`.
 
 ## Methodology Profiles (selectable via `setup-ooad`)
 
@@ -14,203 +14,68 @@ Agentic framework **OOAD + Clean 4 Layers + TDD**, aligned with the Systems Anal
 | **Waterfall** | Fixed contract, regulation, large team | Signed SRS IEEE830 + heavy SDD |
 | **Agile / Scrum** | Digital product, changing requirements | US backlog INVEST + Gherkin AC + just-enough ADR |
 
-The same 7-phase SDLC base (`Discovery → RE → Design → Implementation → Testing → Deployment → Maintenance`) is scheduled differently per profile (`artefactos-por-fase-y-metodologia.md:72-149` — *artifacts-by-phase-and-methodology*, ES).
-
 ## Skills (all `disable-model-invocation: true`, human calls `/name`)
 
-Lifecycle order: `/setup-ooad` (once) → `/ooad-discover` → `/ooad-requirements` → `/ooad-architect` → `/ooad-build` ↔ `/ooad-verify` → `/ooad-ship`.
+```text
+/ask-ooad (router — run when unsure which fits)
+  ↓
+/setup-ooad (once per repo — run FIRST: bootstraps RUP/Waterfall/Agile + tracker + layout)
+  ↓
+/ooad-discover (PRD + Vision)
+  ↓
+/ooad-requirements (SRS/UC/US + RTM)
+  ↓
+/ooad-architect (C4/UML + ADR)
+  ↓
+/ooad-build ↔ /ooad-verify (loop per UC/US until green: suite green, cov ≥80%, no blockers)
+  ↓
+/ooad-ship (release)
+```
 
-`↔` = Construction loop per UC/US until green (suite green, cov ≥80%, no blockers). Consumer docs mirror the order: `docs/01-discovery → 02-requirements → 03-architecture → src/ → 05-qa → 06-deploy`. RUP iterates, Waterfall runs once end-to-end, Agile slices per sprint.
+RUP iterates, Waterfall runs once end-to-end, Agile slices per sprint. Brownfield may start at `ooad-architect` with gap → US.
 
-Router: `/ask-ooad` — “which skill fits?” (one trigger per branch). Then:
+| # | Trigger | Does | Produces | Run |
+|---|---------|------|----------|-----|
+| – | `/ask-ooad` | Router over the 7 workflow skills | decision | once per decision |
+| 0 | `/setup-ooad` | RUP/Waterfall/Agile + tracker + 4-layer layout | bootstrapped repo | once per repo |
+| 1 | `/ooad-discover` | RUP Inception + Vision + MoSCoW | PRD + draft glossary | per feature |
+| 2 | `/ooad-requirements` | IEEE 29148 + UC/INVEST/Gherkin + RDD/CRC + Fagan + RTM | SRS/UC/US + CRC + RTM | per feature |
+| 3 | `/ooad-architect` | C4 + UML + RDD→GRASP + GoF + Clean 4 Layers + ADR-MADR | C4/UML + classes + ADR | per feature |
+| 4 | `/ooad-build` | Clean 4 Layers + GRASP-guarded TDD (Beck) + OpenAPI, slice by UC/US | TDD vertical slice | per UC/US |
+| 5 | `/ooad-verify` | BDD/Gherkin + Test Pyramid 80/15/5, RTM-traced | Gherkin test plan | per slice |
+| 6 | `/ooad-ship` | Continuous Delivery + SRE | checklist + rollback + changelog | per release |
 
-1. `/setup-ooad` — RUP/Waterfall/Agile + Clean Architecture — bootstrap repo (once)
-2. `/ooad-discover` — RUP Inception + Vision + MoSCoW — PRD + draft glossary
-3. `/ooad-requirements` — IEEE 29148 + UC/INVEST/Gherkin + RDD/CRC + Fagan + RTM
-4. `/ooad-architect` — C4 + UML + RDD→GRASP + GoF + Clean 4 Layers + ADR-MADR
-5. `/ooad-build` — Clean 4 Layers + GRASP-guarded TDD (Beck) + OpenAPI — slice by UC/US
-6. `/ooad-verify` — BDD/Gherkin + Test Pyramid 80/15/5 — RTM-traced
-7. `/ooad-ship` — Continuous Delivery + SRE — checklist + rollback + changelog
-
-> Suggested order, not enforced: brownfield can start at `ooad-architect` with gap → US. Not sure? `/ask-ooad`.
-
-## Reference
-
-| Skill | Source | Run |
-|-------|--------|-----|
-| [ask-ooad](skills/ask-ooad/SKILL.md) | Router over the 7 workflow skills | once per decision |
-| [setup-ooad](skills/setup-ooad/SKILL.md) | RUP/Waterfall/Agile + tracker + 4-layer layout | once per repo |
-| [ooad-discover](skills/ooad-discover/SKILL.md) | PRD + Vision + personas | per feature |
-| [ooad-requirements](skills/ooad-requirements/SKILL.md) | SRS/UC/US + CRC + RTM | per feature |
-| [ooad-architect](skills/ooad-architect/SKILL.md) | C4/UML + GRASP/GoF + ADR-MADR | per feature |
-| [ooad-build](skills/ooad-build/SKILL.md) | TDD vertical slice in 4 layers | per UC/US |
-| [ooad-verify](skills/ooad-verify/SKILL.md) | Gherkin test plan, pyramid 80/15/5 | per slice |
-| [ooad-ship](skills/ooad-ship/SKILL.md) | checklist + rollback + changelog | per release |
-
-Release history: [`CHANGELOG.md`](CHANGELOG.md).
+Release history: [`CHANGELOG.md`](CHANGELOG.md). Shared vocabulary in `references/ooad-vocabulary.md` — no synonym drift.
 
 ## Installation
 
-### Via `skills.sh` (recommended for consumers)
+```bash
+npx skills@latest add estebanmatias92/ooad-workflow
+```
 
-Works with OpenCode, Claude Code, Codex, Cursor, and other agents:
+Then run `/setup-ooad` once per repo — it bootstraps the methodology profile, issue tracker and layout before the workflow starts.
 
 ```bash
-# List available skills without installing
-npx skills@latest add estebanmatias92/ooad-workflow --list
-
-# Install all skills into the current project
-npx skills@latest add estebanmatias92/ooad-workflow --all
-
-# Install a single skill (always include setup-ooad: it bootstraps the repo)
-npx skills@latest add estebanmatias92/ooad-workflow --skill setup-ooad
-
-# Install globally (available across all projects)
-npx skills@latest add estebanmatias92/ooad-workflow --all -g
-
-# Pull latest changes later
-npx skills update
+npx skills@latest update
 ```
-
-Target specific agents with `-a` (e.g. `-a opencode -a claude-code`); use `--copy` instead of the default symlink if your filesystem needs it.
-
-### Via Claude Code plugin
-
-```bash
-/plugin marketplace add estebanmatias92/ooad-workflow
-/plugin install ooad-workflow@ooad-workflow
-```
-
-Plugin skills are namespaced (`/ooad-workflow:setup-ooad` instead of `/setup-ooad`).
-Pick one channel per project — installing both leaves you with every skill twice.
-
-### Development (this repo)
-
-Skills live in `./ooad-workflow/` and are exposed to opencode via global symlink:
-
-```bash
-ln -s $(pwd)/ooad-workflow ~/.config/opencode/skills/ooad-workflow
-```
-
-Verify:
-
-```bash
-ls -l ~/.config/opencode/skills/ooad-workflow
-# should point to .../ooad-systems-modeling/ooad-workflow
-```
-
-### Alternative local repo
-
-```
-ooad-workflow/.opencode/skills/  # if you prefer not to use global
-```
-
-## Usage
-
-```bash
-# 1) Configure new repo
-/setup-ooad   # choose RUP* / Waterfall / Agile, tracker, architecture
-
-# 2) Cycle per feature (RUP example: per iteration)
- /ooad-discover      # PRD + Vision
- /ooad-requirements  # UC-001.. + RTM
- /ooad-architect     # C4 + classes + ADR
- /ooad-build         # TDD per UC
- /ooad-verify        # Gherkin E2E
- /ooad-ship          # release
-```
-
-Each skill reads `docs/agents/workflow.md` for profile gating (`templates/workflow.md`). Shared vocabulary in `references/ooad-vocabulary.md` — no synonym drift.
 
 ## Structure
 
-```
-ooad-workflow/
-├── skills/
-│   ├── ask-ooad/ (router)
-│   ├── setup-ooad/
-│   ├── ooad-discover/
-│   ├── ooad-requirements/
-│   ├── ooad-architect/
-│   ├── ooad-build/
-│   ├── ooad-verify/
-│   └── ooad-ship/
-├── templates/
-│   ├── prd.md, srs-830.md, use-case-detailed.md, us-gherkin.md
-│   ├── glossary.md, rtm.csv, adr-madr.md
-│   ├── c4.puml, class-diagram.puml, sequence-diagram.puml
-│   └── workflow.md, domain.md, architecture.md, issue-tracker-*.md
-├── docs/
- │   ├── glossary.md               # term & acronym index → references/ooad-vocabulary.md (single source)
- │   ├── dev-cycle-comparison.md   # DDD vs OOAD comparison + activity diagram
- │   └── diagrams/dev-cycle-comparison.puml+.svg
- └── references/
-     ├── artifacts-matrix.md
-     ├── definition-of-done.md
-     └── ooad-vocabulary.md  # shared leading words (single source; human index: docs/glossary.md)
-```
+`skills/` (8 skills) · `templates/` (PRD, SRS-830, UC, US-Gherkin, C4/UML, ADR-MADR…) · `references/` (artifacts matrix, definition of done, vocabulary) · `docs/` (glossary, comparisons, diagrams). Details: [`AGENTS.md`](AGENTS.md).
 
 ## Comparison
 
-> **Which cycle to follow?** Side-by-side activity diagram + origin, step-by-step outputs/state,
-> profile variants and decision table: [`docs/dev-cycle-comparison.md`](docs/dev-cycle-comparison.md)
-> — diagram source `docs/diagrams/dev-cycle-comparison.puml` (render: `plantuml -tsvg docs/diagrams/dev-cycle-comparison.puml`).
-
-| OOAD Criterion | `ooad-workflow` | Matt Pocock | AddyOsmani |
-|----------------|-----------------|-------------|------------|
-| IEEE830/FR-xxx | ✅ native per profile | ❌ DDD User Stories | ❌ SaaS PRD |
-| UC→CRC→Sequence→Classes (RDD→GRASP) | ✅ CRC cards + 9 GRASP cited per mapping | ❌ seams | ❌ VSA |
-| GoF + Clean 4 | ✅ MADR justified | Deep modules | Generic contract-first |
-| TDD | ✅ RED→GREEN per layer | seam-based | ✅ |
-| MVC/Layers | ✅ default | VSA | VSA SaaS |
+> **Which cycle to follow?** Side-by-side activity diagram, outputs/state, profile variants and decision table: [`docs/dev-cycle-comparison.md`](docs/dev-cycle-comparison.md).
 
 ## References
 
 - `docs/glossary.md` — acronym & term index (human entry point)
-- `references/ooad-vocabulary.md` — single source for leading words (writing-for-agents)
-- `docs/systems-analysis-ooad-paradigm.md` (ES) (canonical is `docs/systems-analysis-ooad-paradigm.md`)
-- `artefactos-por-fase-y-metodologia.md` (ES)
-- `requirements-engineering.md` + 5 RE sub-phases (ES)
-- `architecture-decision-record.md` (MADR) (ES)
+- `references/ooad-vocabulary.md` — single source for leading words
+- `docs/systems-analysis-ooad-paradigm.md` (ES)
 
 ## Contributing
 
-`templates/` and `references/` at the repo root are the source of truth. Each
-skill folder contains committed copies (`skills/<name>/templates/`,
-`skills/<name>/references/`) so single-skill installs via `npx skills add`
-stay self-contained. After editing any template or reference, re-sync before
-committing:
-
-```bash
-./scripts/sync-skill-bundles.sh
-```
-
-> Maintainers on Windows: work on this repo from **WSL2**, not native
-> PowerShell/CMD — the sync script is bash and the symlink dev-install above
-> is Unix-style. (This note is maintainer-only; installing and using the
-> skills via `npx skills add` or the Claude plugin works on native Windows.)
-
-### Releasing
-
-Releases run on [changesets](https://github.com/changesets/changesets):
-
-```bash
-# 1. With each change, add a changeset (pick patch/minor/major):
-npx changeset
-# 2. Merge to main → the release workflow opens/updates the
-#    "chore: version ooad-workflow" PR (bumps versions, CHANGELOG, plugin.json)
-# 3. Merge that PR when ready → tag cut, release done
-```
-
-Bump rubric for this pack:
-
-- `patch` — typo/wording fix, bundle re-sync, docs tweak
-- `minor` — new skill, template, or reference; backward-compatible change
-- `major` — trigger rename, required-frontmatter change, `skills/*` layout change, dropped skill
-
-PR guardrails (`.github/workflows/guards.yml`) fail fast on: stale bundled
-copies, `plugin.json` version drift, and missing changesets. README-only
-edits are exempt from the changeset requirement.
+Want to collaborate? See [`AGENTS.md`](AGENTS.md).
 
 ## License
 
