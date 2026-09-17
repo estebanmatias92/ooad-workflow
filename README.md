@@ -170,6 +170,11 @@ committing:
 ./scripts/sync-skill-bundles.sh
 ```
 
+> Maintainers on Windows: work on this repo from **WSL2**, not native
+> PowerShell/CMD — the sync script is bash and the symlink dev-install above
+> is Unix-style. (This note is maintainer-only; installing and using the
+> skills via `npx skills add` or the Claude plugin works on native Windows.)
+
 ## License
 
 MIT — see `LICENSE`.
