@@ -1,0 +1,1 @@
+{"access": "restricted", "baseBranch": "main", "changelog": ["@changesets/changelog-github", {"repo": "estebanmatias92/ooad-workflow"}], "commit": false, "fixed": [], "ignore": [], "linked": [], "privatePackages": {"tag": true, "version": true}, "updateInternalDependencies": "patch"}

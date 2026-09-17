@@ -34,6 +34,21 @@ Router: `/ask-ooad` — “which skill fits?” (one trigger per branch). Then:
 
 > Suggested order, not enforced: brownfield can start at `ooad-architect` with gap → US. Not sure? `/ask-ooad`.
 
+## Reference
+
+| Skill | Source | Run |
+|-------|--------|-----|
+| [ask-ooad](skills/ask-ooad/SKILL.md) | Router over the 7 workflow skills | once per decision |
+| [setup-ooad](skills/setup-ooad/SKILL.md) | RUP/Waterfall/Agile + tracker + 4-layer layout | once per repo |
+| [ooad-discover](skills/ooad-discover/SKILL.md) | PRD + Vision + personas | per feature |
+| [ooad-requirements](skills/ooad-requirements/SKILL.md) | SRS/UC/US + CRC + RTM | per feature |
+| [ooad-architect](skills/ooad-architect/SKILL.md) | C4/UML + GRASP/GoF + ADR-MADR | per feature |
+| [ooad-build](skills/ooad-build/SKILL.md) | TDD vertical slice in 4 layers | per UC/US |
+| [ooad-verify](skills/ooad-verify/SKILL.md) | Gherkin test plan, pyramid 80/15/5 | per slice |
+| [ooad-ship](skills/ooad-ship/SKILL.md) | checklist + rollback + changelog | per release |
+
+Release history: [`CHANGELOG.md`](CHANGELOG.md).
+
 ## Installation
 
 ### Via `skills.sh` (recommended for consumers)
